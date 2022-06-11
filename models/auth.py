@@ -50,6 +50,17 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM users where username=%s AND password=%s"
         return self.fetch_one(sql, username, hashed_password)
 
+    def find_profile_by_user_id(self, user_id):
+        """
+        ユーザ名とパスワードからユーザを探す
+        ユーザが存在しない場合，空の辞書を返す
+        :param username: 検索するユーザ名
+        :param password: 検索するパスワード
+        :return: 検索したユーザ
+        """
+        sql = "SELECT * FROM profile where user_id=%s"
+        return self.fetch_one(sql, user_id)
+
     def logout(self):
         pass
 
@@ -60,3 +71,7 @@ class AuthModel(AbstractModel):
         :return: ハッシュ化されたパスワード
         """
         return sha256(password.encode()).hexdigest()
+
+    def register_profile(self, user_id):
+        sql = "INSERT INTO profile(user_id) VALUE (%s);"
+        self.execute(sql, user_id)

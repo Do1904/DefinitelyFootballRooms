@@ -6,9 +6,15 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/styles.css')}}">
 </head>
 <body>
+    <br>
+    <div>
 <nav>
-    <h2>FOOTBALL ROOMS</h2>
     {% if not user %}
+    <div class="welcome">
+        <br><br>
+        <h4>Welcome to</h4>
+        <h1>FOOTBALL ROOMS</h1>
+    </div>
         <ul>
             <li>
                 <a href="{{ url_for('register') }}">新規登録</a>
@@ -18,7 +24,26 @@
             </li>
         </ul>
     {% else %}
+    <div class="welcome">
+        <h5>FOOTBALL ROOMS</h5>
+        <!-- なんでインデント揃えるとエラーになる？？ -->
+      </div>
         <h3>ようこそ{{ user["username"] }}さん</h3>
+        <h4>プロフィール</h4>
+        <table border="0">
+            <tr>
+              <td>Your Club</td>
+              <td>未登録</td>
+            </tr>
+            <tr>
+              <td>Your League</td>
+              <td>未登録</td>
+            </tr>
+            <tr>
+              <td>Your Nation</td>
+              <td>未登録</td>
+            </tr>
+          </table>
         <ul>
             <li>
                 <a href="{{ url_for('articles_index') }}">記事一覧</a>
@@ -40,5 +65,6 @@
 </nav>
 {% block body %}
 {% endblock %}
+</div>
 </body>
 </html>

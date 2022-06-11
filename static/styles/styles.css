@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+body {
+    background-color: rgb(243, 243, 243);
+    font-family: 'Josefin Sans';
+}
+
+.welcome{
+  font-family: 'Josefin Sans';
+    text-align: center;
+}
+
+.content{
+  font-family: 'Josefin Sans';
+
+}
+
+  .letter {
+    background: #fff;
+    font-family: 'Josefin Sans';
+  }
