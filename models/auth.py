@@ -50,16 +50,16 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM users where username=%s AND password=%s"
         return self.fetch_one(sql, username, hashed_password)
 
-    def find_profile_by_user_id(self, user_id):
-        """
-        ユーザ名とパスワードからユーザを探す
-        ユーザが存在しない場合，空の辞書を返す
-        :param username: 検索するユーザ名
-        :param password: 検索するパスワード
-        :return: 検索したユーザ
-        """
-        sql = "SELECT * FROM profile where user_id=%s"
-        return self.fetch_one(sql, user_id)
+    # def find_profile_by_user_id(self, user_id):
+    #     """
+    #     ユーザ名とパスワードからユーザを探す
+    #     ユーザが存在しない場合，空の辞書を返す
+    #     :param username: 検索するユーザ名
+    #     :param password: 検索するパスワード
+    #     :return: 検索したユーザ
+    #     """
+    #     sql = "SELECT * FROM profile where user_id=%s"
+    #     return self.fetch_one(sql, user_id)
 
     def logout(self):
         pass
@@ -72,10 +72,6 @@ class AuthModel(AbstractModel):
         """
         return sha256(password.encode()).hexdigest()
 
-    def register_profile(self, user_id):
-        sql = "INSERT INTO profile(user_id) VALUE (%s);"
-        self.execute(sql, user_id)
-
     def profile_update(self, yourclub, yourleague, yournation, user_id):
-        sql = "UPDATE `profile` SET `yourclub` = '%s', `yourleague` = '%s', `yournation` = '%s' WHERE `profile`.`user_id` = %s;"
+        sql = "UPDATE users SET your_club = '%s', your_league = '%s', your_nation = '%s' WHERE id = %s;"
         self.execute(sql, yourclub, yourleague, yournation, user_id)

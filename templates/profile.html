@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="content">
-        <p>あなたのFootballファン情報を入力してください。</p>{{user}}
+        <p>あなたのFootballファン情報を入力してください。</p>
         <form action="/profile_update" method="post">
             <div>
                 <label for="yourclub">好きなクラブを入力してください</label>
@@ -15,9 +15,6 @@
                 <label for="yournation">好きな国を選択してください</label>
                 <p><input id="yournation" type="text" name="yournation"/></p>
             </div>
-            <!-- <div>
-                <p><input id="user_id" type="hidden" value="{{user['id']}}" name="user_id"/></p>
-            </div> -->
             <div>
                 <button type="submit">更新</button>
             </div>

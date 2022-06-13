@@ -73,16 +73,19 @@ def create_user(username: str = Form(...), password: str = Form(...)):
     response.set_cookie("session_id", session_id)
     return response
 
-@app.post("/profile")
+@app.get("/profile")
+@check_login
+def profile_update_page(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("profile.html", {"request": request, "user": user})
 
-def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...)):
+@app.post("/profile")
+@check_login
+def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), session_id=Cookie(default=None)):
+    user_id = session.get(session_id).get("user").get("id")
     auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(yourclub, yourleague, yournation) # auth.pyの中にある関数を使うために必要
-    user = auth_model.find_user_by_name_and_password(username, password) #Returnで受け取ったものをprofileに代入
-    response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
-    session_id = session.set("user", user)
-    response.set_cookie("session_id", session_id)
-    return response
+    auth_model.profile_update(yourclub, yourleague, yournation, user_id) # auth.pyの中にある関数を使うために必要
+    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 
 @app.get("/articles")
@@ -98,7 +101,6 @@ def articles_index(request: Request, session_id=Cookie(default=None)):
         "request": request,
         "articles": articles,
         "user": user,
-        # "profile": user_profile
     })
 
 
