@@ -75,3 +75,7 @@ class AuthModel(AbstractModel):
     def register_profile(self, user_id):
         sql = "INSERT INTO profile(user_id) VALUE (%s);"
         self.execute(sql, user_id)
+
+    def profile_update(self, yourclub, yourleague, yournation, user_id):
+        sql = "UPDATE `profile` SET `yourclub` = '%s', `yourleague` = '%s', `yournation` = '%s' WHERE `profile`.`user_id` = %s;"
+        self.execute(sql, yourclub, yourleague, yournation, user_id)

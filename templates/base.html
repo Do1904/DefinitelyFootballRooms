@@ -33,18 +33,21 @@
         <table border="0">
             <tr>
               <td>Your Club</td>
-              <td>未登録</td>
+              <td>{{ user["your_club"] }}</td>
             </tr>
             <tr>
               <td>Your League</td>
-              <td>未登録</td>
+              <td>{{ user["your_league"] }}</td>
             </tr>
             <tr>
               <td>Your Nation</td>
-              <td>未登録</td>
+              <td>{{ user["your_nation"] }}</td>
             </tr>
           </table>
         <ul>
+            <li>
+                <a href="{{ url_for('profile_update') }}">プロフィール</a>
+            </li>
             <li>
                 <a href="{{ url_for('articles_index') }}">記事一覧</a>
             </li>

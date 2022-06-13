@@ -36,7 +36,6 @@ def register(request: Request):
     """
     return templates.TemplateResponse("register.html", {"request": request})
 
-
 @app.post("/login")
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
     """
@@ -69,17 +68,17 @@ def create_user(username: str = Form(...), password: str = Form(...)):
     auth_model = AuthModel(config)
     auth_model.create_user(username, password)
     user = auth_model.find_user_by_name_and_password(username, password)
-    auth_model.register_profile(user["id"])
     response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     session_id = session.set("user", user)
     response.set_cookie("session_id", session_id)
     return response
 
-@app.post("/profile_update")
-def create_user(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...)):
-    auth_model = AuthModel(config)
-    auth_model.profile_update(yourclub, yourleague, yournation)
-    profile = auth_model.profile(username, password)
+@app.post("/profile")
+
+def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...)):
+    auth_model = AuthModel(config) # auth.pyを使うために必要
+    auth_model.profile_update(yourclub, yourleague, yournation) # auth.pyの中にある関数を使うために必要
+    user = auth_model.find_user_by_name_and_password(username, password) #Returnで受け取ったものをprofileに代入
     response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     session_id = session.set("user", user)
     response.set_cookie("session_id", session_id)
@@ -92,14 +91,14 @@ def create_user(yourclub: str = Form(...), yourleague: str = Form(...), yournati
 def articles_index(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
-    user_profile = auth_model.find_profile_by_user_id(user["id"])
+    # user_profile = auth_model.find_profile_by_user_id(user["id"])
     article_model = ArticleModel(config)
     articles = article_model.fetch_recent_articles()
     return templates.TemplateResponse("article-index.html", {
         "request": request,
         "articles": articles,
         "user": user,
-        "profile": user_profile
+        # "profile": user_profile
     })
 
 
@@ -130,7 +129,6 @@ def article_detail_page(request: Request, article_id: int, session_id=Cookie(def
         "article": article,
         "user": user
     })
-
 
 @app.get("/logout")
 @check_login
