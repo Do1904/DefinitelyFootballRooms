@@ -73,5 +73,5 @@ class AuthModel(AbstractModel):
         return sha256(password.encode()).hexdigest()
 
     def profile_update(self, yourclub, yourleague, yournation, user_id):
-        sql = "UPDATE users SET your_club = '%s', your_league = '%s', your_nation = '%s' WHERE id = %s;"
+        sql = "UPDATE users SET your_club = %s, your_league = %s, your_nation = %s WHERE users.id = %s;"
         self.execute(sql, yourclub, yourleague, yournation, user_id)

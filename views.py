@@ -73,13 +73,13 @@ def create_user(username: str = Form(...), password: str = Form(...)):
     response.set_cookie("session_id", session_id)
     return response
 
-@app.get("/profile")
+@app.get("/profile_update")
 @check_login
 def profile_update_page(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
     return templates.TemplateResponse("profile.html", {"request": request, "user": user})
 
-@app.post("/profile")
+@app.post("/profile_update")
 @check_login
 def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), session_id=Cookie(default=None)):
     user_id = session.get(session_id).get("user").get("id")
