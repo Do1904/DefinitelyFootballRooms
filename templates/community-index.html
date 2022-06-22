@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>サンプルページ</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/community.css')}}">
+</head>
+<body>
+    <br>
+    <div class="community">
+<nav>
+        <h5>COMMUNITY</h5>
+        <h4>プロフィール</h4>
+        <table border="0">
+            <tr>
+              <td>Your Club</td>
+              <td>{{ user["your_club"] }}</td>
+            </tr>
+            <tr>
+              <td>Your League</td>
+              <td>{{ user["your_league"] }}</td>
+            </tr>
+            <tr>
+              <td>Your Nation</td>
+              <td>{{ user["your_nation"] }}</td>
+            </tr>
+            <tr>
+                <td>Profile</td>
+                <td>{{ user["profile"] }}</td>
+              </tr>
+          </table>
+        <ul>
+            <li>
+                <a href="{{ url_for('profile_update_page') }}">プロフィール</a>
+            </li>
+            <li>
+                <a href="{{ url_for('find_community') }}">検索</a>
+            </li>
+            <li>
+                <a href="{{ url_for('logout') }}" methods="post">Home</a>
+            </li>
+        </ul>
+</nav>
+{% block body %}
+{% endblock %}
+</div>
+</body>
+</html>

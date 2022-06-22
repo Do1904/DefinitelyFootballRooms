@@ -72,6 +72,51 @@ class AuthModel(AbstractModel):
         """
         return sha256(password.encode()).hexdigest()
 
-    def profile_update(self, yourclub, yourleague, yournation, user_id):
-        sql = "UPDATE users SET your_club = %s, your_league = %s, your_nation = %s WHERE users.id = %s;"
-        self.execute(sql, yourclub, yourleague, yournation, user_id)
+    def profile_update(self, yourclub, yourleague, yournation, profile, user_id):
+        sql = "UPDATE users SET your_club = %s, your_league = %s, your_nation = %s, profile = %s WHERE users.id = %s;"
+        self.execute(sql, yourclub, yourleague, yournation, profile, user_id)
+
+    def find_rooms_by_keyword(self, keyword):
+        """
+        ユーザ名とパスワードからユーザを探す
+        ユーザが存在しない場合，空の辞書を返す
+        :param username: 検索するユーザ名
+        :param password: 検索するパスワード
+        :return: 検索したユーザ
+        """
+        sql = "SELECT * FROM rooms where room_comment LIKE '%%%s%%'"
+        return self.fetch_one(sql, keyword)
+
+    def find_pubs_by_keyword(self, keyword):
+        """
+        ユーザ名とパスワードからユーザを探す
+        ユーザが存在しない場合，空の辞書を返す
+        :param username: 検索するユーザ名
+        :param password: 検索するパスワード
+        :return: 検索したユーザ
+        """
+        sql = "SELECT * FROM pubs where pub_comment LIKE '%%%s%%'"
+        return self.fetch_one(sql, keyword)
+
+    def find_users_by_keyword(self, keyword):
+        """
+        ユーザ名とパスワードからユーザを探す
+        ユーザが存在しない場合，空の辞書を返す
+        :param username: 検索するユーザ名
+        :param password: 検索するパスワード
+        :return: 検索したユーザ
+        """
+        sql = "SELECT * FROM users where profile LIKE '%%%s%%'"
+        return self.fetch_one(sql, keyword)
+
+    def create_new_pub(self, community_name, community_comment):
+        """
+        ユーザ名とパスワードからユーザを探す
+        ユーザが存在しない場合，空の辞書を返す
+        :param username: 検索するユーザ名
+        :param password: 検索するパスワード
+        :return: 検索したユーザ
+        """
+        sql = "INSERT INTO pubs(pub_id, pub_name, pub_comment) VALUE (NEWID(), %s, %s);" 
+        # IDをランダムでユニークなものにしたい。どうやって???
+        self.execute(sql, community_name, community_comment)

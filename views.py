@@ -81,10 +81,10 @@ def profile_update_page(request: Request, session_id=Cookie(default=None)):
 
 @app.post("/profile_update")
 @check_login
-def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), session_id=Cookie(default=None)):
+def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
     user_id = session.get(session_id).get("user").get("id")
     auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(yourclub, yourleague, yournation, user_id) # auth.pyの中にある関数を使うために必要
+    auth_model.profile_update(yourclub, yourleague, yournation, profile, user_id) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 
@@ -139,3 +139,42 @@ def logout(session_id=Cookie(default=None)):
     response = RedirectResponse(url="/")
     response.delete_cookie("session_id")
     return response
+
+@app.get("/community")
+@check_login
+def find_community(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("community.html", {"request": request, "user": user})
+
+@app.post("/community")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = Form(...), session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    if search_from == "Rooms":
+        search_list = auth_model.find_rooms_by_keyword(keyword)
+    elif search_from == "Pubs":
+        search_list = auth_model.find_pubs_by_keyword(keyword)
+    elif search_from == "Users":
+        search_list = auth_model.find_users_by_keyword(keyword)
+    return templates.TemplateResponse("community.html", {
+        "request": request,
+        "search_list": search_list,
+        "user": user
+    })
+
+@app.get("/new_community")
+@check_login
+def create_community(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("create-community.html", {"request": request, "user": user})
+
+@app.post("/new_community")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def create_pub(request: Request, community_name: str = Form(...), community_comment: str = Form(...), session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    new_community = auth_model.create_new_pub(community_name, community_comment)
+    return RedirectResponse("/community", status_code=HTTP_302_FOUND)

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="content">
+        <p>CREATE NEW COMMUNITY</p>
+        <form action="/new_community" method="post">
+            <div>
+                <p><input id="community_name" type="text" size="30" name="community_name" placeholder="Pubの名前を入れましょう!" required/></p>
+            </div>
+            <div>
+                <textarea id="community_comment" name="community_comment" cols="30" rows="30" placeholder="Pubの紹介文を書きましょう! 検索されやすいように、ハッシュタグをつけましょう!"></textarea>
+            </div>
+            <!-- <div>
+                <label><input type="radio" name="public_or_not" class="public" value="public" checked="checked">Public</label>
+                <label><input type="radio" name="public_or_not" class="private" value="private">Private</label>
+            </div> -->
+            <br>
+            <div>
+                <button type="submit">作成</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

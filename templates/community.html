@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="content">
+        <p>SEARCH COMMUNITY</p>
+        <form action="/community" method="post">
+            <div>
+                <p><input id="keyword" type="text" value="#" name="keyword"/></p>
+            </div>
+            <div>
+                <label><input type="radio" name="search_from" class="Rooms" value="Rooms" checked="checked">Rooms</label>
+                <label><input type="radio" name="search_from" class="Pubs" value="Pubs">Pubs</label>
+                <label><input type="radio" name="search_from" class="Users" value="Users">Users</label>
+            </div>
+            <br>
+            <div>
+                <button type="submit">検索</button>
+            </div>
+        </form>
+        <hr>
+        <h3>Pubs</h3>
+        <ul>
+            {% for result in search_list %}
+            <li>
+                {{result}}
+            </li>
+            {% endfor %}
+        </ul>
+        {% if not search_list %}
+        <p>該当ユーザはいません</p>
+        {% endif %}
+    </div>
+{% endblock %}

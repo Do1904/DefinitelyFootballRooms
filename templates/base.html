@@ -7,14 +7,10 @@
 </head>
 <body>
     <br>
-    <div class="letter">
-<nav>
+
     {% if not user %}
-    <div class="welcome">
-        <br><br>
-        <h4>Welcome to</h4>
-        <h1>FOOTBALL ROOMS</h1>
-    </div>
+    <div class="letter">
+    <nav>
         <ul>
             <li>
                 <a href="{{ url_for('register') }}">新規登録</a>
@@ -23,14 +19,13 @@
                 <a href="{{ url_for('index') }}">ログイン</a>
             </li>
         </ul>
+    </nav>
+    </div>
     {% else %}
-    <div class="welcome">
-        <h5>FOOTBALL ROOMS</h5>
-        <!-- なんでインデント揃えるとエラーになる？？ -->
-      </div>
+    <nav class="manu" style="z-index:10000">
         <h3>ようこそ{{ user["username"] }}さん</h3>
         <h4>プロフィール</h4>
-        <table border="0">
+        <table border="0" class="profile_table">
             <tr>
               <td>Your Club</td>
               <td>{{ user["your_club"] }}</td>
@@ -43,8 +38,13 @@
               <td>Your Nation</td>
               <td>{{ user["your_nation"] }}</td>
             </tr>
+            <!-- <tr>
+                <td>Profile</td>
+                <td>{{ user["profile"] }}</td>
+              </tr> -->
           </table>
-        <ul>
+        <p>Home</p>  
+        <ul class="main_menu">
             <li>
                 <a href="{{ url_for('profile_update_page') }}">プロフィール</a>
             </li>
@@ -58,6 +58,16 @@
                 <a href="{{ url_for('logout') }}" methods="post"> ログアウト </a>
             </li>
         </ul>
+        <p>Community</p>
+        <ul class="community_menu">
+            <li>
+                <a href="{{ url_for('find_community') }}">検索</a>
+            </li>
+            <li>
+                <a href="{{ url_for('create_community') }}">新規作成</a>
+            </li>
+        </ul>
+    </nav>
     {% endif %}
     {% if error %}
         <p style="color: red">{{ error }}</p>
@@ -65,9 +75,9 @@
     {% if information %}
         <p style="color: cornflowerblue">{{ information }}</p>
     {% endif %}
-</nav>
+<main>
 {% block body %}
 {% endblock %}
-</div>
+</main>
 </body>
 </html>
