@@ -84,8 +84,10 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
-        sql = "SELECT * FROM rooms where room_comment LIKE '%%%s%%'"
-        return self.fetch_one(sql, keyword)
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM rooms where room_comment LIKE %s"
+        print(sql)
+        return self.fetch_all(sql,args)
 
     def find_pubs_by_keyword(self, keyword):
         """
@@ -95,8 +97,9 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
-        sql = "SELECT * FROM pubs where pub_comment LIKE '%%%s%%'"
-        return self.fetch_one(sql, keyword)
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM pubs where pub_comment LIKE %s"
+        return self.fetch_all(sql, args)
 
     def find_users_by_keyword(self, keyword):
         """
@@ -106,10 +109,20 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
-        sql = "SELECT * FROM users where profile LIKE '%%%s%%'"
-        return self.fetch_one(sql, keyword)
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM users where profile LIKE %s"
+        return self.fetch_all(sql, args)
 
-    def create_new_pub(self, community_name, community_comment):
+    def validate_pub(self,community_id) -> bool:
+        sql = "SELECT * FROM pubs WHERE pub_id=%s"
+        result = self.fetch_all(sql,community_id)
+        if len(result) > 0:
+            return True
+        else:
+            return False
+
+
+    def create_new_pub(self, community_id, community_name, community_comment, user_name):
         """
         ユーザ名とパスワードからユーザを探す
         ユーザが存在しない場合，空の辞書を返す
@@ -117,6 +130,13 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
-        sql = "INSERT INTO pubs(pub_id, pub_name, pub_comment) VALUE (NEWID(), %s, %s);" 
-        # IDをランダムでユニークなものにしたい。どうやって???
-        self.execute(sql, community_name, community_comment)
+        is_exist = self.validate_pub(community_id)
+        if is_exist == False:
+            sql = "INSERT INTO pubs(pub_id, pub_name, pub_comment, created_by) VALUE (%s, %s, %s, %s);" 
+            # ID
+            self.execute(sql, community_id, community_name, community_comment, user_name)
+            return True
+        else:
+            return False
+
+    

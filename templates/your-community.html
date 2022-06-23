@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="content">
+        <h2>YOUR COMMUNITY</h2>
+        <hr>
+        <h3>Rooms</h3>
+        <ul>
+            {% for result in search_list %}
+            <li>
+                {{ result["pub_name"] }}: {{ result["pub_comment"] }}
+            </li>
+            {% endfor %}
+        </ul>
+        <h3>Pubs</h3>
+        <ul>
+            {% for result in search_list %}
+            <li>
+                {{ result["pub_name"] }}: {{ result["pub_comment"] }}
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- {% if not search_list %}
+        <p>該当するコミュニティは見つかりませんでした。</p>
+        {% endif %} -->
+    </div>
+{% endblock %}

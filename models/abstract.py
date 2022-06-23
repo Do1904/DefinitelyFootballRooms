@@ -49,6 +49,8 @@ class AbstractModel(object):
         :param args: SQLに代入する値
         :return: 取得したレコード(Dict)
         """
+        print(sql_statement)
+        print(args)
         with self.connection.cursor() as cursor:
             self._execute(sql_statement, cursor, *args)
             return cursor.fetchone()

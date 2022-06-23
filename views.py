@@ -154,14 +154,26 @@ def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = F
     auth_model = AuthModel(config)
     if search_from == "Rooms":
         search_list = auth_model.find_rooms_by_keyword(keyword)
+        found_id = "room_id"
+        found_name = "room_name"
+        found_comment = "room_comment"
     elif search_from == "Pubs":
         search_list = auth_model.find_pubs_by_keyword(keyword)
+        found_id = "pub_id"
+        found_name = "pub_name"
+        found_comment = "pub_comment"
     elif search_from == "Users":
         search_list = auth_model.find_users_by_keyword(keyword)
+        found_id = "id"
+        found_name = "username"
+        found_comment = "profile"
     return templates.TemplateResponse("community.html", {
         "request": request,
         "search_list": search_list,
-        "user": user
+        "user": user,
+        "found_id":found_id,
+        "found_name": found_name,
+        "found_comment": found_comment
     })
 
 @app.get("/new_community")
@@ -173,8 +185,15 @@ def create_community(request: Request, session_id=Cookie(default=None)):
 @app.post("/new_community")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def create_pub(request: Request, community_name: str = Form(...), community_comment: str = Form(...), session_id=Cookie(default=None)):
+def create_pub(request: Request, community_name: str = Form(...), community_comment: str = Form(...), community_id: str = Form(...), session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
-    new_community = auth_model.create_new_pub(community_name, community_comment)
+    new_community = auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
     return RedirectResponse("/community", status_code=HTTP_302_FOUND)
+
+@app.get("/see_community")
+@check_login
+def your_community(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("your-community.html", {"request": request, "user": user})

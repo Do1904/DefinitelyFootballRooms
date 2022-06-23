@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="content">
-        <p>CREATE NEW COMMUNITY</p>
+        <h2>CREATE NEW COMMUNITY</h2>
         <form action="/new_community" method="post">
+            <div>
+                <p><input id="community_id" type="text" size="30" name="community_id" placeholder="Pubのidを作成しましょう!" required/></p>
+            </div>
             <div>
                 <p><input id="community_name" type="text" size="30" name="community_name" placeholder="Pubの名前を入れましょう!" required/></p>
             </div>

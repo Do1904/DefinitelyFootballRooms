@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="content">
-        <p>SEARCH COMMUNITY</p>
+        <h2>SEARCH COMMUNITY</h2>
         <form action="/community" method="post">
             <div>
                 <p><input id="keyword" type="text" value="#" name="keyword"/></p>
@@ -17,16 +17,16 @@
             </div>
         </form>
         <hr>
-        <h3>Pubs</h3>
+        <h3>COMMUNITY</h3>
         <ul>
             {% for result in search_list %}
             <li>
-                {{result}}
+                {{ result["found_name"] }}: {{ result["found_comment"] }}
             </li>
             {% endfor %}
         </ul>
         {% if not search_list %}
-        <p>該当ユーザはいません</p>
+        <p>該当するコミュニティは見つかりませんでした。</p>
         {% endif %}
     </div>
 {% endblock %}
