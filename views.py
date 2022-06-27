@@ -190,10 +190,63 @@ def create_pub(request: Request, community_name: str = Form(...), community_comm
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     new_community = auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
-    return RedirectResponse("/community", status_code=HTTP_302_FOUND)
+    return RedirectResponse("/your_community", status_code=HTTP_302_FOUND)
 
-@app.get("/see_community")
+@app.get("/your_community")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def your_community(request: Request, session_id=Cookie(default=None)):
+def show_community_list(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
-    return templates.TemplateResponse("your-community.html", {"request": request, "user": user})
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    your_community = auth_model.find_your_community_by_user_name(user_name)
+    return templates.TemplateResponse("your-community.html", {
+        "request": request,
+        "your_community": your_community,
+        "user": user
+    })
+
+@app.get("/your_community/{pub_id}")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def go_pub_home(request: Request, pub_id: str, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    pub = auth_model.find_pub_by_id(pub_id)
+    # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
+    # session_id = session.set("user", user)
+    # response.set_cookie("session_id", session_id)
+    return templates.TemplateResponse("pub-home.html", {
+        "request": request,
+        "user": user,
+        "pub": pub
+    })
+
+@app.get("/your_community/{pub_id}/chat")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+def see_chats(request: Request, pub_id: str, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    pub = auth_model.find_pub_by_id(pub_id)
+    # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
+    # session_id = session.set("user", user)
+    # response.set_cookie("session_id", session_id)
+    return templates.TemplateResponse("pub-home.html", {
+        "request": request,
+        "user": user,
+        "pub": pub
+    })
+
+@app.get("/your_community/{pub_id}/update")
+@check_login
+def pub_update_page(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("pub-update.html", {"request": request, "user": user})
+
+@app.post("/your_community/{pub_id}/update")
+@check_login
+def pub_update(pub_name: str = Form(...), pub_comment: str = Form(...), session_id=Cookie(default=None)):
+    user_id = session.get(session_id).get("user").get("id")
+    auth_model = AuthModel(config) # auth.pyを使うために必要
+    auth_model.profile_update(yourclub, yourleague, yournation, profile, user_id) # auth.pyの中にある関数を使うために必要
+    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)

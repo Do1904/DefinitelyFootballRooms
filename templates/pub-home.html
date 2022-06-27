@@ -1,0 +1,11 @@
+{% extends "pub-index.html" %}
+{% block body %}
+    <div class="content">
+        <h2>{{ pub["pub_name"] }} へようこそ！</h2>
+        <p>{{ pub["pub_comment"] }}</p>
+        <li>
+            <a href="{{ url_for('pub_update_page') }}">プロフィール</a>
+        </li>
+    </div>
+
+{% endblock %}

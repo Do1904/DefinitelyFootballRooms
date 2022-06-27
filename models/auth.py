@@ -86,7 +86,6 @@ class AuthModel(AbstractModel):
         """
         args = f'%{keyword}%'
         sql = "SELECT * FROM rooms where room_comment LIKE %s"
-        print(sql)
         return self.fetch_all(sql,args)
 
     def find_pubs_by_keyword(self, keyword):
@@ -138,5 +137,13 @@ class AuthModel(AbstractModel):
             return True
         else:
             return False
+
+    def find_your_community_by_user_name(self, user_name):
+        sql = "SELECT * FROM pubs where created_by=%s ORDER BY created_at DESC"
+        return self.fetch_all(sql, user_name)
+
+    def find_pub_by_id(self, pub_id):
+        sql = "SELECT * FROM pubs where pub_id=%s"
+        return self.fetch_one(sql, pub_id)
 
     
