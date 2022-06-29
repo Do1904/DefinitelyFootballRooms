@@ -18,11 +18,12 @@
         <p>まだチャットはありません。何か送信してみましょう！</p>
         {% endif %}
         <footer>
-            <form action="{{ url_for("send_message"), pub_id=pub["pub_id"]) }}" method="post">
+            <form action="/community/chat" method="post">
                 <div>
                     <p><textarea id="context" name="context" cols="20" rows="4" placeholder="context"></textarea></p>
                 </div>
                 <div><p><input type="hidden" id="user_name" value="{{ member["username"] }}" name="user_name"/></p></div>
+                <div><p><input type="hidden" id="pub_id" value="{{ pub["pub_id"] }}" name="pub_id"/></p></div>
                 <div>
                     <button type="submit">送信</button>
                 </div>

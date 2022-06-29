@@ -252,17 +252,22 @@ def go_pub_chat(request: Request, pub_id: str, session_id=Cookie(default=None)):
         "chats": chats
     })
 
-@app.post("/community/{pub_id}/chat")
+@app.post("/community/chat")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def send_message(pub_id: str, user_name: str = Form(...), context: str = Form(...)):
-    # user = session.get(session_id).get("user")
+def send_message(pub_id: str = Form(...), user_name: str = Form(...), context: str = Form(...)):
     auth_model = AuthModel(config)
-    # pub = auth_model.find_pub_by_id(pub_id)
     auth_model.send_message(pub_id, user_name, context)
     # member = auth_model.find_chat_member_by_pub_id_username(pub_id, user_name)
     # members = auth_model.find_chat_members_by_pub_id(pub_id)
+    # chats = auth_model.find_chats_by_pub_id(pub_id)
     return RedirectResponse("/community/{pub_id}/chat", status_code=HTTP_302_FOUND)
+    # return templates.TemplateResponse("pub-chat.html", {
+    #     "request": request,
+    #     "member": member,
+    #     "members": members,
+    #     "chats": chats
+    # })
 
 
 
