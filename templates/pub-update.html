@@ -1,0 +1,22 @@
+{% extends "pub-index.html" %}
+{% block body %}
+    <div class="content">
+        <p>{{pub["pub_name"]}}の情報を変更します。</p>
+        <form action="/pub_update" method="post">
+            <div>
+                <label for="pub_name">Pubの名前</label>
+                <p><input id="pub_name" type="text" name="pub_name"/></p>
+            </div>
+            <div>
+                <label for="pub_comment">pubの紹介文</label>
+                <p><textarea id="pub_comment" name="pub_comment" rows="10" placeholder=""></textarea></p>
+            </div>
+            <div>
+                <p><input type="hidden" id="pub_id" type="text" value={{pub["pub_name"]}} name="pub_id"/></p>
+            </div>
+            <div>
+                <button type="submit">更新</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

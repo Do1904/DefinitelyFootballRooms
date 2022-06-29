@@ -7,8 +7,8 @@
                 <p><input id="keyword" type="text" value="#" name="keyword"/></p>
             </div>
             <div>
-                <label><input type="radio" name="search_from" class="Rooms" value="Rooms" checked="checked">Rooms</label>
-                <label><input type="radio" name="search_from" class="Pubs" value="Pubs">Pubs</label>
+                <label><input type="radio" name="search_from" class="Rooms" value="Rooms">Rooms</label>
+                <label><input type="radio" name="search_from" class="Pubs" value="Pubs" checked="checked">Pubs</label>
                 <label><input type="radio" name="search_from" class="Users" value="Users">Users</label>
             </div>
             <br>
@@ -18,10 +18,12 @@
         </form>
         <hr>
         <h3>COMMUNITY</h3>
+        <p></p>
         <ul>
             {% for result in search_list %}
             <li>
-                {{ result["found_name"] }}: {{ result["found_comment"] }}
+                <a href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}">{{ result["pub_name"] }} </a>
+                <br>{{ result["pub_comment"] }}
             </li>
             {% endfor %}
         </ul>

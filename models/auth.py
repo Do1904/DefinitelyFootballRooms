@@ -72,9 +72,9 @@ class AuthModel(AbstractModel):
         """
         return sha256(password.encode()).hexdigest()
 
-    def profile_update(self, yourclub, yourleague, yournation, profile, user_id):
-        sql = "UPDATE users SET your_club = %s, your_league = %s, your_nation = %s, profile = %s WHERE users.id = %s;"
-        self.execute(sql, yourclub, yourleague, yournation, profile, user_id)
+    def profile_update(self, yourclub, yourleague, yournation, profile, user_name):
+        sql = "UPDATE users SET your_club = %s, your_league = %s, your_nation = %s, profile = %s WHERE users.username = %s;"
+        self.execute(sql, yourclub, yourleague, yournation, profile, user_name)
 
     def find_rooms_by_keyword(self, keyword):
         """
@@ -145,5 +145,31 @@ class AuthModel(AbstractModel):
     def find_pub_by_id(self, pub_id):
         sql = "SELECT * FROM pubs where pub_id=%s"
         return self.fetch_one(sql, pub_id)
+
+    def join_chat_member(self, pub_id, user_name):
+        sql = "INSERT INTO pub_members(pub_id, username) VALUE (%s, %s);" 
+        self.execute(sql, pub_id, user_name)
+
+    def find_chat_member_by_pub_id_username(self, pub_id, user_name):
+        sql = "SELECT * FROM pub_members where pub_id=%s AND username=%s;"
+        return self.fetch_one(sql, pub_id, user_name)
+
+    def find_chat_members_by_pub_id(self, pub_id):
+        sql = "SELECT * FROM pub_members where pub_id=%s"
+        return self.fetch_all(sql, pub_id)
+
+    def find_chats_by_pub_id(self, pub_id):
+        sql = "SELECT * FROM message where pub_id=%s ORDER BY created_at DESC"
+        return self.fetch_all(sql, pub_id)
+
+    def send_message(self, pub_id, user_name, context):
+        sql = "INSERT INTO message(pub_id, username, context) VALUE (%s, %s, %s);"
+        self.execute(sql, pub_id, user_name, context)
+
+    # def pub_update(self, pub_name, pub_comment, pub_id):
+    #     sql = "UPDATE pubs SET pub_name = %s, pub_comment = %s WHERE pubs.pub_id = %s;"
+    #     self.execute(sql, pub_name, pub_comment, pub_id)
+
+
 
     

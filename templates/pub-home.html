@@ -1,11 +1,25 @@
 {% extends "pub-index.html" %}
 {% block body %}
     <div class="content">
-        <h2>{{ pub["pub_name"] }} へようこそ！</h2>
+        <h1>{{ pub["pub_name"] }} へようこそ！</h1>
         <p>{{ pub["pub_comment"] }}</p>
-        <li>
-            <a href="{{ url_for('pub_update_page') }}">プロフィール</a>
-        </li>
+        <br>
+        <hr>
+        <br>
+        <h4>24人が参加しています。</h4>
+        <p>メンバー</p>
+        <ul class="members_list">
+            {% for result in members %}
+            <li>
+                {{ result["username"] }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% if not members %}
+        <p>まだ参加者はいません</p>
+        {% endif %}
+        <a href="{{ url_for("go_pub_chat", pub_id=pub["pub_id"]) }}">参加する</a>
+        
     </div>
 
 {% endblock %}

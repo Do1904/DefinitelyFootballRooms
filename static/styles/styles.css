@@ -45,4 +45,8 @@ header#home {
   position:fixed;
 }
 
+.members_list {
+  display: inline-block;
+  vertical-align: top;
+}
 

@@ -82,9 +82,9 @@ def profile_update_page(request: Request, session_id=Cookie(default=None)):
 @app.post("/profile_update")
 @check_login
 def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
-    user_id = session.get(session_id).get("user").get("id")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(yourclub, yourleague, yournation, profile, user_id) # auth.pyの中にある関数を使うために必要
+    auth_model.profile_update(yourclub, yourleague, yournation, profile, user_name) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 
@@ -115,8 +115,8 @@ def create_article_page(request: Request, session_id=Cookie(default=None)):
 @check_login
 def post_article(title: str = Form(...), body: str = Form(...), session_id=Cookie(default=None)):
     article_model = ArticleModel(config)
-    user_id = session.get(session_id).get("user").get("id")
-    article_model.create_article(user_id, title, body)
+    user_name = session.get(session_id).get("user").get("username")
+    article_model.create_article(user_name, title, body)
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 
@@ -154,26 +154,18 @@ def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = F
     auth_model = AuthModel(config)
     if search_from == "Rooms":
         search_list = auth_model.find_rooms_by_keyword(keyword)
-        found_id = "room_id"
-        found_name = "room_name"
-        found_comment = "room_comment"
+        ids = {'found_id': "room_id", 'found_name': "room_name", 'found_comment': "room_comment"}
     elif search_from == "Pubs":
         search_list = auth_model.find_pubs_by_keyword(keyword)
-        found_id = "pub_id"
-        found_name = "pub_name"
-        found_comment = "pub_comment"
+        ids = {'found_id': "pub_id", 'found_name': "pub_name", 'found_comment': "pub_comment"}
     elif search_from == "Users":
         search_list = auth_model.find_users_by_keyword(keyword)
-        found_id = "id"
-        found_name = "username"
-        found_comment = "profile"
+        ids = {'found_id': "id", 'found_name': "username", 'found_comment': "profile"}
     return templates.TemplateResponse("community.html", {
         "request": request,
         "search_list": search_list,
         "user": user,
-        "found_id":found_id,
-        "found_name": found_name,
-        "found_comment": found_comment
+        "found_ids": ids
     })
 
 @app.get("/new_community")
@@ -222,31 +214,59 @@ def go_pub_home(request: Request, pub_id: str, session_id=Cookie(default=None)):
         "pub": pub
     })
 
-@app.get("/your_community/{pub_id}/chat")
+    
+@app.get("/community/{pub_id}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
-def see_chats(request: Request, pub_id: str, session_id=Cookie(default=None)):
+@check_login
+def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
     pub = auth_model.find_pub_by_id(pub_id)
+    members = auth_model.find_chat_members_by_pub_id(pub_id)
     # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     # session_id = session.set("user", user)
     # response.set_cookie("session_id", session_id)
     return templates.TemplateResponse("pub-home.html", {
         "request": request,
         "user": user,
-        "pub": pub
+        "pub": pub,
+        "members": members
     })
 
-@app.get("/your_community/{pub_id}/update")
+@app.get("/community/{pub_id}/chat")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def pub_update_page(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
-    return templates.TemplateResponse("pub-update.html", {"request": request, "user": user})
+def go_pub_chat(request: Request, pub_id: str, session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    pub = auth_model.find_pub_by_id(pub_id)
+    auth_model.join_chat_member(pub_id, user_name)
+    member = auth_model.find_chat_member_by_pub_id_username(pub_id, user_name)
+    members = auth_model.find_chat_members_by_pub_id(pub_id)
+    chats = auth_model.find_chats_by_pub_id(pub_id)
+    return templates.TemplateResponse("pub-chat.html", {
+        "request": request,
+        "pub": pub,
+        "member": member,
+        "members": members,
+        "chats": chats
+    })
 
-@app.post("/your_community/{pub_id}/update")
+@app.post("/community/{pub_id}/chat")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def pub_update(pub_name: str = Form(...), pub_comment: str = Form(...), session_id=Cookie(default=None)):
-    user_id = session.get(session_id).get("user").get("id")
-    auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(yourclub, yourleague, yournation, profile, user_id) # auth.pyの中にある関数を使うために必要
-    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
+def send_message(pub_id: str, user_name: str = Form(...), context: str = Form(...)):
+    # user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    # pub = auth_model.find_pub_by_id(pub_id)
+    auth_model.send_message(pub_id, user_name, context)
+    # member = auth_model.find_chat_member_by_pub_id_username(pub_id, user_name)
+    # members = auth_model.find_chat_members_by_pub_id(pub_id)
+    return RedirectResponse("/community/{pub_id}/chat", status_code=HTTP_302_FOUND)
+
+
+
+
+
+
+
