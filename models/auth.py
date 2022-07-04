@@ -139,7 +139,7 @@ class AuthModel(AbstractModel):
             return False
 
     def find_your_community_by_user_name(self, user_name):
-        sql = "SELECT * FROM pubs where created_by=%s ORDER BY created_at DESC"
+        sql = "SELECT * FROM pub_members where username=%s"
         return self.fetch_all(sql, user_name)
 
     def find_pub_by_id(self, pub_id):

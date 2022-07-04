@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request, Form, Cookie
+from typing import List
+from fastapi import FastAPI, Request, WebSocket, Form, Cookie,WebSocketDisconnect
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
@@ -14,6 +15,7 @@ app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="/app/templates")
 config = Config()
 session = Session(config)
+
 
 
 
@@ -182,6 +184,8 @@ def create_pub(request: Request, community_name: str = Form(...), community_comm
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     new_community = auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
+    pub_id = community_id
+    auth_model.join_chat_member(pub_id, user_name)
     return RedirectResponse("/your_community", status_code=HTTP_302_FOUND)
 
 @app.get("/your_community")
@@ -197,6 +201,7 @@ def show_community_list(request: Request, session_id=Cookie(default=None)):
         "your_community": your_community,
         "user": user
     })
+
 
 @app.get("/your_community/{pub_id}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
@@ -258,16 +263,12 @@ def go_pub_chat(request: Request, pub_id: str, session_id=Cookie(default=None)):
 def send_message(pub_id: str = Form(...), user_name: str = Form(...), context: str = Form(...)):
     auth_model = AuthModel(config)
     auth_model.send_message(pub_id, user_name, context)
-    # member = auth_model.find_chat_member_by_pub_id_username(pub_id, user_name)
-    # members = auth_model.find_chat_members_by_pub_id(pub_id)
-    # chats = auth_model.find_chats_by_pub_id(pub_id)
     return RedirectResponse("/community/{pub_id}/chat", status_code=HTTP_302_FOUND)
-    # return templates.TemplateResponse("pub-chat.html", {
-    #     "request": request,
-    #     "member": member,
-    #     "members": members,
-    #     "chats": chats
-    # })
+
+
+
+
+
 
 
 

@@ -7,8 +7,7 @@
         <ul list-style:none>
             {% for result in your_community %}
             <li class="your_community">
-                {{ result["pub_name"] }}<br>
-                {{ result["pub_comment"] }}<br>
+                {{ result["pub_id"] }}<br>
                 <a href="{{ url_for("go_pub_home", pub_id=result["pub_id"]) }}">入る</a>
             </li>
             {% endfor %}
