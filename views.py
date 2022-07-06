@@ -95,10 +95,11 @@ def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yourn
 @check_login
 def articles_index(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
+    username = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     # user_profile = auth_model.find_profile_by_user_id(user["id"])
     article_model = ArticleModel(config)
-    articles = article_model.fetch_recent_articles()
+    articles = article_model.fetch_your_recent_articles(username)
     return templates.TemplateResponse("article-index.html", {
         "request": request,
         "articles": articles,
@@ -266,7 +267,21 @@ def send_message(pub_id: str = Form(...), user_name: str = Form(...), context: s
     return RedirectResponse("/community/{pub_id}/chat", status_code=HTTP_302_FOUND)
 
 
-
+@app.get("/user/{username}")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def user_detail_page(request: Request, username: str, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    other_user = auth_model.find_other_users_by_username(username)
+    # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
+    # session_id = session.set("user", user)
+    # response.set_cookie("session_id", session_id)
+    return templates.TemplateResponse("user-home.html", {
+        "request": request,
+        "user": user,
+        "other_user": other_user
+    })
 
 
 

@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 {% block body %}
-    <div>
-        <h2 class="content">YOUR COMMUNITY</h2>
-        <hr>
-        <h3 class="content">Pubs</h3>
-        <ul list-style:none>
-            {% for result in your_community %}
-            <li class="your_community">
-                {{ result["pub_id"] }}<br>
-                <a href="{{ url_for("go_pub_home", pub_id=result["pub_id"]) }}">入る</a>
-            </li>
-            {% endfor %}
-        </ul>
-        {% if not your_community %}
-        <p>該当するコミュニティは見つかりませんでした。</p>
-        {% endif %}
+<br><br><br><br>
+<div class="content">
+    <h2>YOUR COMMUNITY</h2>
+    <br>
+    <hr>
+
+    <h3>Pubs</h3>
+    {% for result in your_community %}
+    <div class="your_community">
+        <h2>
+            {{ result["pub_name"] }}<br>
+        </h2>
+        <p style="font-size: 85%;">{{ result["pub_comment"] }}</p>
+        <a class="join" href="{{ url_for(" go_pub_home", pub_id=result["pub_id"]) }}">入る</a>
     </div>
+    <br>
+    {% endfor %}
+    {% if not your_community %}
+    <p>該当するコミュニティは見つかりませんでした。</p>
+    {% endif %}
+</div>
 {% endblock %}

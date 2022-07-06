@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% block body %}
+<br><br><br><br>
     <div class="content">
         <p>あなたのFootballファン情報を入力してください。</p>
         <form action="/profile_update" method="post">
             <div>
                 <label for="yourclub">好きなクラブを入力してください</label>
-                <p><input id="yourclub" type="text" name="yourclub"/></p>
+                <p><input id="yourclub" type="text" maxlength="25" name="yourclub"/></p>
             </div>
             <div>
                 <label for="yourleague">好きなリーグを選択してください</label>
-                <p><input id="yourleague" type="text" name="yourleague"/></p>
+                <p><input id="yourleague" type="text" maxlength="25" name="yourleague"/></p>
             </div>
             <div>
                 <label for="yournation">好きな国を選択してください</label>
-                <p><input id="yournation" type="text" name="yournation"/></p>
+                <p><input id="yournation" type="text" maxlength="25" name="yournation"/></p>
             </div>
             <div>
                 <label for="profile">自己紹介を書きましょう</label>

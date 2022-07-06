@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% block body %}
+<br><br><br><br>
     <div class="content">
-        <h3>記事一覧</h3>
-        <ul>
+        <h2>Blog一覧</h2>
+        <br>
             {% for article in articles %}
-                <li>
-                    <a href="{{ url_for("article_detail_page", article_id=article["id"]) }}">{{ article["title"] }} </a>
-                </li>
+            <div class="blogs">
+                <p>
+                    <a class="blogtitle" href="{{ url_for("article_detail_page", article_id=article["id"]) }}">{{ article["title"] }} </a>
+                    <p style="font-size: 78%;">{{ article["created_at"] }}</p>
+                </p>
+            </div>
             {% endfor %}
-        </ul>
         {% if not articles %}
             <p>投稿された記事はありません</p>
         {% endif %}

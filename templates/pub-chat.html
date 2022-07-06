@@ -1,14 +1,15 @@
 {% extends "pub-index.html" %}
 {% block body %}
+<br><br><br><br>
     <div class="content">
         <h2>{{ pub["pub_name"] }}</h2>
         <p>Members:</p>
         <br>
         <hr>
         <br>
-        <ul>
+        <ul style="list-style: none;">
             {% for result in chats %}
-            <li>
+            <li> 
                 {{ result["username"] }}: {{ result["created_at"] }}
                 <br>{{ result["context"] }}
             </li>

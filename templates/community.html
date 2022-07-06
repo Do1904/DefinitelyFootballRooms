@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
+<br><br><br><br>
     <div class="content">
         <h2>SEARCH COMMUNITY</h2>
         <form action="/community" method="post">
@@ -19,14 +20,15 @@
         <hr>
         <h3>COMMUNITY</h3>
         <p></p>
-        <ul>
             {% for result in search_list %}
-            <li>
-                <a href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}">{{ result["pub_name"] }} </a>
-                <br>{{ result["pub_comment"] }}
-            </li>
+            <div class="communities">
+                <br>
+                <a style="font-size: 140%;" class="join2" href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}"><b>{{ result["pub_name"] }}</b></a>
+                <br><br>
+                <p style="font-size: 85%;">{{ result["pub_comment"] }}</p>
+                <p style="font-size: 85%;">オーナー：<a style="font-size: 85%;" class="join2" href="{{ url_for("user_detail_page", username=result["created_by"]) }}">{{ result["created_by"] }}</a></p>
+            </div>
             {% endfor %}
-        </ul>
         {% if not search_list %}
         <p>該当するコミュニティは見つかりませんでした。</p>
         {% endif %}

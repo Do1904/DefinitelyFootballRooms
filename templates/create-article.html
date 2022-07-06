@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block body %}
+<br><br><br><br>
     <div class="content">
+        <h2>Blog新規投稿</h2>
+        <br>
         <form action="{{ url_for("post_article") }}" method="post">
             <div>
-                <label for="title">タイトル</label>
-                <input id="title" type="text" name="title"/>
+                <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
             </div>
+            <br>
             <div>
-                <label for="body">内容</label>
-                <textarea id="body" name="body" rows="20" placeholder=""></textarea>
+                <textarea id="body" name="body" rows="20" cols="40" placeholder="ブログの内容を書こう！"></textarea>
             </div>
+            <br>
             <div>
                 <button type="submit">投稿</button>
             </div>

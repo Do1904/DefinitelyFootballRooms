@@ -139,7 +139,7 @@ class AuthModel(AbstractModel):
             return False
 
     def find_your_community_by_user_name(self, user_name):
-        sql = "SELECT * FROM pub_members where username=%s"
+        sql = "SELECT * FROM pub_members INNER JOIN pubs on pub_members.pub_id = pubs.pub_id where username=%s"
         return self.fetch_all(sql, user_name)
 
     def find_pub_by_id(self, pub_id):
@@ -147,7 +147,7 @@ class AuthModel(AbstractModel):
         return self.fetch_one(sql, pub_id)
 
     def join_chat_member(self, pub_id, user_name):
-        sql = "INSERT INTO pub_members(pub_id, username) VALUE (%s, %s);" 
+        sql = "INSERT IGNORE INTO pub_members(pub_id, username) VALUE (%s, %s);" 
         self.execute(sql, pub_id, user_name)
 
     def find_chat_member_by_pub_id_username(self, pub_id, user_name):
@@ -165,6 +165,10 @@ class AuthModel(AbstractModel):
     def send_message(self, pub_id, user_name, context):
         sql = "INSERT INTO message(pub_id, username, context) VALUE (%s, %s, %s);"
         self.execute(sql, pub_id, user_name, context)
+
+    def find_other_users_by_username(self, username):
+        sql = "SELECT * FROM users where username=%s"
+        return self.fetch_one(sql, username)
 
     # def pub_update(self, pub_name, pub_comment, pub_id):
     #     sql = "UPDATE pubs SET pub_name = %s, pub_comment = %s WHERE pubs.pub_id = %s;"
