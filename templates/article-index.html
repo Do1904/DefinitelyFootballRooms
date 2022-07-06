@@ -8,6 +8,7 @@
             <div class="blogs">
                 <p>
                     <a class="blogtitle" href="{{ url_for("article_detail_page", article_id=article["id"]) }}">{{ article["title"] }} </a>
+                    <p style="font-size: 90%;">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=article["username"]) }}">{{ article["username"] }}</a></p>
                     <p style="font-size: 78%;">{{ article["created_at"] }}</p>
                 </p>
             </div>

@@ -8,14 +8,14 @@ class ArticleModel(AbstractModel):
     def __init__(self, config):
         super(ArticleModel, self).__init__(config)
 
-    def fetch_your_recent_articles(self, username, limit=5):
+    def fetch_recent_articles(self, limit=500):
         """
         最新の記事を取得する．デフォルトでは最新5件まで
         :param limit: 取得する記事の数
         :return:
         """
-        sql = "SELECT * FROM articles where username = %s ORDER BY created_at DESC LIMIT %s"
-        return self.fetch_all(sql, username, limit)
+        sql = "SELECT * FROM articles ORDER BY created_at DESC LIMIT %s"
+        return self.fetch_all(sql, limit)
 
     def fetch_article_by_id(self, article_id):
         """

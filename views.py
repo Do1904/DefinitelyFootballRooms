@@ -95,11 +95,8 @@ def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yourn
 @check_login
 def articles_index(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
-    username = session.get(session_id).get("user").get("username")
-    auth_model = AuthModel(config)
-    # user_profile = auth_model.find_profile_by_user_id(user["id"])
     article_model = ArticleModel(config)
-    articles = article_model.fetch_your_recent_articles(username)
+    articles = article_model.fetch_recent_articles()
     return templates.TemplateResponse("article-index.html", {
         "request": request,
         "articles": articles,

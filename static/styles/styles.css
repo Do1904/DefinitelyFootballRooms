@@ -84,16 +84,16 @@ a {
 
 .menus {
   padding: 0.2em 0.4em;
-	background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, #ffffffa8 50%);
-	background-position: 0 0;
-	background-size: 200% auto;
-	transition: .3s;
-	color: #ffffff;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, #ffffffa8 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: #ffffff;
 }
 
 .menus:hover {
   background-position: 0 100%;
-	color: rgba(139, 139, 139, 0.673);
+  color: rgba(139, 139, 139, 0.673);
 }
 
 .backtohome {
@@ -110,85 +110,77 @@ a {
   color: rgb(255, 255, 255);
 }
 
-.join2 {
+.join {
   padding: 0.2em 0.4em;
-	background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, #ffffffa8 50%);
-	background-position: 0 0;
-	background-size: 200% auto;
-	transition: .3s;
-	color: #ffffff;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, #ffffffee 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: #ffffff;
 }
 
-.join2:hover {
+.join:hover {
   background-position: -100% 0;
-	color: rgba(0, 0, 0, 0.673);
-}
-
-.join2 {
-  padding: 0.2em 0.4em;
-	background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, #000000a8 50%);
-	background-position: 0 0;
-	background-size: 200% auto;
-	transition: .3s;
-	color: #000000;
-}
-
-.join2:hover {
-  background-position: -100% 0;
-	color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 
 .blogtitle {
   padding: 0.2em 0.4em;
-	background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, #000000a8 50%);
-	background-position: 0 0;
-	background-size: 200% auto;
-	transition: .3s;
-	color: #000000;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, #000000a8 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: #000000;
 }
 
 .blogtitle:hover {
   background-position: -100% 0%;
-	color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
 }
 
 .your_community {
   color: rgb(255, 255, 255);
   background: #000000bb;
-    /*背景色の指定*/
-    border: #d2d2d260 2px solid;
-    /*境界線の指定 */
-    box-shadow: 0 0 0 2px #ffffff3c;
-    /*  境界線の外側の指定 */
-    padding: 35px 75px;
-    margin: 40px auto;
-    width: 28%;
+  /*背景色の指定*/
+  border: #ffffffb0 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #000000a3;
+  /*  境界線の外側の指定 */
+  padding: 35px 75px;
+  margin: 40px auto;
+  width: 28%;
 }
 
 .communities {
-  color: rgb(0, 0, 0);
-  background: #ffffffbb;
-    /*背景色の指定*/
-    border: #73737360 2px solid;
-    /*境界線の指定 */
-    box-shadow: 0 0 0 2px #ffffff3c;
-    /*  境界線の外側の指定 */
-    padding: 35px 75px;
-    margin: 40px auto;
-    width: 28%;
+  color: rgb(255, 255, 255);
+  background: #000000bb;
+  /*背景色の指定*/
+  border: #ffffffb0 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #000000a3;
+  /*  境界線の外側の指定 */
+  padding: 35px 75px;
+  margin: 40px auto;
+  width: 28%;
 }
 
 .blogs {
   color: rgb(0, 0, 0);
-    border: #9e9e9e60 2px solid;
-    padding: 20px 70px;
-    margin: 20px auto;
-    width: 20%;
+  background: #ffffffbb;
+  /*背景色の指定*/
+  border: #73737360 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #ffffff3c;
+  /*  境界線の外側の指定 */
+  padding: 6px 70px;
+  margin: 7px auto;
+  width: 20%;
 }
 
 .article {
   color: rgb(0, 0, 0);
-    padding: 10px 90px;
-    margin: 20px auto;
-    width: 50%;
+  border: #9e9e9e60 2px solid;
+  padding: 20px 40px;
+  margin: 20px auto;
+  width: 50%;
 }
