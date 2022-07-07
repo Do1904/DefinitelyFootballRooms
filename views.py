@@ -59,16 +59,17 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
 
 @app.post("/register")
-def create_user(username: str = Form(...), password: str = Form(...)):
+def create_user(username: str = Form(...), nickname: str = Form(...), password: str = Form(...)):
     """
     ユーザ登録をおこなう
     フォームから入力を受け取る時は，`username=Form(...)`のように書くことで受け取れる
     :param username: 登録するユーザ名
+    :param nickname: 登録するサイトでの表示名
     :param password: 登録するパスワード
     :return: 登録が完了したら/blogへリダイレクト
     """
     auth_model = AuthModel(config)
-    auth_model.create_user(username, password)
+    auth_model.create_user(username, nickname, password)
     user = auth_model.find_user_by_name_and_password(username, password)
     response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     session_id = session.set("user", user)
@@ -270,14 +271,17 @@ def send_message(pub_id: str = Form(...), user_name: str = Form(...), context: s
 def user_detail_page(request: Request, username: str, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
+    article_model = ArticleModel(config)
     other_user = auth_model.find_other_users_by_username(username)
+    articles = article_model.fetch_article_by_username(username)
     # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     # session_id = session.set("user", user)
     # response.set_cookie("session_id", session_id)
     return templates.TemplateResponse("user-home.html", {
         "request": request,
         "user": user,
-        "other_user": other_user
+        "other_user": other_user,
+        "articles": articles
     })
 
 

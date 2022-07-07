@@ -1,11 +1,26 @@
 {% extends "user-index.html" %}
 {% block body %}
 <br><br>
-    <div class="content">
-        <h1>{{ other_user["username"] }}さんのページ</h1>
-        <p>{{ other_user["your_club"] }}</p>
-        <br>
-        
+<div class="content">
+    <h1>{{ other_user["nickname"] }}さんのページ</h1>
+    <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p>
+    <br>
+    <hr>
+    <br>
+    <hr>
+    {% for article in articles %}
+    <div class="user_blogs" style="white-space:pre-wrap;">
+
+        <h3 style="text-align: center;margin: 0px;">{{ article["title"] }}</h3>
+        <p style="font-size: 103%;text-align: left;margin: 0px;">{{ article["body"] }}</p>
+        <p style="font-size: 78%;text-align: left;margin: 0px;">{{ article["created_at"] }}</p>
+        <hr>
     </div>
+    {% endfor %}
+    {% if not articles %}
+    <p>投稿された記事はありません</p>
+    {% endif %}
+
+</div>
 
 {% endblock %}

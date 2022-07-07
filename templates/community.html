@@ -26,7 +26,7 @@
                 <a style="font-size: 140%;" class="join" href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}"><b>{{ result["pub_name"] }}</b></a>
                 <br><br>
                 <p style="font-size: 85%;">{{ result["pub_comment"] }}</p>
-                <p style="font-size: 85%;">オーナー：<a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=result["created_by"]) }}">{{ result["created_by"] }}</a></p>
+                <p style="font-size: 85%;">オーナー：<a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=result["created_by"]) }}">{{ result["nickname"] }}</a></p>
             </div>
             {% endfor %}
         {% if not search_list %}

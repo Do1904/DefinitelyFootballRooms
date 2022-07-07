@@ -177,6 +177,19 @@ a {
   width: 20%;
 }
 
+.user_blogs {
+  color: rgb(0, 0, 0);
+  background: #ffffffbb;
+  /*背景色の指定*/
+  border: #73737360 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #ffffff3c;
+  /*  境界線の外側の指定 */
+  padding: 0px 60px;
+  margin: 10px auto;
+  width: 39%;
+}
+
 .article {
   color: rgb(0, 0, 0);
   border: #9e9e9e60 2px solid;

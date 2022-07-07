@@ -27,7 +27,7 @@ class AuthModel(AbstractModel):
         # TODO: セッションに情報を追加
         return True, user
 
-    def create_user(self, username, password):
+    def create_user(self, username, nickname, password):
         """
         新規ユーザ作成
         :param username: ユーザ名
@@ -35,8 +35,8 @@ class AuthModel(AbstractModel):
         :return:
         """
         hashed_password = self.hash_password(password)
-        sql = "INSERT INTO users(username, password) VALUE (%s, %s);"
-        self.execute(sql, username, hashed_password)
+        sql = "INSERT INTO users(username, nickname, password) VALUE (%s, %s, %s);"
+        self.execute(sql, username, nickname, hashed_password)
 
     def find_user_by_name_and_password(self, username, password):
         """
@@ -85,7 +85,7 @@ class AuthModel(AbstractModel):
         :return: 検索したユーザ
         """
         args = f'%{keyword}%'
-        sql = "SELECT * FROM rooms where room_comment LIKE %s"
+        sql = "SELECT * FROM rooms INNER JOIN users on rooms.created_by = users.username where room_comment LIKE %s"
         return self.fetch_all(sql,args)
 
     def find_pubs_by_keyword(self, keyword):
@@ -97,7 +97,7 @@ class AuthModel(AbstractModel):
         :return: 検索したユーザ
         """
         args = f'%{keyword}%'
-        sql = "SELECT * FROM pubs where pub_comment LIKE %s"
+        sql = "SELECT * FROM pubs INNER JOIN users on pubs.created_by = users.username where pub_comment LIKE %s"
         return self.fetch_all(sql, args)
 
     def find_users_by_keyword(self, keyword):

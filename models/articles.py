@@ -14,7 +14,7 @@ class ArticleModel(AbstractModel):
         :param limit: 取得する記事の数
         :return:
         """
-        sql = "SELECT * FROM articles ORDER BY created_at DESC LIMIT %s"
+        sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username ORDER BY articles.created_at DESC LIMIT %s"
         return self.fetch_all(sql, limit)
 
     def fetch_article_by_id(self, article_id):
@@ -25,6 +25,15 @@ class ArticleModel(AbstractModel):
         """
         sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username WHERE articles.id=%s"
         return self.fetch_one(sql, article_id)
+
+    def fetch_article_by_username(self, username):
+        """
+        指定されたIDの記事を取得
+        :param article_id: 取得したい記事のID
+        :return: 指定された記事のID
+        """
+        sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username WHERE articles.username=%s ORDER BY articles.created_at DESC"
+        return self.fetch_all(sql, username)
 
     def create_article(self, user_name, title, body):
         """
