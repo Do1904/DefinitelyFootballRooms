@@ -8,6 +8,7 @@
                 <label for="yourclub">好きなクラブを入力してください</label>
                 <!-- <p><input id="yourclub" type="text" value="{{ user["your_club"] }}" maxlength="25" name="yourclub"/></p> -->
                 <p><select name="yourclub">
+                    <option value="{{ user["your_club"] }}" selected>現在：{{ user["your_club"] }}</option>
                 {% for club in clubs %}
                     <option value="{{ club["clubs"] }}">{{ club["clubs"] }}</option>
                 {% endfor %}
@@ -18,6 +19,7 @@
                 <label for="yourleague">好きなリーグを選択してください</label>
                 <!-- <p><input id="yourleague" type="text" value="{{ user["your_league"] }}" maxlength="25" name="yourleague"/></p> -->
                 <p><select name="yourleague">
+                    <option value="{{ user["your_league"] }}" selected>現在：{{ user["your_league"] }}</option>
                     {% for league in leagues %}
                         <option value="{{ league["english_name"] }}">{{ league["leagues"] }}</option>
                     {% endfor %}
@@ -27,6 +29,7 @@
                 <label for="yournation">好きな国を選択してください</label>
                 <!-- <p><input id="yournation" type="text" value="{{ user["your_nation"] }}" maxlength="25" name="yournation"/></p> -->
                 <p><select name="yournation">
+                    <option value="{{ user["your_nation"] }}" selected>現在：{{ user["your_nation"] }}</option>
                     {% for nation in nations %}
                         <option value="{{ nation["nations"] }}">{{ nation["nations"] }}</option>
                     {% endfor %}
