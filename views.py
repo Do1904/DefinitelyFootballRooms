@@ -80,7 +80,17 @@ def create_user(username: str = Form(...), nickname: str = Form(...), password: 
 @check_login
 def profile_update_page(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
-    return templates.TemplateResponse("profile.html", {"request": request, "user": user})
+    auth_model = AuthModel(config)
+    clubs = auth_model.clubs_list()
+    leagues = auth_model.leagues_list()
+    nations = auth_model.nations_list()
+    return templates.TemplateResponse("profile.html", {
+        "request": request, 
+        "user": user,
+        "clubs": clubs,
+        "leagues": leagues,
+        "nations": nations
+    })
 
 @app.post("/profile_update")
 @check_login

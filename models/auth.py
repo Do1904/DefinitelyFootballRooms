@@ -120,6 +120,18 @@ class AuthModel(AbstractModel):
         else:
             return False
 
+    def clubs_list(self):
+        sql = "SELECT * FROM clubs"
+        return self.fetch_all(sql)
+
+    def leagues_list(self):
+        sql = "SELECT * FROM leagues"
+        return self.fetch_all(sql)
+
+    def nations_list(self):
+        sql = "SELECT * FROM nations"
+        return self.fetch_all(sql)
+
 
     def create_new_pub(self, community_id, community_name, community_comment, user_name):
         """

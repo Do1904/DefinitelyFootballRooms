@@ -6,15 +6,31 @@
         <form action="/profile_update" method="post">
             <div>
                 <label for="yourclub">好きなクラブを入力してください</label>
-                <p><input id="yourclub" type="text" value="{{ user["your_club"] }}" maxlength="25" name="yourclub"/></p>
+                <!-- <p><input id="yourclub" type="text" value="{{ user["your_club"] }}" maxlength="25" name="yourclub"/></p> -->
+                <p><select name="yourclub">
+                {% for club in clubs %}
+                    <option value="{{ club["clubs"] }}">{{ club["clubs"] }}</option>
+                {% endfor %}
+                </select></p>
+
             </div>
             <div>
                 <label for="yourleague">好きなリーグを選択してください</label>
-                <p><input id="yourleague" type="text" value="{{ user["your_league"] }}" maxlength="25" name="yourleague"/></p>
+                <!-- <p><input id="yourleague" type="text" value="{{ user["your_league"] }}" maxlength="25" name="yourleague"/></p> -->
+                <p><select name="yourleague">
+                    {% for league in leagues %}
+                        <option value="{{ league["english_name"] }}">{{ league["leagues"] }}</option>
+                    {% endfor %}
+                </select></p>
             </div>
             <div>
                 <label for="yournation">好きな国を選択してください</label>
-                <p><input id="yournation" type="text" value="{{ user["your_nation"] }}" maxlength="25" name="yournation"/></p>
+                <!-- <p><input id="yournation" type="text" value="{{ user["your_nation"] }}" maxlength="25" name="yournation"/></p> -->
+                <p><select name="yournation">
+                    {% for nation in nations %}
+                        <option value="{{ nation["nations"] }}">{{ nation["nations"] }}</option>
+                    {% endfor %}
+                </select></p>
             </div>
             <div>
                 <label for="profile">自己紹介を書きましょう</label>
