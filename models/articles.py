@@ -26,6 +26,15 @@ class ArticleModel(AbstractModel):
         sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username WHERE articles.id=%s"
         return self.fetch_one(sql, article_id)
 
+    def fetch_comment_by_id(self, article_id):
+        """
+        指定されたIDの記事を取得
+        :param article_id: 取得したい記事のID
+        :return: 指定された記事のID
+        """
+        sql = "SELECT * FROM comments INNER JOIN users on comments.username = users.username WHERE comments.article_id=%s ORDER BY comments.created_at DESC"
+        return self.fetch_all(sql, article_id)
+
     def fetch_article_by_username(self, username):
         """
         指定されたIDの記事を取得
@@ -45,3 +54,7 @@ class ArticleModel(AbstractModel):
         """
         sql = "INSERT INTO articles(username, title, body) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, title, body)
+
+    def post_new_comment(self, user_name, article_id, body):
+        sql = "INSERT INTO comments(username, article_id, comment) VALUE (%s, %s, %s);"
+        self.execute(sql, user_name, article_id, body)

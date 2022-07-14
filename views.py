@@ -136,12 +136,34 @@ def post_article(title: str = Form(...), body: str = Form(...), session_id=Cooki
 def article_detail_page(request: Request, article_id: int, session_id=Cookie(default=None)):
     article_model = ArticleModel(config)
     article = article_model.fetch_article_by_id(article_id)
+    comments = article_model.fetch_comment_by_id(article_id)
     user = session.get(session_id).get("user")
     return templates.TemplateResponse("article-detail.html", {
         "request": request,
         "article": article,
+        "comments": comments,
         "user": user
     })
+
+@app.get("/article/{article_id}/comment")
+@check_login
+def comment_page(request: Request, article_id: int, session_id=Cookie(default=None)):
+    article_model = ArticleModel(config)
+    article = article_model.fetch_article_by_id(article_id)
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("comment.html", {
+        "request": request,
+        "article": article,
+        "user": user
+    })
+
+@app.post("/article/comment")
+@check_login
+def post_comment(body: str = Form(...), article_id: int = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    article_model = ArticleModel(config)
+    article_model.post_new_comment(user_name, article_id, body)
+    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 @app.get("/logout")
 @check_login

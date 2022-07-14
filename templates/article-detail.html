@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 {% block body %}
 <br><br><br><br>
-    <div class="content">
-        <h2>{{ article["title"] }}</h2>
-        <p>
-            <i>投稿者: {{ article["username"] }}</i>
-        </p>
-        <p class="article" style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ article["body"] }}</p>
-    </div>
+<div class="content">
+    <h2>{{ article["title"] }}</h2>
+    <p>
+        <i>投稿者: {{ article["username"] }}</i>
+    </p>
+    <p class="article" style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ article["body"] }}</p>
+</div>
+<br>
+<p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=article["id"]) }}">Comment</a></p>
+{% for comment in comments %}
+<div class="article">
+    <p style="font-size: 85%;text-align: center;"><a class="blogtitle" href="{{ url_for("user_detail_page", username=article["username"]) }}">{{ article["nickname"] }}</a></p>
+    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ comment["comment"] }}</p>
+    <p style="font-size: 85%;">{{ comment["created_at"] }}</p>
+</div>
+{% endfor %}
+{% if not comments %}
+<div class="article">コメントはまだありません。</div>
+{% endif %}
 {% endblock %}
