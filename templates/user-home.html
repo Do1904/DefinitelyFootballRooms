@@ -7,11 +7,25 @@
     <br>
     <hr>
     <br>
-    <hr>
+    <h3>Pubs</h3>
+    <ul class="pubs-list">
+        {% for pub in pubs %}
+        <li class="pub">
+            <a style="font-size: 140%;" class="join" href="{{ url_for("pub_detail_page", pub_id=pub["pub_id"]) }}"><b>{{ pub["pub_name"] }}</b></a>
+                <br>
+                <p style="font-size: 90%;text-align: center;">{{ pub["created_at"] }}</p>
+        </li>
+        {% endfor %}
+    {% if not articles %}
+    <p>Pubはまだありません</p>
+    {% endif %}
+    </ul>
+    <br>
+    <h3>Blogs</h3>
+    <br>
     {% for article in articles %}
     <div class="user_blogs" style="white-space:pre-wrap;">
-
-        <h3 style="text-align: center;margin: 0px;">{{ article["title"] }}</h3>
+        <h3><a class="blogtitle" href="{{ url_for("article_detail_page", article_id=article["id"]) }}">{{ article["title"] }} </a></h3>
         <p style="font-size: 103%;text-align: left;margin: 0px;">{{ article["body"] }}</p>
         <p style="font-size: 78%;text-align: left;margin: 0px;">{{ article["created_at"] }}</p>
         <hr>

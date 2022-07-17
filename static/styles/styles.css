@@ -43,6 +43,18 @@ header#manu {
   position: fixed;
 }
 
+div#search {
+  position: fixed;
+}
+
+.searchblog {
+  margin: 0 0 0 auto;
+  width: 10%;
+  display: block;
+}
+
+
+
 .menu li {
   list-style: none;
 }
@@ -196,4 +208,23 @@ a {
   padding: 20px 40px;
   margin: 20px auto;
   width: 50%;
+}
+
+ul.pubs-list {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+li.pub {
+  display: inline-block;
+  color: rgb(255, 255, 255);
+  background: #000000bb;
+  /*背景色の指定*/
+  border: #ffffffb0 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #000000a3;
+  /*  境界線の外側の指定 */
+  padding: 30px 60px;
+  margin: 40px auto;
+  width: 25%;
 }

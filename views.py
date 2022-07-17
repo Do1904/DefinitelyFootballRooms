@@ -94,10 +94,10 @@ def profile_update_page(request: Request, session_id=Cookie(default=None)):
 
 @app.post("/profile_update")
 @check_login
-def profile_update(yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
+def profile_update(nickname: str = Form(...), yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(yourclub, yourleague, yournation, profile, user_name) # auth.pyの中にある関数を使うために必要
+    auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, user_name) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 
@@ -306,6 +306,8 @@ def user_detail_page(request: Request, username: str, session_id=Cookie(default=
     article_model = ArticleModel(config)
     other_user = auth_model.find_other_users_by_username(username)
     articles = article_model.fetch_article_by_username(username)
+    created_by = username
+    pubs = auth_model.find_pub_by_created_by(created_by)
     # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     # session_id = session.set("user", user)
     # response.set_cookie("session_id", session_id)
@@ -313,7 +315,8 @@ def user_detail_page(request: Request, username: str, session_id=Cookie(default=
         "request": request,
         "user": user,
         "other_user": other_user,
-        "articles": articles
+        "articles": articles,
+        "pubs": pubs
     })
 
 

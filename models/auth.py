@@ -72,9 +72,9 @@ class AuthModel(AbstractModel):
         """
         return sha256(password.encode()).hexdigest()
 
-    def profile_update(self, yourclub, yourleague, yournation, profile, user_name):
-        sql = "UPDATE users SET your_club = %s, your_league = %s, your_nation = %s, profile = %s WHERE users.username = %s;"
-        self.execute(sql, yourclub, yourleague, yournation, profile, user_name)
+    def profile_update(self, nickname, yourclub, yourleague, yournation, profile, user_name):
+        sql = "UPDATE users SET nickname  = %s, your_club = %s, your_league = %s, your_nation = %s, profile = %s WHERE users.username = %s;"
+        self.execute(sql, nickname, yourclub, yourleague, yournation, profile, user_name)
 
     def find_rooms_by_keyword(self, keyword):
         """
@@ -157,6 +157,10 @@ class AuthModel(AbstractModel):
     def find_pub_by_id(self, pub_id):
         sql = "SELECT * FROM pubs where pub_id=%s"
         return self.fetch_one(sql, pub_id)
+
+    def find_pub_by_created_by(self, created_by):
+        sql = "SELECT * FROM pubs where created_by=%s"
+        return self.fetch_all(sql, created_by)
 
     def join_chat_member(self, pub_id, user_name):
         sql = "INSERT IGNORE INTO pub_members(pub_id, username) VALUE (%s, %s);" 
