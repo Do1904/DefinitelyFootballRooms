@@ -45,14 +45,16 @@ header#manu {
 
 div#search {
   position: fixed;
+  right: 0; /* 基準の位置を画面の一番右に指定する */
 }
 
 .searchblog {
-  margin: 0 0 0 auto;
-  width: 10%;
-  display: block;
+  border-left: 2px solid #333;
+  /*境界線の指定 */
+  padding: 40px 20px;
+  margin: 130px 20px;
+  width: 63%;
 }
-
 
 
 .menu li {

@@ -114,6 +114,24 @@ def articles_index(request: Request, session_id=Cookie(default=None)):
         "user": user,
     })
 
+@app.post("/articles")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def articles_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    article_model = ArticleModel(config)
+    if search_by == "titles":
+        articles = article_model.find_article_by_title(keyword)
+    elif search_by == "words":
+        articles = article_model.find_article_by_keyword(keyword)
+    elif search_by == "users":
+        articles = article_model.find_article_by_username(keyword)
+    return templates.TemplateResponse("article-index.html", {
+        "request": request,
+        "articles": articles,
+        "user": user,
+    })
+
 
 @app.get("/article/create")
 @check_login

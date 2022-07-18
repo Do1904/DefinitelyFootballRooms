@@ -55,6 +55,23 @@ class ArticleModel(AbstractModel):
         sql = "INSERT INTO articles(username, title, body) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, title, body)
 
+    def find_article_by_title(self, keyword):
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username where articles.title like %s ORDER BY articles.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, args)
+
+    def find_article_by_keyword(self, keyword):
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username where articles.body like %s ORDER BY articles.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, args)
+
+    def find_article_by_username(self, keyword):
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM articles INNER JOIN users on articles.username = users.username where users.nickname like %s ORDER BY articles.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, args)
+
     def post_new_comment(self, user_name, article_id, body):
         sql = "INSERT INTO comments(username, article_id, comment) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, article_id, body)
+
+    

@@ -3,17 +3,33 @@
 <br><br><br><br>
 <div id="search">
     <div class="searchblog">
-        <h2>SEARCH Blogs</h2>
-        <!-- <form action="/community" method="post"> -->
+        <form action="/articles" method="post">
             <div>
-                <p><input id="search_articles" type="text" value="#" name="keyword"/></p>
+                <label for="search_articles">Blog検索</label>
+                <p><input id="search_articles" type="text" value="" name="keyword"/></p>
             </div>
-            <br>
+            <div>
+                <table border="0" class="profile_table">
+                    <tr>
+                      <td><label>Title</label></td>
+                      <td><input type="radio" name="search_by" class="titles" value="titles" checked="checked"></td>
+                    </tr>
+                    <tr>
+                      <td><label>Keyword</label></td>
+                      <td><input type="radio" name="search_by" class="words" value="words"></td>
+                    </tr>
+                    <tr>
+                      <td><label>User</label></td>
+                      <td><input type="radio" name="search_by" class="users" value="users"></td>
+                    </tr>
+                  </table>
+            </div>
+            <Br>
             <div>
                 <button type="submit">検索</button>
             </div>
-        <!-- </form> -->
-</div>
+        </form>
+    </div>
 </div>
     <div class="content">
         <h2>Blog一覧</h2>
