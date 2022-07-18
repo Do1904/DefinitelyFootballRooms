@@ -84,9 +84,10 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
+        status = "room"
         args = f'%{keyword}%'
         sql = "SELECT * FROM rooms INNER JOIN users on rooms.created_by = users.username where room_comment LIKE %s"
-        return self.fetch_all(sql,args)
+        return self.fetch_all(sql,args),status
 
     def find_pubs_by_keyword(self, keyword):
         """
@@ -96,9 +97,10 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
+        status = "pub"
         args = f'%{keyword}%'
         sql = "SELECT * FROM pubs INNER JOIN users on pubs.created_by = users.username where pub_comment LIKE %s"
-        return self.fetch_all(sql, args)
+        return self.fetch_all(sql, args),status
 
     def find_users_by_keyword(self, keyword):
         """
@@ -108,9 +110,10 @@ class AuthModel(AbstractModel):
         :param password: 検索するパスワード
         :return: 検索したユーザ
         """
+        status = "user"
         args = f'%{keyword}%'
         sql = "SELECT * FROM users where profile LIKE %s"
-        return self.fetch_all(sql, args)
+        return self.fetch_all(sql, args),status
 
     def validate_pub(self,community_id) -> bool:
         sql = "SELECT * FROM pubs WHERE pub_id=%s"

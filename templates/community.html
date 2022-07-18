@@ -18,20 +18,51 @@
             </div>
         </form>
         <hr>
-        
-        <h3>COMMUNITY</h3>
+        {% if status == "pub" %}
+        <h3>PUBS</h3>
         <p></p>
             {% for result in search_list %}
             <div class="communities">
                 <br>
-                <a style="font-size: 140%;" class="join" href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}"><b>{{ result["pub_name"] }}</b></a>
+                <a style="font-size: 145%;" class="join" href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}"><b>{{ result["pub_name"] }}</b></a>
                 <br><br>
-                <p style="font-size: 85%;">{{ result["pub_comment"] }}</p>
+                <p style="font-size: 85%;white-space:pre-wrap;">{{ result["pub_comment"] }}</p><hr>
                 <p style="font-size: 85%;">オーナー：<a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=result["created_by"]) }}">{{ result["nickname"] }}</a></p>
             </div>
             {% endfor %}
         {% if not search_list %}
         <p>該当するコミュニティは見つかりませんでした。</p>
+        {% endif %}
+
+        {% elif status == "room" %}
+        <h3>ROOMS</h3>
+        <p></p>
+            {% for result in search_list %}
+            <div class="communities">
+                <br><p>{{ result["room_name"] }}</p>
+                <br><br>
+                <p style="font-size: 85%;white-space:pre-wrap;">{{ result["room_comment"] }}</p><hr>
+                <p style="font-size: 85%;">オーナー：<a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=result["created_by"]) }}">{{ result["nickname"] }}</a></p>
+            </div>
+            {% endfor %}
+        {% if not search_list %}
+        <p>該当するコミュニティは見つかりませんでした。</p>
+        {% endif %}
+
+        {% elif status == "user" %}
+        <h3>USERS</h3>
+        <p></p>
+            {% for result in search_list %}
+            <div class="communities">
+                <p style="font-size: 145%;"><a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=result["username"]) }}"><b>{{ result["nickname"] }}</b></a></p>
+                <hr>
+                <p style="font-size: 94%;white-space:pre-wrap;">{{ result["profile"] }}</p>
+                
+            </div>
+            {% endfor %}
+        {% if not search_list %}
+        <p>該当するコミュニティは見つかりませんでした。</p>
+        {% endif %}
         {% endif %}
     </div>
 {% endblock %}

@@ -197,6 +197,10 @@ def find_community(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
     return templates.TemplateResponse("community.html", {"request": request, "user": user})
 
+
+
+
+
 @app.post("/community")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
@@ -204,20 +208,34 @@ def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = F
     user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
     if search_from == "Rooms":
-        search_list = auth_model.find_rooms_by_keyword(keyword)
-        ids = {'found_id': "room_id", 'found_name': "room_name", 'found_comment': "room_comment"}
-    elif search_from == "Pubs":
-        search_list = auth_model.find_pubs_by_keyword(keyword)
-        ids = {'found_id': "pub_id", 'found_name': "pub_name", 'found_comment': "pub_comment"}
-    elif search_from == "Users":
-        search_list = auth_model.find_users_by_keyword(keyword)
-        ids = {'found_id': "id", 'found_name': "username", 'found_comment': "profile"}
-    return templates.TemplateResponse("community.html", {
+        [search_list, status] = auth_model.find_rooms_by_keyword(keyword)
+        return templates.TemplateResponse("community.html", {
         "request": request,
         "search_list": search_list,
         "user": user,
-        "found_ids": ids
-    })
+        "status": status
+        })
+    elif search_from == "Pubs":
+        [search_list, status] = auth_model.find_pubs_by_keyword(keyword)
+        return templates.TemplateResponse("community.html", {
+        "request": request,
+        "search_list": search_list,
+        "user": user,
+        "status": status
+        })
+    elif search_from == "Users":
+        [search_list, status] = auth_model.find_users_by_keyword(keyword)
+        return templates.TemplateResponse("community.html", {
+        "request": request,
+        "search_list": search_list,
+        "user": user,
+        "status": status
+        })
+
+
+
+
+
 
 @app.get("/new_community")
 @check_login
