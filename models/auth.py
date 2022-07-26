@@ -102,6 +102,10 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM pubs INNER JOIN users on pubs.created_by = users.username where pub_comment LIKE %s"
         return self.fetch_all(sql, args),status
 
+    def fetch_all_users(self):
+        sql = "SELECT * FROM users"
+        return self.fetch_all(sql)
+
     def find_users_by_keyword(self, keyword):
         """
         ユーザ名とパスワードからユーザを探す

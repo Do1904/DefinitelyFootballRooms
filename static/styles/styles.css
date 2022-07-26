@@ -69,6 +69,10 @@ div#search {
   font-size: 90%;
 }
 
+.matching_menu {
+  font-size: 90%;
+}
+
 .community_menu {
   font-size: 90%;
 }
@@ -179,6 +183,19 @@ a {
 }
 
 .blogs {
+  color: rgb(0, 0, 0);
+  background: #ffffffbb;
+  /*背景色の指定*/
+  border: #73737360 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #ffffff3c;
+  /*  境界線の外側の指定 */
+  padding: 6px 70px;
+  margin: 7px auto;
+  width: 20%;
+}
+
+.users {
   color: rgb(0, 0, 0);
   background: #ffffffbb;
   /*背景色の指定*/

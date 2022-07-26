@@ -100,6 +100,19 @@ def profile_update(nickname: str = Form(...), yourclub: str = Form(...), yourlea
     auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, user_name) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
+@app.get("/matching")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def user_finden(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    users = auth_model.fetch_all_users()
+    return templates.TemplateResponse("matching.html", {
+        "request": request,
+        "users": users,
+        "user": user
+    })
+
 
 @app.get("/articles")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる

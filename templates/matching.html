@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block body %}
+<br><br><br><br>
+<div id="search">
+    <div class="searchblog">
+        <!-- <form action="/matching" method="post">
+            <div>
+                <label for="search_fans">Blog検索</label>
+                <p><input id="search_fans" type="text" value="" name="keyword"/></p>
+            </div>
+            <div>
+                <table border="0" class="profile_table">
+                    <tr>
+                      <td><label>Club</label></td>
+                      <td><input type="radio" name="search_by" class="clubs" value="clubs" checked="checked"></td>
+                    </tr>
+                    <tr>
+                      <td><label>League</label></td>
+                      <td><input type="radio" name="search_by" class="leagues" value="leagues"></td>
+                    </tr>
+                    <tr>
+                      <td><label>Nation</label></td>
+                      <td><input type="radio" name="search_by" class="nations" value="nations"></td>
+                    </tr>
+                  </table>
+            </div>
+            <Br>
+            <div>
+                <button type="submit">検索</button>
+            </div>
+        </form> -->
+    </div>
+</div>
+    <div class="content">
+        <h2>User一覧</h2>
+        <br>
+            {% for user in users %}
+            <div class="blogs">
+                <p>
+                    <p style="font-size: 78%;">{{ user["nickname"] }}</p>
+                    <p style="font-size: 78%;">{{ user["created_at"] }}</p>
+                </p>
+            </div>
+            {% endfor %}
+        {% if not users %}
+            <p>そんなユーザーはいません</p>
+        {% endif %}
+    </div>
+{% endblock %}
