@@ -200,28 +200,32 @@ class AuthModel(AbstractModel):
         return self.fetch_one(sql, username)
 
 
-    def find_discussion_by_title(self, keyword):
+    def find_discussion_by_title(self, pub_id, keyword):
         args = f'%{keyword}%'
-        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.title like %s ORDER BY message.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, args)
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.pub_id = %s AND message.title like %s ORDER BY message.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, pub_id, args)
 
-    def find_discussion_by_keyword(self, keyword):
+    def find_discussion_by_keyword(self, pub_id, keyword):
         args = f'%{keyword}%'
-        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.body like %s ORDER BY message.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, args)
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.pub_id = %s AND message.body like %s ORDER BY message.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, pub_id, args)
 
-    def find_discussion_by_username(self, keyword):
+    def find_discussion_by_username(self, pub_id, keyword):
         args = f'%{keyword}%'
-        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where users.nickname like %s ORDER BY message.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, args)
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.pub_id = %s AND users.nickname like %s ORDER BY message.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, pub_id, args)
 
     def find_discussion_by_id(self, id):
-        sql = "SELECT * FROM message where id=%s"
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.id=%s"
         return self.fetch_one(sql, id)
 
     def fetch_discussion_commnets_by_id(self, id):
-        sql = "SELECT * FROM discuss_comments where message_id=%s"
+        sql = "SELECT * FROM discuss_comments INNER JOIN users on discuss_comments.username = users.username where discuss_comments.message_id=%s"
         return self.fetch_all(sql, id)
+
+    def post_discussion_comment(self, user_name, topic_id, body):
+        sql = "INSERT INTO discuss_comments(username, message_id, context) VALUE (%s, %s, %s);"
+        self.execute(sql, user_name, topic_id, body)
 
     # def pub_update(self, pub_name, pub_comment, pub_id):
     #     sql = "UPDATE pubs SET pub_name = %s, pub_comment = %s WHERE pubs.pub_id = %s;"

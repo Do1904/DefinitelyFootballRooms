@@ -1,23 +1,35 @@
 {% extends "pub-index.html" %}
 {% block body %}
-<br><br><br><br>
-<div class="content">
-    <h2>{{ topic["title"] }}</h2>
-    <p>
-        <i>投稿者: {{ topic["username"] }}</i>
-    </p>
-    <p class="article" style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ topic["body"] }}</p>
+<br>
+<div id="search">
+    <div class="searchdiscussion">
+        <p><a class="blogtitle" href="{{ url_for("post_discuss_comment", id=topic["id"]) }}">コメント</a></p>
+    </div>
 </div>
+<div class="content">
+    <div class="letter2">
+        <p>
+            <h3 style="font-size: 150%;background: #000000bb;color: whitesmoke;">#{{ topic["status"] }}</h3>
+            <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;"><b>{{ topic["title"] }}</b></p>
+            <p style="font-size: 120%;white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ topic["body"] }}</p><Br>
+            <p style="font-size: 105%;">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=topic["username"]) }}">{{ topic["nickname"] }}</a></p>
+            <p style="font-size: 105%;">{{ topic["created_at"] }}</p>
+        </p>
+    </div>
 <br>
 <!-- <p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=["id"]) }}">コメント</a></p> -->
+<div class="letter2">
+    <h2 style="background: #000000bb;color: whitesmoke;">Discussion</h2>
 {% for comment in comments %}
-<div class="article">
-    <p style="font-size: 85%;text-align: center;"><a class="blogtitle" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></p>
-    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ comment["comment"] }}</p>
+    <h3 style="font-size: 100%;text-align: left;"><a class="discussionpage" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></h3>
+    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ comment["context"] }}</p>
     <p style="font-size: 85%;">{{ comment["created_at"] }}</p>
-</div>
+    <hr>
 {% endfor %}
+</div>
 {% if not comments %}
-<div class="article">コメントはまだありません。</div>
+<br>
+<div>ディスカッションしましょう！</div>
+</div>
 {% endif %}
 {% endblock %}

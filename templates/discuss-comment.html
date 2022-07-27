@@ -1,0 +1,20 @@
+{% extends "pub-index.html" %}
+{% block body %}
+<br><br><br><br>
+    <div class="content">
+        <h2>コメント投稿</h2>
+        <br>
+        <form action="/discussion/comment" method="post">
+            <div>
+                <textarea id="body" name="body" rows="20" cols="40" placeholder="コメント"></textarea>
+            </div>
+            <div>
+                <p><input type="hidden" id="topic_id" value="{{ topic["id"] }}" name="topic_id"/></p>
+            </div>
+            <br>
+            <div>
+                <button type="submit">投稿</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

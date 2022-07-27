@@ -406,16 +406,16 @@ def create_discussion(pub_id: str = Form(...), status: str = Form(...), discuss_
 @app.post("/search_discussion")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def articles_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), pub_id: str = Form(...), session_id=Cookie(default=None)):
+def discussion_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), pub_id: str = Form(...), session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
     pub = auth_model.find_pub_by_id(pub_id)
     if search_by == "titles":
-        topics = auth_model.find_discussion_by_title(keyword, pub_id)
+        topics = auth_model.find_discussion_by_title(pub_id, keyword)
     elif search_by == "words":
-        topics = auth_model.find_discussion_by_keyword(keyword, pub_id)
+        topics = auth_model.find_discussion_by_keyword(pub_id, keyword)
     elif search_by == "users":
-        topics = auth_model.find_discussion_by_username(keyword, pub_id)
+        topics = auth_model.find_discussion_by_username(pub_id, keyword)
     return templates.TemplateResponse("pub-discuss.html", {
         "user": user,
         "request": request,
@@ -437,6 +437,26 @@ def discussion_detail_page(request: Request, id: int, session_id=Cookie(default=
         "topic": topic,
         "comments": comments
     })
+
+@app.get("/discussioncomment/{id}")
+@check_login
+def post_discuss_comment(request: Request, id: int, session_id=Cookie(default=None)):
+    auth_model = AuthModel(config)
+    topic = auth_model.find_discussion_by_id(id)
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("discuss-comment.html", {
+        "request": request,
+        "topic": topic,
+        "user": user
+    })
+
+@app.post("/discussion/comment")
+@check_login
+def post_comment(body: str = Form(...), topic_id: int = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    auth_model.post_discussion_comment(user_name, topic_id, body)
+    return RedirectResponse("/community/discussion/%s" % (topic_id), status_code=HTTP_302_FOUND)
 
 
 @app.get("/user/{username}")
