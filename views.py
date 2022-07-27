@@ -423,6 +423,21 @@ def articles_finden(request: Request, keyword: str = Form(...), search_by: str =
         "topics": topics
     })
 
+@app.get("/community/discussion/{id}")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def discussion_detail_page(request: Request, id: int, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    topic = auth_model.find_discussion_by_id(id)
+    comments = auth_model.fetch_discussion_commnets_by_id(id)
+    return templates.TemplateResponse("discussion-detail.html", {
+        "request": request,
+        "user": user,
+        "topic": topic,
+        "comments": comments
+    })
+
 
 @app.get("/user/{username}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる

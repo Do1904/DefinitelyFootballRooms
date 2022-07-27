@@ -46,7 +46,7 @@
             <div class="letter">
                 <p>
                     <h3 style="font-size: 120%;text-align: left;">#{{ result["status"] }}</h3>
-                    <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;"><b><a class="discussionpage" href="{{ url_for("user_detail_page", username=result["title"]) }}">{{ result["title"] }}</a></b></p>
+                    <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;"><b><a class="discussionpage" href="{{ url_for("discussion_detail_page", id=result["id"]) }}">{{ result["title"] }}</a></b></p>
                     <p style="font-size: 100%;">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=result["username"]) }}">{{ result["nickname"] }}</a></p>
                     <p style="font-size: 100%;">{{ result["created_at"] }}</p>
                 </p>

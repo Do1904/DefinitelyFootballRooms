@@ -215,6 +215,14 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where users.nickname like %s ORDER BY message.created_at DESC LIMIT 500"
         return self.fetch_all(sql, args)
 
+    def find_discussion_by_id(self, id):
+        sql = "SELECT * FROM message where id=%s"
+        return self.fetch_one(sql, id)
+
+    def fetch_discussion_commnets_by_id(self, id):
+        sql = "SELECT * FROM discuss_comments where message_id=%s"
+        return self.fetch_all(sql, id)
+
     # def pub_update(self, pub_name, pub_comment, pub_id):
     #     sql = "UPDATE pubs SET pub_name = %s, pub_comment = %s WHERE pubs.pub_id = %s;"
     #     self.execute(sql, pub_name, pub_comment, pub_id)
