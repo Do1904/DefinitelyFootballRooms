@@ -1,5 +1,5 @@
-from typing import List
-from fastapi import FastAPI, Request, WebSocket, Form, Cookie,WebSocketDisconnect
+# from typing import List, Optional
+from fastapi import FastAPI, Request, Form, Cookie
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
@@ -9,12 +9,52 @@ from app.utilities.session import Session
 from app.models.auth import AuthModel
 from app.models.articles import ArticleModel
 from app.utilities.check_login import check_login
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="/app/templates")
 config = Config()
 session = Session(config)
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=['*'],
+#     allow_credentials=True,
+#     allow_methods=['*'],
+#     allow_headers=['*'],
+# )
+
+# active_ws_connections: List[WebSocket] = []
+
+# @app.websocket("/community/{pub_id}/chat")
+# async def chat(websocket: WebSocket, nickname: Optional[str] = None):
+#     # 接続を受け取る
+#     await websocket.accept()
+#     # 接続中のclientを保持
+#     active_ws_connections.append(websocket)
+
+#     # クエリーの中のnicknameを取得
+#     # ない場合はunknown_{ipアドレス}にする
+#     if nickname is None:
+#         nickname = f'unknown_{websocket.client.host}'
+
+#     try:
+#         while True:
+#             # メッセージが送られるのを待つ
+#             # 形は{ "message": "contents" }
+#             data = await websocket.receive_json()
+#             # 受け取ったメッセージにnicknameを付与
+#             data['nickname'] = nickname
+#             # 全てのclientに送信
+#             # 形は{ "nickname": "nickname",　"message": "contents" }
+#             for connection in active_ws_connections:
+#                 await connection.send_json(data)
+#     except WebSocketDisconnect:
+#         # 接続を切断された場合WebSocketDisconnectと言うエラーを吐くので
+#         # それを捕捉して接続リストから該当のもの削除する
+#         active_ws_connections.remove(websocket)
+
 
 
 
@@ -201,7 +241,7 @@ def post_comment(body: str = Form(...), article_id: int = Form(...), session_id=
     user_name = session.get(session_id).get("user").get("username")
     article_model = ArticleModel(config)
     article_model.post_new_comment(user_name, article_id, body)
-    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
+    return RedirectResponse("/article/%s" % (article_id), status_code=HTTP_302_FOUND)
 
 @app.get("/logout")
 @check_login
@@ -325,32 +365,43 @@ def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=Non
         "members": members
     })
 
-@app.get("/community/{pub_id}/chat")
+@app.get("/community/{pub_id}/discuss")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def go_pub_chat(request: Request, pub_id: str, session_id=Cookie(default=None)):
+def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
+    user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
     pub = auth_model.find_pub_by_id(pub_id)
-    auth_model.join_chat_member(pub_id, user_name)
-    member = auth_model.find_chat_member_by_pub_id_username(pub_id, user_name)
-    members = auth_model.find_chat_members_by_pub_id(pub_id)
-    chats = auth_model.find_chats_by_pub_id(pub_id)
-    return templates.TemplateResponse("pub-chat.html", {
+    auth_model.join_pub_member(pub_id, user_name)
+    topics = auth_model.find_discussion_by_pub_id(pub_id)
+    return templates.TemplateResponse("pub-discuss.html", {
+        "user": user,
         "request": request,
         "pub": pub,
-        "member": member,
-        "members": members,
-        "chats": chats
+        "topics": topics
     })
 
-@app.post("/community/chat")
+@app.get("/community/{pub_id}/newdiscussion")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def send_message(pub_id: str = Form(...), user_name: str = Form(...), context: str = Form(...)):
+def create_new_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
-    auth_model.send_message(pub_id, user_name, context)
-    return RedirectResponse("/community/{pub_id}/chat", status_code=HTTP_302_FOUND)
+    pub = auth_model.find_pub_by_id(pub_id)
+    return templates.TemplateResponse("discuss.html", {
+        "user": user,
+        "request": request,
+        "pub": pub
+    })
+
+@app.post("/community/newdiscussion")
+@check_login
+def create_discussion(pub_id: str = Form(...), status: str = Form(...), discuss_title: str = Form(...), body: str = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    auth_model.create_new_discussion(pub_id, user_name, status, discuss_title, body)
+    return RedirectResponse("/community/%s/discuss" % (pub_id), status_code=HTTP_302_FOUND)
 
 
 @app.get("/user/{username}")

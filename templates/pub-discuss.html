@@ -1,0 +1,25 @@
+{% extends "pub-index.html" %}
+{% block body %}
+<br><br>
+    <div class="content">
+        <h1>Discussion!!</h1>
+        <p>D{{ pub["pub_name"] }}</p>
+        <br>
+        {% for result in topics %}
+            <div class="letter">
+                <p>
+                    <h3 style="text-align: left;">{{ result["status"] }}</h3>
+                    <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;"><b>{{ result["title"] }}</b></p>
+                    <p style="font-size: 100%;">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=result["username"]) }}">{{ result["username"] }}</a></p>
+                    <p style="font-size: 100%;">{{ result["created_at"] }}</p>
+                </p>
+            </div>
+            <br>
+            {% endfor %}
+        {% if not topics %}
+            <p>投稿されたディスカッションはありません</p>
+        {% endif %}
+        <br>
+        <a href="{{ url_for("create_new_discussion", pub_id=pub["pub_id"]) }}">新しいディスカッション</a>
+    </div>
+{% endblock %}

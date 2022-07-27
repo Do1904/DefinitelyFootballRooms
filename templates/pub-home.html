@@ -19,7 +19,7 @@
         {% if not members %}
         <p>まだ参加者はいません</p>
         {% endif %}
-        <a href="{{ url_for("go_pub_chat", pub_id=pub["pub_id"]) }}">参加する</a>
+        <a href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
         
     </div>
 

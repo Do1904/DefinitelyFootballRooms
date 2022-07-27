@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>サンプルページ</title>
+  <!-- <script type=text/javascript src="{{ url_for('static', path='/main.js') }}"></script> -->
   <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/styles.css')}}">
 </head>
 
@@ -14,8 +15,6 @@
       <ul class="main_menu" style="list-style: none;">
         <li>
           <a class="backtohome" href="{{ url_for('show_community_list') }}">戻る</a>
-          <!-- <a href="./chatroom.html">chatroom</a>
-          <a href="./bot.html">botとお話し</a> -->
         </li>
       </ul>
     </nav>

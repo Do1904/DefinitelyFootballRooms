@@ -1,50 +1,48 @@
 {% extends "base.html" %}
 {% block body %}
-<br><br><br><br>
-<div id="search">
-    <div class="searchblog">
-        <!-- <form action="/matching" method="post">
-            <div>
-                <label for="search_fans">Blog検索</label>
-                <p><input id="search_fans" type="text" value="" name="keyword"/></p>
-            </div>
-            <div>
-                <table border="0" class="profile_table">
-                    <tr>
-                      <td><label>Club</label></td>
-                      <td><input type="radio" name="search_by" class="clubs" value="clubs" checked="checked"></td>
-                    </tr>
-                    <tr>
-                      <td><label>League</label></td>
-                      <td><input type="radio" name="search_by" class="leagues" value="leagues"></td>
-                    </tr>
-                    <tr>
-                      <td><label>Nation</label></td>
-                      <td><input type="radio" name="search_by" class="nations" value="nations"></td>
-                    </tr>
-                  </table>
-            </div>
-            <Br>
-            <div>
-                <button type="submit">検索</button>
-            </div>
-        </form> -->
-    </div>
-</div>
+<br>
     <div class="content">
-        <h2>User一覧</h2>
-        {{ clubfan }}
-        <br>
-            {% for user in users %}
-            <div class="blogs">
+        <p>{{ user["your_club"] }}のファン</p>
+        <ul class="users-list">
+            {% for fan in clubfan %}
+            <li class="user">
                 <p>
-                    <p style="font-size: 78%;">{{ user["nickname"] }}</p>
-                    <p style="font-size: 78%;">{{ user["created_at"] }}</p>
+                    <p style="font-size: 145%;"><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=fan["username"]) }}"><b>{{ fan["nickname"] }}</b></a></p>
+                    <p style="font-size: 78%;">{{ fan["created_at"] }}</p>
                 </p>
-            </div>
+            </li>
             {% endfor %}
-        {% if not users %}
-            <p>そんなユーザーはいません</p>
+        {% if not clubfan %}
+        <p>そんなユーザーはまだいません</p>
         {% endif %}
+        </ul>
+        <p>{{ user["your_league"] }}のファン</p>
+        <ul class="users-list">
+            {% for fan in leaguefan %}
+            <li class="user">
+                <p>
+                    <p style="font-size: 145%;"><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=fan["username"]) }}"><b>{{ fan["nickname"] }}</b></a></p>
+                    <p style="font-size: 78%;">{{ fan["created_at"] }}</p>
+                </p>
+            </li>
+            {% endfor %}
+        {% if not clubfan %}
+        <p>そんなユーザーはまだいません</p>
+        {% endif %}
+        </ul>
+        <p>{{ user["your_nation"] }}のファン</p>
+        <ul class="users-list">
+            {% for fan in nationfan %}
+            <li class="user">
+                <p>
+                    <p style="font-size: 145%;"><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=fan["username"]) }}"><b>{{ fan["nickname"] }}</b></a></p>
+                    <p style="font-size: 78%;">{{ fan["created_at"] }}</p>
+                </p>
+            </li>
+            {% endfor %}
+        {% if not clubfan %}
+        <p>そんなユーザーはまだいません</p>
+        {% endif %}
+        </ul>
     </div>
 {% endblock %}

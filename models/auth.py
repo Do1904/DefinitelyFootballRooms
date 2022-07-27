@@ -175,7 +175,7 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM pubs where created_by=%s"
         return self.fetch_all(sql, created_by)
 
-    def join_chat_member(self, pub_id, user_name):
+    def join_pub_member(self, pub_id, user_name):
         sql = "INSERT IGNORE INTO pub_members(pub_id, username) VALUE (%s, %s);" 
         self.execute(sql, pub_id, user_name)
 
@@ -187,13 +187,13 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM pub_members where pub_id=%s"
         return self.fetch_all(sql, pub_id)
 
-    def find_chats_by_pub_id(self, pub_id):
+    def find_discussion_by_pub_id(self, pub_id):
         sql = "SELECT * FROM message where pub_id=%s ORDER BY created_at DESC"
         return self.fetch_all(sql, pub_id)
 
-    def send_message(self, pub_id, user_name, context):
-        sql = "INSERT INTO message(pub_id, username, context) VALUE (%s, %s, %s);"
-        self.execute(sql, pub_id, user_name, context)
+    def create_new_discussion(self, pub_id, user_name, status, discuss_title, body):
+        sql = "INSERT INTO message(pub_id, username, status, title, body) VALUE (%s, %s, %s, %s, %s);"
+        self.execute(sql, pub_id, user_name, status, discuss_title, body)
 
     def find_other_users_by_username(self, username):
         sql = "SELECT * FROM users where username=%s"
