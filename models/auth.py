@@ -188,7 +188,7 @@ class AuthModel(AbstractModel):
         return self.fetch_all(sql, pub_id)
 
     def find_discussion_by_pub_id(self, pub_id):
-        sql = "SELECT * FROM message where pub_id=%s ORDER BY created_at DESC"
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.pub_id=%s ORDER BY message.created_at DESC"
         return self.fetch_all(sql, pub_id)
 
     def create_new_discussion(self, pub_id, user_name, status, discuss_title, body):
@@ -198,6 +198,22 @@ class AuthModel(AbstractModel):
     def find_other_users_by_username(self, username):
         sql = "SELECT * FROM users where username=%s"
         return self.fetch_one(sql, username)
+
+
+    def find_discussion_by_title(self, keyword):
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.title like %s ORDER BY message.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, args)
+
+    def find_discussion_by_keyword(self, keyword):
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.body like %s ORDER BY message.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, args)
+
+    def find_discussion_by_username(self, keyword):
+        args = f'%{keyword}%'
+        sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where users.nickname like %s ORDER BY message.created_at DESC LIMIT 500"
+        return self.fetch_all(sql, args)
 
     # def pub_update(self, pub_name, pub_comment, pub_id):
     #     sql = "UPDATE pubs SET pub_name = %s, pub_comment = %s WHERE pubs.pub_id = %s;"

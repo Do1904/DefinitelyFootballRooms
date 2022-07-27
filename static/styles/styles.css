@@ -56,6 +56,16 @@ div#search {
   width: 63%;
 }
 
+.searchdiscussion {
+  border-left: 2px solid #333;
+  /*境界線の指定 */
+  padding: 40px 20px;
+  margin: 80px 20px;
+  width: 63%;
+}
+
+
+
 
 .menu li {
   list-style: none;
@@ -155,6 +165,23 @@ a {
   background-position: -100% 0%;
   color: rgb(255, 255, 255);
 }
+
+.discussionpage {
+  padding: 0em 0em;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, #000000a8 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: #000000;
+}
+
+.discussionpage:hover {
+  background-position: -100% 0%;
+  color: rgb(255, 255, 255);
+}
+
+
+
 
 .your_community {
   color: rgb(255, 255, 255);

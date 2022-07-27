@@ -403,6 +403,26 @@ def create_discussion(pub_id: str = Form(...), status: str = Form(...), discuss_
     auth_model.create_new_discussion(pub_id, user_name, status, discuss_title, body)
     return RedirectResponse("/community/%s/discuss" % (pub_id), status_code=HTTP_302_FOUND)
 
+@app.post("/search_discussion")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def articles_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), pub_id: str = Form(...), session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    auth_model = AuthModel(config)
+    pub = auth_model.find_pub_by_id(pub_id)
+    if search_by == "titles":
+        topics = auth_model.find_discussion_by_title(keyword, pub_id)
+    elif search_by == "words":
+        topics = auth_model.find_discussion_by_keyword(keyword, pub_id)
+    elif search_by == "users":
+        topics = auth_model.find_discussion_by_username(keyword, pub_id)
+    return templates.TemplateResponse("pub-discuss.html", {
+        "user": user,
+        "request": request,
+        "pub": pub,
+        "topics": topics
+    })
+
 
 @app.get("/user/{username}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
