@@ -3,13 +3,13 @@
 <br>
 <div id="search">
     <div class="searchdiscussion">
-        <p><a class="blogtitle" href="{{ url_for("post_discuss_comment", id=topic["id"]) }}">コメント</a></p>
+        <p><a class="blogtitle" href="{{ url_for("post_discuss_comment", id=topic["id"]) }}">新規コメント</a></p>
     </div>
 </div>
 <div class="content">
     <div class="letter2">
         <p>
-            <h3 style="font-size: 150%;background: #000000bb;color: whitesmoke;">#{{ topic["status"] }}</h3>
+            <h3 style="font-size: 150%;background: #000000bb;color: whitesmoke;">{{ topic["status"] }}</h3>
             <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;"><b>{{ topic["title"] }}</b></p>
             <p style="font-size: 120%;white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ topic["body"] }}</p><Br>
             <p style="font-size: 105%;">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=topic["username"]) }}">{{ topic["nickname"] }}</a></p>
@@ -26,10 +26,10 @@
     <p style="font-size: 85%;">{{ comment["created_at"] }}</p>
     <hr>
 {% endfor %}
-</div>
 {% if not comments %}
 <br>
 <div>ディスカッションしましょう！</div>
+</div>
 </div>
 {% endif %}
 {% endblock %}

@@ -31,11 +31,11 @@
         <div>
             <button type="submit">検索</button>
         </div>
-        <br>
-        <hr>
-        <p><a class="blogtitle" href="{{ url_for("create_new_discussion", pub_id=pub["pub_id"]) }}">新規投稿</a></p>
-
     </form>
+    <br>
+        <hr>
+        <p style="font-size: 90%;"><a class="blogtitle" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">全て表示/更新</a></p>
+        <p style="font-size: 90%;"><a class="blogtitle" href="{{ url_for("create_new_discussion", pub_id=pub["pub_id"]) }}">新規投稿</a></p>
 </div>
 </div>
     <div class="content">

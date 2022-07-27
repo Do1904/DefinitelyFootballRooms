@@ -1,13 +1,13 @@
 {% extends "pub-index.html" %}
 {% block body %}
-<br><br><br><br>
+<br><br><br><br><br><br>
     <div class="content">
         <h1>{{ pub["pub_name"] }} へようこそ！</h1>
         <p>{{ pub["pub_comment"] }}</p>
         <br>
         <hr>
         <br>
-        <h4>24人が参加しています。</h4>
+        <!-- <h4>24人が参加しています。</h4>
         <p>メンバー</p>
         <ul class="members_list" style="list-style: none;">
             {% for result in members %}
@@ -18,8 +18,9 @@
         </ul>
         {% if not members %}
         <p>まだ参加者はいません</p>
-        {% endif %}
-        <a href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
+        {% endif %} -->
+        <h3>あなたの好きな話題でみんなとディスカッションしましょう！！</h3>
+        <a class="blogtitle" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
         
     </div>
 
