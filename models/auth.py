@@ -102,9 +102,15 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM pubs INNER JOIN users on pubs.created_by = users.username where pub_comment LIKE %s"
         return self.fetch_all(sql, args),status
 
-    def fetch_all_users(self):
+    def fetch_all_fans(self):
         sql = "SELECT * FROM users"
         return self.fetch_all(sql)
+
+    def fetch_fans(self, your_club, your_league, your_nation):
+        sql = "SELECT * FROM users where your_club = %s"
+        sql2 = "SELECT * FROM users where your_league = %s"
+        sql3 = "SELECT * FROM users where your_nation = %s"
+        return self.fetch_all(sql, your_club), self.fetch_all(sql2, your_league), self.fetch_all(sql3, your_nation)
 
     def find_users_by_keyword(self, keyword):
         """

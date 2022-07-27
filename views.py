@@ -105,12 +105,19 @@ def profile_update(nickname: str = Form(...), yourclub: str = Form(...), yourlea
 @check_login
 def user_finden(request: Request, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
+    your_club = user["your_club"]
+    your_league = user["your_league"]
+    your_nation = user["your_nation"]
     auth_model = AuthModel(config)
-    users = auth_model.fetch_all_users()
+    users = auth_model.fetch_all_fans()
+    [clubfan, leaguefan, nationfan] = auth_model.fetch_fans(your_club, your_league, your_nation)
     return templates.TemplateResponse("matching.html", {
         "request": request,
         "users": users,
-        "user": user
+        "user": user,
+        "clubfan": clubfan,
+        "leaguefan": leaguefan,
+        "nationfan": nationfan
     })
 
 
