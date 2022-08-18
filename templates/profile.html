@@ -2,12 +2,24 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
-        <p>あなたのFootballファン情報を入力してください。</p>
+        <div class="formstyle">
         <form action="/profile_update" method="post">
+            <div class="cp_iptxt">
+                <label for="nickname" class="ef">あなたのニックネームを入力してください
+                <p><input id="nickname" name="nickname" value="{{ user["nickname"] }}" rows="10" cols="40" placeholder=""></label></p>
+            </div><br>
+            <div class="cp_iptxt">
+                <label for="nickname" class="ef">Twitter
+                <p><input id="twitter" name="twitter" value="{{ user["twitter"] }}" rows="10" cols="40" placeholder="アカウントURL"></label></p>
+            </div><br>
+            <div class="cp_iptxt">
+                <label for="nickname" class="ef">Instagram
+                <p><input id="instagram" name="instagram" value="{{ user["instagram"] }}" rows="10" cols="40" placeholder="アカウントURL"></label></p>
+            </div><br>
             <div>
-                <label for="nickname">あなたのニックネームを入力してください</label>
-                <p><input id="nickname" name="nickname" value="{{ user["nickname"] }}" rows="10" placeholder=""></p>
-            </div>
+                <label for="profile">他のSNSアカウント</label>
+                <p><textarea id="socialmedia" name="socialmedia" rows="5" cols="40"  placeholder="アカウントURL">{{ user["SNS"] }}</textarea></p>
+            </div><br>
             <div>
                 <label for="yourclub">あなたの好きなクラブを入力してください</label>
                 <!-- <p><input id="yourclub" type="text" value="{{ user["your_club"] }}" maxlength="25" name="yourclub"/></p> -->
@@ -18,7 +30,7 @@
                 {% endfor %}
                 </select></p>
 
-            </div>
+            </div><br>
             <div>
                 <label for="yourleague">あなたの好きなリーグを選択してください</label>
                 <!-- <p><input id="yourleague" type="text" value="{{ user["your_league"] }}" maxlength="25" name="yourleague"/></p> -->
@@ -28,7 +40,7 @@
                         <option value="{{ league["english_name"] }}">{{ league["leagues"] }}</option>
                     {% endfor %}
                 </select></p>
-            </div>
+            </div><br>
             <div>
                 <label for="yournation">あなたの住んでいる国を選択してください</label>
                 <!-- <p><input id="yournation" type="text" value="{{ user["your_nation"] }}" maxlength="25" name="yournation"/></p> -->
@@ -38,14 +50,15 @@
                         <option value="{{ nation["nations"] }}">{{ nation["nations"] }}</option>
                     {% endfor %}
                 </select></p>
-            </div>
+            </div><br>
             <div>
                 <label for="profile">自己紹介文を書きましょう</label>
-                <p><textarea id="profile" name="profile" rows="10" placeholder="">{{ user["profile"] }}</textarea></p>
-            </div>
+                <p><textarea id="profile" name="profile" rows="10" cols="40" placeholder="">{{ user["profile"] }}</textarea></p>
+            </div><br>
             <div>
                 <button type="submit">更新</button>
             </div>
         </form>
+    </div><br><br><br><br>
     </div>
 {% endblock %}

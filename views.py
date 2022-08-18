@@ -1,5 +1,5 @@
-# from typing import List, Optional
-from fastapi import FastAPI, Request, Form, Cookie
+from typing import List, Optional
+from fastapi import FastAPI, Request, Form, Cookie, WebSocket, WebSocketDisconnect 
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
@@ -17,43 +17,43 @@ templates = Jinja2Templates(directory="/app/templates")
 config = Config()
 session = Session(config)
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=['*'],
-#     allow_credentials=True,
-#     allow_methods=['*'],
-#     allow_headers=['*'],
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
-# active_ws_connections: List[WebSocket] = []
+active_ws_connections: List[WebSocket] = []
 
-# @app.websocket("/community/{pub_id}/chat")
-# async def chat(websocket: WebSocket, nickname: Optional[str] = None):
-#     # 接続を受け取る
-#     await websocket.accept()
-#     # 接続中のclientを保持
-#     active_ws_connections.append(websocket)
+@app.websocket("/chaaaaaat")
+async def chat(websocket: WebSocket, nickname: Optional[str] = None):
+    # 接続を受け取る
+    await websocket.accept()
+    # 接続中のclientを保持
+    active_ws_connections.append(websocket)
 
-#     # クエリーの中のnicknameを取得
-#     # ない場合はunknown_{ipアドレス}にする
-#     if nickname is None:
-#         nickname = f'unknown_{websocket.client.host}'
+    # クエリーの中のnicknameを取得
+    # ない場合はunknown_{ipアドレス}にする
+    if nickname is None:
+        nickname = f'unknown_{websocket.client.host}'
 
-#     try:
-#         while True:
-#             # メッセージが送られるのを待つ
-#             # 形は{ "message": "contents" }
-#             data = await websocket.receive_json()
-#             # 受け取ったメッセージにnicknameを付与
-#             data['nickname'] = nickname
-#             # 全てのclientに送信
-#             # 形は{ "nickname": "nickname",　"message": "contents" }
-#             for connection in active_ws_connections:
-#                 await connection.send_json(data)
-#     except WebSocketDisconnect:
-#         # 接続を切断された場合WebSocketDisconnectと言うエラーを吐くので
-#         # それを捕捉して接続リストから該当のもの削除する
-#         active_ws_connections.remove(websocket)
+    try:
+        while True:
+            # メッセージが送られるのを待つ
+            # 形は{ "message": "contents" }
+            data = await websocket.receive_json()
+            # 受け取ったメッセージにnicknameを付与
+            data['nickname'] = nickname
+            # 全てのclientに送信
+            # 形は{ "nickname": "nickname",　"message": "contents" }
+            for connection in active_ws_connections:
+                await connection.send_json(data)
+    except WebSocketDisconnect:
+        # 接続を切断された場合WebSocketDisconnectと言うエラーを吐くので
+        # それを捕捉して接続リストから該当のもの削除する
+        active_ws_connections.remove(websocket)
 
 
 
@@ -134,10 +134,10 @@ def profile_update_page(request: Request, session_id=Cookie(default=None)):
 
 @app.post("/profile_update")
 @check_login
-def profile_update(nickname: str = Form(...), yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
+def profile_update(nickname: str = Form(...), twitter: str = Form(...), instagram: str = Form(...), socialmedia: str = Form(...), yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, user_name) # auth.pyの中にある関数を使うために必要
+    auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, twitter, instagram, socialmedia, user_name) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
 
 @app.get("/matching")
@@ -306,13 +306,12 @@ def create_community(request: Request, session_id=Cookie(default=None)):
 @app.post("/new_community")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def create_pub(request: Request, community_name: str = Form(...), community_comment: str = Form(...), community_id: str = Form(...), session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+def create_pub(community_name: str = Form(...), community_comment: str = Form(...), community_id: str = Form(...), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
-    new_community = auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
+    auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
     pub_id = community_id
-    auth_model.join_chat_member(pub_id, user_name)
+    auth_model.join_pub_member(pub_id, user_name)
     return RedirectResponse("/your_community", status_code=HTTP_302_FOUND)
 
 @app.get("/your_community")

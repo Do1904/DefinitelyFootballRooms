@@ -6,7 +6,7 @@ const nameSettingButton = document.getElementById("setName")
 const sendButton = document.getElementById("send")
 const msgText = document.getElementById("message")
 const nameArea = document.getElementById("nameArea")
-// const pub = document.getElementById("pub")
+const pub = document.getElementById("pub")
 
 const nameSetting = () => {
     const nickname = inputNickname.value
@@ -40,7 +40,7 @@ const updateLog = ( data ) => {
 
 const connectWsServer = () => {
     //webSocketのクラスをインスタンス化する。(最初に作っておいた変数wsに代入する)
-    ws = new WebSocket(`ws://localhost:8000/community/${fd}/chat?nickname=${nameArea.innerText}`)
+    ws = new WebSocket(`ws://localhost:8000/community/${pub}/chat?nickname=${nameArea.innerText}`)
     //wsの接続が確立された時の処理
     ws.onopen = function() {
         //wsからmessageが来た時の処理。

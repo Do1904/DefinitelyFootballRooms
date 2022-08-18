@@ -1,14 +1,15 @@
 {% extends "user-index.html" %}
 {% block body %}
-<br><br>
 <div class="content">
-    <h1>{{ other_user["nickname"] }}さんのページ</h1>
-    <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p>
-    <br>
-    <hr>
-    <br>
+    <div class="profileheader" style="background-color: black;padding: 100px;color: rgb(254, 254, 254);">
+        <h1>{{ other_user["nickname"] }}さんのページ</h1>
+        <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p>
+        <p>{{ other_user["profile"] }}</p>
+        <br>
+    </div>
+    
     <h3>Pubs</h3>
-    <ul class="pubs-list">
+    <ul class="pubs-list" style="margin: 0pt 100px;border-left: #000000b0 2px solid;border-right: #000000b0 2px solid;">
         {% for pub in pubs %}
         <li class="pub">
             <a style="font-size: 140%;" class="join" href="{{ url_for("pub_detail_page", pub_id=pub["pub_id"]) }}"><b>{{ pub["pub_name"] }}</b></a>

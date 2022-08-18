@@ -45,7 +45,8 @@ header#manu {
 
 div#search {
   position: fixed;
-  right: 0; /* 基準の位置を画面の一番右に指定する */
+  right: 0;
+  /* 基準の位置を画面の一番右に指定する */
 }
 
 .searchblog {
@@ -65,7 +66,17 @@ div#search {
 }
 
 
-
+.formstyle {
+  color: rgb(255, 255, 255);
+  background: #000000bd;
+  /*背景色の指定*/
+  border: #ffffffb0 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #000000a3;
+  /*  境界線の外側の指定 */
+  padding: 35px 75px;
+  margin: 40px auto;
+}
 
 .menu li {
   list-style: none;
@@ -296,7 +307,7 @@ li.user {
 
 .letter {
   background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 26px auto 0;
   max-width: 550px;
   min-height: 300px;
@@ -305,23 +316,27 @@ li.user {
   width: 80%;
   font-family: 'Times New Roman', Times, serif;
 }
-.letter:before, .letter:after {
+
+.letter:before,
+.letter:after {
   content: "";
   height: 98%;
   position: absolute;
   width: 100%;
   z-index: -1;
 }
+
 .letter:before {
   background: #fafafa;
-  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   left: -5px;
   top: 4px;
   transform: rotate(-2.5deg);
 }
+
 .letter:after {
   background: #f6f6f6;
-  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   right: -3px;
   top: 1px;
   transform: rotate(1.4deg);
@@ -329,7 +344,7 @@ li.user {
 
 .letter2 {
   background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 26px auto 0;
   max-width: 550px;
   min-height: 300px;
@@ -338,10 +353,39 @@ li.user {
   width: 80%;
   font-family: 'Times New Roman', Times, serif;
 }
-.letter2:before, .letter:after {
+
+.letter2:before,
+.letter:after {
   content: "";
   height: 98%;
   position: absolute;
   width: 100%;
   z-index: -1;
+}
+
+.letter3 {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  margin: 26px auto 0;
+  max-width: 550px;
+  min-height: 300px;
+  padding: 24px;
+  position: relative;
+  width: 80%;
+  font-family: 'Josefin Sans';
+}
+
+.letter3:before,
+.letter:after {
+  content: "";
+  height: 98%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+
+.profileheader {
+  margin: 50px;
+  border-bottom: #000000b0 2px solid;
 }

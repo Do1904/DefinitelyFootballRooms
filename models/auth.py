@@ -72,9 +72,9 @@ class AuthModel(AbstractModel):
         """
         return sha256(password.encode()).hexdigest()
 
-    def profile_update(self, nickname, yourclub, yourleague, yournation, profile, user_name):
-        sql = "UPDATE users SET nickname  = %s, your_club = %s, your_league = %s, your_nation = %s, profile = %s WHERE users.username = %s;"
-        self.execute(sql, nickname, yourclub, yourleague, yournation, profile, user_name)
+    def profile_update(self, nickname, yourclub, yourleague, yournation, profile, twitter, instagram, socialmedia, user_name):
+        sql = "UPDATE users SET nickname  = %s, your_club = %s, your_league = %s, your_nation = %s, profile = %s, twitter = %s, instagram = %s, SNS = %s WHERE users.username = %s;"
+        self.execute(sql, nickname, yourclub, yourleague, yournation, profile, twitter, instagram, socialmedia, user_name)
 
     def find_rooms_by_keyword(self, keyword):
         """

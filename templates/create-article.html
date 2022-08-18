@@ -5,8 +5,10 @@
         <h2>Blog新規投稿</h2>
         <br>
         <form action="{{ url_for("post_article") }}" method="post">
-            <div>
-                <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
+            <div class="cp_iptxt">
+                <label class="ef">
+                    <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
+                </label>
             </div>
             <br>
             <div>

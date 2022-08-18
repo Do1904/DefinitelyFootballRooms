@@ -2,23 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FootHouse</title>
+    <title>FooTTown</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/styles.css')}}">
 </head>
 <body>
 
     {% if not user %}
-    <div class="letter">
-    <header>
-        <ul style="list-style: none;">
-            <li>
-                <a href="{{ url_for('register') }}">新規登録</a>
-            </li>
-            <li>
-                <a href="{{ url_for('index') }}">ログイン</a>
-            </li>
-        </ul>
-    </header>
+    <div class="letter3">
+        <h3 style="text-align: center;">Welcome to</h3>
+        <h1 style="text-align: center;">FooTTown</h1>
+        <p style="text-align: center;">フットボールファンとニッチなトークを楽しんで交流しましょう！<br>あなたの好きなクラブ、リーグ、国を選択して,<Br>あなたの趣味に合ったユーザーと繋がり、<Br>そしてコミュニティで好きなトピックについてディスカッションをして、<br>フットボールファンの自分をもっと好きになろう！
+        </p><hr>
+            <p style="text-align: center;"><a class="blogtitle" href="{{ url_for('register') }}">新規登録</a></p>
+            <p style="text-align: center;"><a class="blogtitle" href="{{ url_for('index') }}">ログイン</a></p>
     </div>
     {% else %}
     <header id="manu" style="z-index:10000">
