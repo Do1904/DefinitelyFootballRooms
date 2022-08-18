@@ -1,16 +1,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
-body {
+body#home {
   width: auto;
-  background: linear-gradient(45deg, #d8d8d8, #ffffff, #c5c5c5);
+  /* background: linear-gradient(45deg, #d8d8d8, #ffffff, #c5c5c5);
   /*グラデーションを定義*/
-  background-size: 180% 180%;
+  /* background-size: 180% 180%; */
   /*サイズを大きくひきのばす*/
-  animation: bggradient 20s ease infinite;
+  /* animation: bggradient 20s ease infinite;  */
+  background-color: #53aa5d;
   font-family: 'Josefin Sans';
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   background-attachment: fixed;
   margin: 0px;
+}
+
+body#user {
+  width: auto;
+  /* background: linear-gradient(45deg, #d8d8d8, #ffffff, #c5c5c5);
+  /*グラデーションを定義*/
+  /* background-size: 180% 180%; */
+  /*サイズを大きくひきのばす*/
+  /* animation: bggradient 20s ease infinite;  */
+  background-color: #53aa5d;
+  font-family: 'Josefin Sans';
+  color: rgb(255, 255, 255);
+  background-attachment: fixed;
+  margin: 0px;
+}
+
+body#pub {
+  width: auto;
+  /* background: linear-gradient(45deg, #d8d8d8, #ffffff, #c5c5c5);
+  /*グラデーションを定義*/
+  /* background-size: 180% 180%; */
+  /*サイズを大きくひきのばす*/
+  /* animation: bggradient 20s ease infinite;  */
+  background: repeating-linear-gradient(90deg, #000000, #000000 1px, #491b1b 3px, #491b1b 60px);
+  font-family: 'Josefin Sans';
+  color: rgb(255, 255, 255);
+  background-attachment: fixed;
+  margin: 0px;
+}
+
+.formstyle {
+  background-color: rgb(34, 104, 40);
+  margin: 50px 300px;
+  padding: 100px;
+  color: rgb(254, 254, 254);
+  border: #ffffff 2px dashed;
+  box-shadow: 0 0 0 5px rgb(34, 104, 40);
+}
+
+.pubHome {
+  background: repeating-linear-gradient(90deg, #000000, #000000 1px, #491b1b 3px, #491b1b 60px);
+  height: 100%;
+  margin:0;
+  padding: 100px;
+}
+
+.board {
+  font-family: 'Sacramento', cursive;
+  font-size: 130%;
+}
+
+.pubintro {
+  color: rgb(255, 255, 255);
+  background-color: #000000b2;
+  /*背景色の指定*/
+  border: #505050d5 3px dotted;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 4px #000000b2;
+  padding: 50px 100px;
+  margin: 30px auto;
+  width: 47%;
+  word-wrap:break-all;
 }
 
 @keyframes bggradient {
@@ -36,9 +100,19 @@ main {
 
 header#manu {
   color: rgb(255, 255, 255);
-  background: #000000b7;
+  background: #001b03b7;
   /*背景色の指定*/
   padding: 60px 30px 400px 20px;
+  margin: auto;
+  position: fixed;
+}
+
+nav#manu {
+  color: rgb(255, 255, 255);
+  /*背景色の指定*/
+  background: #000000b7;
+  top: 0;
+  width: 100%;
   margin: auto;
   position: fixed;
 }
@@ -50,7 +124,8 @@ div#search {
 }
 
 .searchblog {
-  border-left: 2px solid #333;
+  border-left: 2px solid rgb(255, 255, 255);
+  color: #ffffff;
   /*境界線の指定 */
   padding: 40px 20px;
   margin: 110px 20px;
@@ -58,25 +133,13 @@ div#search {
 }
 
 .searchdiscussion {
-  border-left: 2px solid #333;
+  border-left: 2px solid rgb(255, 255, 255);
   /*境界線の指定 */
   padding: 40px 20px;
-  margin: 55px 20px;
+  margin: 100px 20px;
   width: 63%;
 }
 
-
-.formstyle {
-  color: rgb(255, 255, 255);
-  background: #000000bd;
-  /*背景色の指定*/
-  border: #ffffffb0 2px solid;
-  /*境界線の指定 */
-  box-shadow: 0 0 0 2px #000000a3;
-  /*  境界線の外側の指定 */
-  padding: 35px 75px;
-  margin: 40px auto;
-}
 
 .menu li {
   list-style: none;
@@ -196,11 +259,11 @@ a {
 
 .your_community {
   color: rgb(255, 255, 255);
-  background: #000000bb;
+  background: repeating-linear-gradient(90deg, #000000, #000000 1px, #491b1b 3px, #491b1b 60px);
   /*背景色の指定*/
-  border: #ffffffb0 2px solid;
+  border: #b0b0b0 3px dotted;
   /*境界線の指定 */
-  box-shadow: 0 0 0 2px #000000a3;
+  box-shadow: 0 0 0 4px #1e0808;
   /*  境界線の外側の指定 */
   padding: 35px 75px;
   margin: 40px auto;
@@ -209,11 +272,11 @@ a {
 
 .communities {
   color: rgb(255, 255, 255);
-  background: #000000bb;
+  background: repeating-linear-gradient(90deg, #000000, #000000 1px, #491b1b 3px, #491b1b 60px);
   /*背景色の指定*/
-  border: #ffffffb0 2px solid;
+  border: #00000061 3px solid;
   /*境界線の指定 */
-  box-shadow: 0 0 0 2px #000000a3;
+  box-shadow: 0 0 0 2px #00000061;
   /*  境界線の外側の指定 */
   padding: 35px 75px;
   margin: 40px auto;
@@ -224,7 +287,7 @@ a {
   color: rgb(0, 0, 0);
   background: #ffffffbb;
   /*背景色の指定*/
-  border: #73737360 2px solid;
+  border: #ffffff 2px solid;
   /*境界線の指定 */
   box-shadow: 0 0 0 2px #ffffff3c;
   /*  境界線の外側の指定 */
@@ -235,9 +298,9 @@ a {
 
 .users {
   color: rgb(0, 0, 0);
-  background: #ffffffbb;
+  background: #ffffff96;
   /*背景色の指定*/
-  border: #73737360 2px solid;
+  border: #ffffff 2px solid;
   /*境界線の指定 */
   box-shadow: 0 0 0 2px #ffffff3c;
   /*  境界線の外側の指定 */
@@ -248,9 +311,9 @@ a {
 
 .user_blogs {
   color: rgb(0, 0, 0);
-  background: #ffffffbb;
+  background: #ffffff96;
   /*背景色の指定*/
-  border: #73737360 2px solid;
+  border: #ffffff 2px solid;
   /*境界線の指定 */
   box-shadow: 0 0 0 2px #ffffff3c;
   /*  境界線の外側の指定 */
@@ -261,7 +324,7 @@ a {
 
 .article {
   color: rgb(0, 0, 0);
-  border: #9e9e9e60 2px solid;
+  border: #ffffff 2px solid;
   padding: 20px 40px;
   margin: 20px auto;
   width: 50%;
@@ -277,12 +340,12 @@ li.pub {
   color: rgb(255, 255, 255);
   background: #000000bb;
   /*背景色の指定*/
-  border: #ffffffb0 2px solid;
+  border: #ffffff74 2.4px dotted;
   /*境界線の指定 */
   box-shadow: 0 0 0 2px #000000a3;
   /*  境界線の外側の指定 */
   padding: 30px 60px;
-  margin: 40px auto;
+  margin: 40px 10px;
   width: 25%;
 }
 
@@ -306,7 +369,7 @@ li.user {
 }
 
 .letter {
-  background: #fff;
+  background: rgb(211, 204, 193);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 26px auto 0;
   max-width: 550px;
@@ -327,7 +390,7 @@ li.user {
 }
 
 .letter:before {
-  background: #fafafa;
+  background: rgb(211, 204, 193);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   left: -5px;
   top: 4px;
@@ -335,7 +398,7 @@ li.user {
 }
 
 .letter:after {
-  background: #f6f6f6;
+  background: rgb(211, 204, 193);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   right: -3px;
   top: 1px;
@@ -343,7 +406,7 @@ li.user {
 }
 
 .letter2 {
-  background: #fff;
+  background: rgb(211, 204, 193);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 26px auto 0;
   max-width: 550px;
@@ -364,7 +427,7 @@ li.user {
 }
 
 .letter3 {
-  background: #fff;
+  background: rgb(211, 204, 193);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin: 26px auto 0;
   max-width: 550px;

@@ -2,22 +2,24 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
-        <h2>Blog新規投稿</h2>
-        <br>
-        <form action="{{ url_for("post_article") }}" method="post">
-            <div class="cp_iptxt">
-                <label class="ef">
-                    <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
-                </label>
-            </div>
-            <br>
-            <div>
-                <textarea id="body" name="body" rows="20" cols="40" placeholder="ブログの内容を書こう！"></textarea>
-            </div>
-            <br>
-            <div>
-                <button type="submit">投稿</button>
-            </div>
-        </form>
+        <h2><br>POST NEW BLOG</h2>
+        <div class="formstyle">
+            <form action="{{ url_for("post_article") }}" method="post">
+                <div class="cp_iptxt">
+                    <label class="ef">
+                        <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
+                    </label>
+                </div>
+                <br>
+                <div>
+                    <textarea id="body" name="body" rows="20" cols="40" placeholder="ブログの内容を書こう！"></textarea>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">投稿</button>
+                </div>
+            </form>
+        </div>
+        
     </div>
 {% endblock %}

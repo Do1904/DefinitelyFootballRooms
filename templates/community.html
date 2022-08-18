@@ -2,13 +2,12 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
-        <h2>SEARCH COMMUNITY</h2>
+        <h2><br>SEARCH COMMUNITY</h2>
         <form action="/community" method="post">
             <div>
                 <p><input id="keyword" type="text" value="#" name="keyword"/></p>
             </div>
             <div>
-                <label><input type="radio" name="search_from" class="Rooms" value="Rooms">Rooms</label>
                 <label><input type="radio" name="search_from" class="Pubs" value="Pubs" checked="checked">Pubs</label>
                 <label><input type="radio" name="search_from" class="Users" value="Users">Users</label>
             </div>
@@ -17,7 +16,8 @@
                 <button type="submit">検索</button>
             </div>
         </form>
-        <hr>
+        <br>
+        <div style="border-bottom: #ffffff 2px solid;margin: 0px 300px;"></div>
         {% if status == "pub" %}
         <h3>PUBS</h3>
         <p></p>

@@ -5,7 +5,7 @@
     <div class="searchblog">
         <form action="/articles" method="post">
             <div>
-                <label for="search_articles">Blog検索</label>
+                <label for="search_articles">BLOG検索</label>
                 <p><input id="search_articles" type="text" value="" name="keyword"/></p>
             </div>
             <div>
@@ -30,12 +30,12 @@
             </div>
         </form>
         <br>
-        <hr>
-        <p style="font-size: 90%;"><a class="blogtitle" href="{{ url_for('articles_index') }}">全て表示/更新</a></p>
+        <br>
+        <p style="font-size: 90%;"><a class="menus" href="{{ url_for('articles_index') }}">全て表示/更新</a></p>
     </div>
 </div>
     <div class="content">
-        <h2>Blog一覧</h2>
+        <h2><br>BLOG</h2>
         <br>
             {% for article in articles %}
             <div class="blogs">

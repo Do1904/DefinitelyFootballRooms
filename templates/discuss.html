@@ -2,41 +2,42 @@
 {% block body %}
 <br>
     <div class="content">
-        <h2>{{ pub["pub_name"] }}</h2>
+        <h2><br><br><br>{{ pub["pub_name"] }}</h2>
         <p>新たなディスカッションを始めよう！！</p>
         <br>
-        <hr>
-        <br>
-        <form action="/community/newdiscussion" method="post">
-            <div>
-                <label for="status">ディスカッションの種類</label>
-                <p><select name="status">
-                    <option value="QUESTION" selected>質問</option>
-                    <option value="NEWS">衝撃</option>
-                    <option value="PRE-MATCH">試合前</option>
-                    <option value="POST-MATCH">試合後</option>
-                    <option value="MATCH">試合中</option>
-                    <option value="BREAKING!">速報</option>
-                    <option value="CELEBRATE!">お祝い</option>
-                    <option value="SHOCKING!">衝撃</option>
-                    <option value="DISTRESSING...">悲報</option>
-                </select></p>
-            </div>
-            <div>
-                <label for="discuss_title">ディスカッションのタイトル</label>
-                <p><input id="discuss_title" name="discuss_title" rows="20" placeholder="タイトル"></textarea></p>
-            </div>
-            <div>
-                <label for="body">ディスカッションの内容</label><br>
-                <p><textarea id="body" name="body" rows="10" cols="90" placeholder="本文"></textarea></p>
-            </div>
-            <div>
-                <p><input type="hidden" id="pub_id" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
-            </div>
-            <br>
-            <div>
-                <button type="submit">投稿</button>
-            </div>
-        </form>
+        <div class="pubintro">
+            <form action="/community/newdiscussion" method="post">
+                <div>
+                    <label for="status">ディスカッションの種類</label>
+                    <p><select name="status">
+                        <option value="QUESTION" selected>質問</option>
+                        <option value="NEWS">衝撃</option>
+                        <option value="PRE-MATCH">試合前</option>
+                        <option value="POST-MATCH">試合後</option>
+                        <option value="MATCH">試合中</option>
+                        <option value="BREAKING!">速報</option>
+                        <option value="CELEBRATE!">お祝い</option>
+                        <option value="SHOCKING!">衝撃</option>
+                        <option value="DISTRESSING...">悲報</option>
+                    </select></p>
+                </div>
+                <div>
+                    <label for="discuss_title">ディスカッションのタイトル</label>
+                    <p><input id="discuss_title" name="discuss_title" rows="20" placeholder="タイトル"></textarea></p>
+                </div>
+                <div>
+                    <label for="body">ディスカッションの内容</label><br>
+                    <p><textarea id="body" name="body" rows="10" cols="90" placeholder="本文"></textarea></p>
+                </div>
+                <div>
+                    <p><input type="hidden" id="pub_id" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">投稿</button>
+                </div>
+            </form>
+        </div><br><br>
+        
     </div>
 {% endblock %}

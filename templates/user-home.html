@@ -1,14 +1,14 @@
 {% extends "user-index.html" %}
 {% block body %}
 <div class="content">
-    <div class="profileheader" style="background-color: black;padding: 100px;color: rgb(254, 254, 254);">
+    <div class="profileheader" style="background-color: rgb(0, 64, 5);margin:0;padding: 100px;color: rgb(190, 255, 192);border: 0;">
         <h1>{{ other_user["nickname"] }}さんのページ</h1>
+        <div style="border-bottom: rgb(190, 255, 192) 2px solid;margin: 0px 300px;"></div>
         <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p>
         <p>{{ other_user["profile"] }}</p>
-        <br>
     </div>
-    
-    <h3>Pubs</h3>
+    <div style="background-color: rgb(34, 104, 40);margin:0;padding: 50px 100px 90px 100px;color: rgb(254, 254, 254);border: 0;">
+        <h3>Pubs</h3>
     <ul class="pubs-list" style="margin: 0pt 100px;border-left: #000000b0 2px solid;border-right: #000000b0 2px solid;">
         {% for pub in pubs %}
         <li class="pub">
@@ -21,7 +21,9 @@
     <p>Pubはまだありません</p>
     {% endif %}
     </ul>
-    <br>
+    </div>
+    
+    <br><br>
     <h3>Blogs</h3>
     <br>
     {% for article in articles %}
@@ -29,7 +31,6 @@
         <h3><a class="blogtitle" href="{{ url_for("article_detail_page", article_id=article["id"]) }}">{{ article["title"] }} </a></h3>
         <p style="font-size: 103%;text-align: left;margin: 0px;">{{ article["body"] }}</p>
         <p style="font-size: 78%;text-align: left;margin: 0px;">{{ article["created_at"] }}</p>
-        <hr>
     </div>
     {% endfor %}
     {% if not articles %}

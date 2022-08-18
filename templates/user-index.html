@@ -7,13 +7,12 @@
   <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/styles.css')}}">
 </head>
 
-<body>
-  <br>
+<body id="user">
   <div class="community">
-    <nav class="backhome" style="z-index:10000">
+    <nav class="backhome" id="manu" style="z-index:10000">
       <ul class="main_menu" style="list-style: none;">
         <li>
-          <a class="backtohome" href="{{ url_for('show_community_list') }}">戻る</a>
+          <a class="menus" style="text-align: center;" href="{{ url_for('show_community_list') }}">FooTTown</a>
           <!-- <a href="./chatroom.html">chatroom</a>
           <a href="./bot.html">botとお話し</a> -->
         </li>

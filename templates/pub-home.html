@@ -1,11 +1,17 @@
 {% extends "pub-index.html" %}
 {% block body %}
-<br><br><br><br><br><br>
+<div class="pubHome">
     <div class="content">
-        <h1>{{ pub["pub_name"] }} へようこそ！</h1>
-        <p>{{ pub["pub_comment"] }}</p>
+        <div class="pubintro">
+            <h3 class="board">Welcome</h3>
+            <h1>{{ pub["pub_name"] }}</h1>
+            <br>
+            <p style="font-size: 80%;">{{ pub["pub_comment"] }}</p>
+        </div>
+        
+
+        
         <br>
-        <hr>
         <br>
         <!-- <h4>24人が参加しています。</h4>
         <p>メンバー</p>
@@ -20,8 +26,9 @@
         <p>まだ参加者はいません</p>
         {% endif %} -->
         <h3>あなたの好きな話題でみんなとディスカッションしましょう！！</h3>
-        <a class="blogtitle" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
-        
+        <a class="menus" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
+        <p>Follow</p>
     </div>
+</div>
 
 {% endblock %}

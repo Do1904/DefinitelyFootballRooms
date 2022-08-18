@@ -5,7 +5,24 @@
     <title>FooTTown</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/styles.css')}}">
 </head>
-<body>
+<body id="home">
+    <script>
+        
+        //初期表示は非表示
+        document.getElementById("manu").style.display ="block";
+        
+        function manuDisplay(){
+            const manu = document.getElementById("manu");
+        
+            if(manu.style.display=="block"){
+                // noneで非表示
+                manu.style.display ="none";
+            }else{
+                // blockで表示
+                manu.style.display ="block";
+            }
+        }
+        </script>
 
     {% if not user %}
     <div class="letter3">
@@ -74,6 +91,18 @@
             </li>
         </ul>
     </header>
+    <nav class="backhome" id="manu" style="z-index:10000">
+        <ul class="main_menu" style="list-style: none;display: flex;">
+          <li style="list-style: none;margin-left: 10px;">
+            <a class="menus" style="text-align: center;" href="{{ url_for('show_community_list') }}">FooTTown</a>
+            <!-- <a href="./chatroom.html">chatroom</a>
+            <a href="./bot.html">botとお話し</a> -->
+          </li>
+          <li style="list-style: none;margin-left: 10px;">
+            <a class="menus" href="javascript:manuDisplay();">Menu</a>
+          </li>
+        </ul>
+      </nav>
     {% endif %}
     {% if error %}
         <p style="color: red">{{ error }}</p>

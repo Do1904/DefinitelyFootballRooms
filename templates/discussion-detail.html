@@ -10,10 +10,10 @@
     <div class="letter2">
         <p>
             <h3 style="font-size: 150%;background: #000000bb;color: whitesmoke;">{{ topic["status"] }}</h3>
-            <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;"><b>{{ topic["title"] }}</b></p>
-            <p style="font-size: 120%;white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ topic["body"] }}</p><Br>
-            <p style="font-size: 105%;">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=topic["username"]) }}">{{ topic["nickname"] }}</a></p>
-            <p style="font-size: 105%;">{{ topic["created_at"] }}</p>
+            <p style="font-size: 300%;white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);"><b>{{ topic["title"] }}</b></p>
+            <p style="font-size: 120%;white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);">{{ topic["body"] }}</p><Br>
+            <p style="font-size: 105%;color: rgb(0, 0, 0);">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=topic["username"]) }}">{{ topic["nickname"] }}</a></p>
+            <p style="font-size: 105%;color: rgb(0, 0, 0);">{{ topic["created_at"] }}</p>
         </p>
     </div>
 <br>
@@ -21,10 +21,10 @@
 <div class="letter2">
     <h2 style="background: #000000bb;color: whitesmoke;">Discussion</h2>
 {% for comment in comments %}
-    <h3 style="font-size: 100%;text-align: left;"><a class="discussionpage" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></h3>
-    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ comment["context"] }}</p>
-    <p style="font-size: 85%;">{{ comment["created_at"] }}</p>
-    <hr>
+    <h3 style="font-size: 100%;text-align: left;color: rgb(0, 0, 0);"><a class="discussionpage" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></h3>
+    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);">{{ comment["context"] }}</p>
+    <p style="font-size: 85%;color: rgb(0, 0, 0);">{{ comment["created_at"] }}</p>
+    <div style="border-bottom: rgb(0, 0, 0) 1px solid;"></div>
 {% endfor %}
 {% if not comments %}
 <br>

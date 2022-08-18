@@ -8,13 +8,12 @@
   <link rel="stylesheet" type="text/css" href="{{url_for('static', path='/styles/styles.css')}}">
 </head>
 
-<body>
-  <br>
+<body id="pub">
   <div class="community">
-    <nav class="backhome" style="z-index:10000">
+    <nav class="backhome" id="manu" style="z-index:10000">
       <ul class="main_menu" style="list-style: none;">
         <li>
-          <a class="backtohome" href="{{ url_for('show_community_list') }}">戻る</a>
+          <a class="menus" style="text-align: center;" href="{{ url_for('show_community_list') }}">FooTTown</a>
         </li>
       </ul>
     </nav>
@@ -23,6 +22,7 @@
       {% endblock %}
     </main>
   </div>
+  
 </body>
 
 </html>
