@@ -227,6 +227,26 @@ class AuthModel(AbstractModel):
         sql = "INSERT INTO discuss_comments(username, message_id, context) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, topic_id, body)
 
+    def follow_user(self, username, user_name, follow_id):
+        sql = "INSERT IGNORE INTO follow(to_user_id, from_user_id, id) VALUE (%s, %s, %s);"
+        self.execute(sql, username, user_name, follow_id)
+
+    def unfollow_user(self, username, user_name):
+        sql = "DELETE FROM follow WHERE to_user_id = %s AND from_user_id = %s"
+        self.execute(sql, username, user_name)
+
+    def get_followings(self, username):
+        sql = "SELECT * FROM follow WHERE from_user_id = %s"
+        return self.fetch_all(sql, username)
+
+    def get_followers(self, username):
+        sql = "SELECT * FROM follow WHERE to_user_id = %s"
+        return self.fetch_all(sql, username)
+
+    def detect_follow(self, follow_id):
+        sql = "SELECT * FROM follow WHERE id = %s"
+        return self.fetch_all(sql, follow_id)
+
     # def pub_update(self, pub_name, pub_comment, pub_id):
     #     sql = "UPDATE pubs SET pub_name = %s, pub_comment = %s WHERE pubs.pub_id = %s;"
     #     self.execute(sql, pub_name, pub_comment, pub_id)

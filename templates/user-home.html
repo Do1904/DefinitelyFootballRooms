@@ -1,11 +1,48 @@
 {% extends "user-index.html" %}
 {% block body %}
 <div class="content">
-    <div class="profileheader" style="background-color: rgb(0, 64, 5);margin:0;padding: 100px;color: rgb(190, 255, 192);border: 0;">
-        <h1>{{ other_user["nickname"] }}さんのページ</h1>
-        <div style="border-bottom: rgb(190, 255, 192) 2px solid;margin: 0px 300px;"></div>
-        <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p>
-        <p>{{ other_user["profile"] }}</p>
+    <div class="profileheader" style="background-color: rgb(0, 64, 5);margin: 0px auto;padding: 100px;color: rgb(190, 255, 192);border: 0;">
+        <h1>{{ other_user["nickname"] }}さんのページ</h1><br>
+        <div style="border-bottom: rgb(190, 255, 192) 2px dashed;margin: 0px 300px;"></div>
+        <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p><br>
+        <p style="white-space:pre-wrap;font-size: 89%;">{{ other_user["profile"] }}</p>
+        <div style="border-bottom: rgb(190, 255, 192) 2px dashed;margin: 0px 300px;"></div><br>
+        <br>
+        <table style="table-layout: fixed;margin: 0 auto;width: 30%;">
+            <tr>
+                <th>Followings</th>
+                <th>Followers</th>
+                <th>Pubs</th>
+                <th>Blogs</th>
+            <tr>
+                <td>{{ following|length }}</td>
+                <td>{{ follower|length }}</td>
+                <td>{{ pubs|length }}</td>
+                <td>{{ articles|length }}</td>
+            </tr>
+        </table>
+        <br>
+        {% if not follow_or_not %}
+        <form action="/follow" name="follow"  method="post">
+            <div>
+                <p><input id="username" type="hidden" value="{{ other_user["username"] }}" name="username"/></p>
+            </div>
+            <div>
+                <a class="followuser" href="javascript:follow.submit()">Follow</a>
+            </div>
+        </form>
+        {% else %}
+        <p style="color: white;">フォロー中</p>
+        <form action="/unfollow" name="unfollow"  method="post">
+            <div>
+                <p><input id="username" type="hidden" value="{{ other_user["username"] }}" name="username"/></p>
+            </div>
+            <div>
+                <a class="followuser" href="javascript:unfollow.submit()">Unfollow</a>
+            </div>
+        </form>
+        
+        {% endif %}
     </div>
     <div style="background-color: rgb(34, 104, 40);margin:0;padding: 50px 100px 90px 100px;color: rgb(254, 254, 254);border: 0;">
         <h3>Pubs</h3>
@@ -17,7 +54,7 @@
                 <p style="font-size: 90%;text-align: center;">{{ pub["created_at"] }}</p>
         </li>
         {% endfor %}
-    {% if not articles %}
+    {% if not pubs %}
     <p>Pubはまだありません</p>
     {% endif %}
     </ul>
@@ -36,6 +73,7 @@
     {% if not articles %}
     <p>投稿された記事はありません</p>
     {% endif %}
+    <br><br>
 
 </div>
 

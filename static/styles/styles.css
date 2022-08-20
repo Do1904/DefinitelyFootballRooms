@@ -100,7 +100,7 @@ main {
 
 header#manu {
   color: rgb(255, 255, 255);
-  background: #001b03b7;
+  background: #003b07b7;
   /*背景色の指定*/
   padding: 60px 30px 400px 20px;
   margin: auto;
@@ -254,6 +254,19 @@ a {
   color: rgb(255, 255, 255);
 }
 
+.followuser {
+  padding: 0.2em 0.4em;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(190, 255, 192) 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: rgb(255, 255, 255);
+}
+
+.followuser:hover {
+  background-position: -100% 0%;
+  color: rgb(0, 64, 5);
+}
 
 
 
@@ -285,12 +298,10 @@ a {
 
 .blogs {
   color: rgb(0, 0, 0);
-  background: #ffffffbb;
+  background: #ffffff6c;
   /*背景色の指定*/
   border: #ffffff 2px solid;
   /*境界線の指定 */
-  box-shadow: 0 0 0 2px #ffffff3c;
-  /*  境界線の外側の指定 */
   padding: 6px 70px;
   margin: 7px auto;
   width: 20%;
@@ -319,15 +330,18 @@ a {
   /*  境界線の外側の指定 */
   padding: 0px 60px;
   margin: 10px auto;
-  width: 39%;
+  width: 55%;
 }
 
 .article {
   color: rgb(0, 0, 0);
+  background: #ffffff6c;
+  /*背景色の指定*/
   border: #ffffff 2px solid;
+  /*境界線の指定 */
   padding: 20px 40px;
   margin: 20px auto;
-  width: 50%;
+  width: 57%;
 }
 
 ul.pubs-list {
@@ -408,23 +422,15 @@ li.user {
 .letter2 {
   background: rgb(211, 204, 193);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  margin: 26px auto 0;
-  max-width: 550px;
+  margin: 20px auto;
+  max-width: 800px;
   min-height: 300px;
-  padding: 24px;
+  padding: 5px 20px;
   position: relative;
-  width: 80%;
+  width: 90%;
   font-family: 'Times New Roman', Times, serif;
 }
 
-.letter2:before,
-.letter:after {
-  content: "";
-  height: 98%;
-  position: absolute;
-  width: 100%;
-  z-index: -1;
-}
 
 .letter3 {
   background: rgb(211, 204, 193);
@@ -452,3 +458,5 @@ li.user {
   margin: 50px;
   border-bottom: #000000b0 2px solid;
 }
+
+

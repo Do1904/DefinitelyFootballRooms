@@ -3,10 +3,11 @@
 <br>
 <div id="search">
     <div class="searchdiscussion">
-        <p><a class="blogtitle" href="{{ url_for("post_discuss_comment", id=topic["id"]) }}">新規コメント</a></p>
+        <p><a class="menus" href="{{ url_for("post_discuss_comment", id=topic["id"]) }}">新規コメント</a></p>
     </div>
 </div>
 <div class="content">
+    <br><br>
     <div class="letter2">
         <p>
             <h3 style="font-size: 150%;background: #000000bb;color: whitesmoke;">{{ topic["status"] }}</h3>
@@ -28,7 +29,7 @@
 {% endfor %}
 {% if not comments %}
 <br>
-<div>ディスカッションしましょう！</div>
+<p style="color: rgb(0, 0, 0);">ディスカッションしましょう！</p>
 </div>
 </div>
 {% endif %}

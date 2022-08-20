@@ -463,22 +463,44 @@ def post_comment(body: str = Form(...), topic_id: int = Form(...), session_id=Co
 @check_login
 def user_detail_page(request: Request, username: str, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     article_model = ArticleModel(config)
     other_user = auth_model.find_other_users_by_username(username)
     articles = article_model.fetch_article_by_username(username)
     created_by = username
     pubs = auth_model.find_pub_by_created_by(created_by)
-    # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
-    # session_id = session.set("user", user)
-    # response.set_cookie("session_id", session_id)
+    followings = auth_model.get_followings(username)
+    followers = auth_model.get_followers(username)
+    follow_id = user_name + "--" + username
+    follow_or_not = auth_model.detect_follow(follow_id)
     return templates.TemplateResponse("user-home.html", {
         "request": request,
         "user": user,
         "other_user": other_user,
         "articles": articles,
-        "pubs": pubs
+        "pubs": pubs,
+        "following": followings,
+        "follower": followers,
+        "follow_or_not": follow_or_not
     })
+
+@app.post("/follow")
+@check_login
+def follow_user(username: str = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    follow_id = user_name + "--" + username
+    auth_model = AuthModel(config)
+    auth_model.follow_user(username, user_name, follow_id)
+    return RedirectResponse("/user/%s" % (username), status_code=HTTP_302_FOUND)
+
+@app.post("/unfollow")
+@check_login
+def unfollow_user(username: str = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    auth_model.unfollow_user(username, user_name)
+    return RedirectResponse("/user/%s" % (username), status_code=HTTP_302_FOUND)
 
 
 
