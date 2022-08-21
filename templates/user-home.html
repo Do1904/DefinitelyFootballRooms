@@ -14,7 +14,8 @@
                 <th>Followers</th>
                 <th>Pubs</th>
                 <th>Blogs</th>
-            <tr>
+            </tr>
+            <tr style="font-size: 140%;">
                 <td>{{ following|length }}</td>
                 <td>{{ follower|length }}</td>
                 <td>{{ pubs|length }}</td>
@@ -22,6 +23,7 @@
             </tr>
         </table>
         <br>
+        {% if user["username"] != other_user["username"] %}
         {% if not follow_or_not %}
         <form action="/follow" name="follow"  method="post">
             <div>
@@ -43,9 +45,14 @@
         </form>
         
         {% endif %}
+        {% endif %}
     </div>
     <div style="background-color: rgb(34, 104, 40);margin:0;padding: 50px 100px 90px 100px;color: rgb(254, 254, 254);border: 0;">
         <h3>Pubs</h3>
+        {% if user["username"] == other_user["username"] %}
+        <p><a class="followuser" href="{{ url_for('create_community') }}">新規作成</a></p>
+        <br>
+        {% endif %}
     <ul class="pubs-list" style="margin: 0pt 100px;border-left: #000000b0 2px solid;border-right: #000000b0 2px solid;">
         {% for pub in pubs %}
         <li class="pub">
@@ -62,6 +69,10 @@
     
     <br><br>
     <h3>Blogs</h3>
+    {% if user["username"] == other_user["username"] %}
+    <p><a class="followuser" href="{{ url_for('create_article_page') }}">新規投稿</a></p>
+    <br>
+    {% endif %}
     <br>
     {% for article in articles %}
     <div class="user_blogs" style="white-space:pre-wrap;">

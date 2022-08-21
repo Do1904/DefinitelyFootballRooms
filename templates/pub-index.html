@@ -9,11 +9,31 @@
 </head>
 
 <body id="pub">
+  <script>
+        
+    //初期表示は表示
+    document.getElementById("manu").style.display ="none";
+    
+    function manuDisplay(){
+        const manu = document.getElementById("manu");
+    
+        if(manu.style.display=="block"){
+            // noneで非表示
+            manu.style.display ="none";
+        }else{
+            // blockで表示
+            manu.style.display ="block";
+        }
+    }
+    </script>
   <div class="community">
-    <nav class="backhome" id="manu" style="z-index:10000">
-      <ul class="main_menu" style="list-style: none;">
-        <li>
-          <a class="menus" style="text-align: center;" href="{{ url_for('show_community_list') }}">FooTTown</a>
+    <nav class="backhome" id="menu" style="z-index:13000">
+      <ul class="main_menu" style="list-style: none;display: flex;">
+        <li style="list-style: none;">
+          <a class="menus" style="text-align: center;" href="{{ url_for('top') }}">FooTTown</a>
+        </li>
+        <li style="list-style: none;margin-left: 10px;">
+          <a class="menus" href="javascript:manuDisplay();">Menu</a>
         </li>
       </ul>
     </nav>

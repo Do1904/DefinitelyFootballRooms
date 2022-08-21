@@ -2,25 +2,31 @@
 {% block body %}
     <div class="content">
         <br><br><br><br>
-        <h2><br>CREATE NEW COMMUNITY</h2>
-        <form action="/new_community" method="post">
-            <div>
-                <p><input id="community_id" type="text" size="30" name="community_id" placeholder="Pubのidを作成しましょう!" required/></p>
-            </div>
-            <div>
-                <p><input id="community_name" type="text" size="30" name="community_name" placeholder="Pubの名前を入れましょう!" required/></p>
-            </div>
-            <div>
-                <textarea id="community_comment" name="community_comment" cols="40" rows="20" placeholder="Pubの紹介文を書きましょう! 検索されやすいように、ハッシュタグをつけましょう!"></textarea>
-            </div>
-            <!-- <div>
-                <label><input type="radio" name="public_or_not" class="public" value="public" checked="checked">Public</label>
-                <label><input type="radio" name="public_or_not" class="private" value="private">Private</label>
-            </div> -->
-            <br>
-            <div>
-                <button type="submit">作成</button>
-            </div>
-        </form>
+        <h2><br>CREATE NEW PUB</h2>
+        <div class="formstyle">
+            <form action="/new_community" method="post">
+                <div>
+                    <label for="community_id">pubのidを作成</label>
+                    <p><input id="community_id" type="text" size="30" name="community_id" placeholder="Pubのidを作成しましょう!" required/></p><br>
+                </div>
+                <div>
+                    <label for="community_name">pubの名前を作成</label>
+                    <p><input id="community_name" type="text" size="30" name="community_name" placeholder="Pubの名前を入れましょう!" required/></p><br>
+                </div>
+                <div>
+                    <label for="community_id">pubの紹介文を作成</label>
+                    <p><textarea id="community_comment" name="community_comment" cols="40" rows="20" placeholder="Pubの紹介文を書きましょう! 検索されやすいように、ハッシュタグをつけましょう!"></textarea></p>
+                </div>
+                <!-- <div>
+                    <label><input type="radio" name="public_or_not" class="public" value="public" checked="checked">Public</label>
+                    <label><input type="radio" name="public_or_not" class="private" value="private">Private</label>
+                </div> -->
+                <br>
+                <div>
+                    <button type="submit">作成</button>
+                </div>
+            </form>
+        </div>
+        
     </div>
 {% endblock %}

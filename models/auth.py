@@ -175,17 +175,17 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM pubs where created_by=%s"
         return self.fetch_all(sql, created_by)
 
-    def join_pub_member(self, pub_id, user_name):
-        sql = "INSERT IGNORE INTO pub_members(pub_id, username) VALUE (%s, %s);" 
-        self.execute(sql, pub_id, user_name)
+    # def join_pub_member(self, pub_id, user_name):
+    #     sql = "INSERT IGNORE INTO pub_members(pub_id, username) VALUE (%s, %s);" 
+    #     self.execute(sql, pub_id, user_name)
 
-    def find_chat_member_by_pub_id_username(self, pub_id, user_name):
-        sql = "SELECT * FROM pub_members where pub_id=%s AND username=%s;"
-        return self.fetch_one(sql, pub_id, user_name)
+    # def find_chat_member_by_pub_id_username(self, pub_id, user_name):
+    #     sql = "SELECT * FROM pub_members where pub_id=%s AND username=%s;"
+    #     return self.fetch_one(sql, pub_id, user_name)
 
-    def find_chat_members_by_pub_id(self, pub_id):
-        sql = "SELECT * FROM pub_members where pub_id=%s"
-        return self.fetch_all(sql, pub_id)
+    # def find_chat_members_by_pub_id(self, pub_id):
+    #     sql = "SELECT * FROM pub_members where pub_id=%s"
+    #     return self.fetch_all(sql, pub_id)
 
     def find_discussion_by_pub_id(self, pub_id):
         sql = "SELECT * FROM message INNER JOIN users on message.username = users.username where message.pub_id=%s ORDER BY message.created_at DESC"
@@ -245,6 +245,27 @@ class AuthModel(AbstractModel):
 
     def detect_follow(self, follow_id):
         sql = "SELECT * FROM follow WHERE id = %s"
+        return self.fetch_all(sql, follow_id)
+
+
+    def follow_pub(self, pub_id, user_name, follow_id):
+        sql = "INSERT IGNORE INTO followpub(pub, user, id) VALUE (%s, %s, %s);"
+        self.execute(sql, pub_id, user_name, follow_id)
+
+    def unfollow_pub(self, pub_id, user_name):
+        sql = "DELETE FROM followpub WHERE pub = %s AND user = %s"
+        self.execute(sql, pub_id, user_name)
+
+    def get_pub_followings(self, username):
+        sql = "SELECT * FROM followpub WHERE user = %s"
+        return self.fetch_all(sql, username)
+
+    def get_pub_followers(self, pub_id):
+        sql = "SELECT * FROM followpub WHERE pub = %s"
+        return self.fetch_all(sql, pub_id)
+
+    def detect_pub_follow(self, follow_id):
+        sql = "SELECT * FROM followpub WHERE id = %s"
         return self.fetch_all(sql, follow_id)
 
     # def pub_update(self, pub_name, pub_comment, pub_id):

@@ -1,5 +1,6 @@
 {% extends "pub-index.html" %}
 {% block body %}
+
 <div class="pubHome">
     <div class="content">
         <div class="pubintro">
@@ -12,22 +13,39 @@
 
         
         <br>
-        <br>
-        <!-- <h4>24人が参加しています。</h4>
-        <p>メンバー</p>
-        <ul class="members_list" style="list-style: none;">
-            {% for result in members %}
-            <li>
-                {{ result["username"] }}
-            </li>
-            {% endfor %}
-        </ul>
-        {% if not members %}
-        <p>まだ参加者はいません</p>
-        {% endif %} -->
+        <table style="table-layout: fixed;margin: 0 auto;width: 30%;">
+            <tr style="font-size: 110%;">
+                <th>Followers</th>
+            </tr>
+            <tr style="font-size: 200%;">
+                <td>{{ follower|length }}</td>
+            </tr>
+        </table>
         <h3>あなたの好きな話題でみんなとディスカッションしましょう！！</h3>
-        <a class="menus" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
-        <p>Follow</p>
+        <br>
+        {% if not follow_or_not %}
+        <form action="/followpub" name="follow"  method="post">
+            <div>
+                <p><input id="pub_id" type="hidden" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
+            </div>
+            <div>
+                <a class="join" href="javascript:follow.submit()">Follow</a>
+            </div>
+        </form>
+        {% else %}
+        <p style="color: white;">フォロー中</p>
+        <form action="/unfollowpub" name="unfollow"  method="post">
+            <div>
+                <p><input id="pub_id" type="hidden" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
+            </div>
+            <div>
+                <a class="join" href="javascript:unfollow.submit()">Unfollow</a>
+            </div>
+        </form>
+        
+        {% endif %}
+        <br>
+        <a class="join" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
     </div>
 </div>
 

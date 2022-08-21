@@ -35,7 +35,7 @@
     </div>
     {% else %}
     <header id="manu" style="z-index:10000">
-        <h3>{{ user["nickname"] }}</h3>
+        <p style="font-size: 145%;"><a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=user["username"]) }}"><b>{{ user["nickname"] }}</b></a></p>
         <br><br>
         <h4>Profile</h4>
         <table border="0" class="profile_table">
@@ -57,19 +57,13 @@
               </tr> -->
           </table>
           <br><br>
-        <p>Home</p>  
+        <p>Blog</p>  
         <ul class="main_menu" style="list-style: none;">
-            <li>
-                <a class="menus" href="{{ url_for('profile_update_page') }}">プロフィール</a>
-            </li>
             <li>
                 <a class="menus" href="{{ url_for('articles_index') }}">Blog一覧</a>
             </li>
             <li>
                 <a class="menus" href="{{ url_for('create_article_page') }}">新規投稿</a>
-            </li>
-            <li>
-                <a class="menus" href="{{ url_for('logout') }}" methods="post"> ログアウト </a>
             </li>
         </ul>
         <p>Matching</p>  
@@ -91,15 +85,16 @@
             </li>
         </ul>
     </header>
-    <nav class="backhome" id="manu" style="z-index:10000">
+    <nav class="backhome" id="menu" style="z-index:10000">
         <ul class="main_menu" style="list-style: none;display: flex;">
           <li style="list-style: none;">
-            <a class="menus" style="text-align: center;" href="{{ url_for('show_community_list') }}">FooTTown</a>
-            <!-- <a href="./chatroom.html">chatroom</a>
-            <a href="./bot.html">botとお話し</a> -->
+            <a class="menus" style="text-align: center;" href="{{ url_for('top') }}">FooTTown</a>
           </li>
           <li style="list-style: none;margin-left: 10px;">
             <a class="menus" href="javascript:manuDisplay();">Menu</a>
+          </li>
+          <li style="list-style: none;margin-left: 10px;">
+            <a class="menus" href="{{ url_for('logout') }}" methods="post">Logout</a>
           </li>
         </ul>
       </nav>

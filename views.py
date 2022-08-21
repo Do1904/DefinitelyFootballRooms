@@ -92,7 +92,7 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     if not result:
         # ユーザが存在しなければトップページへ戻す
         return templates.TemplateResponse("index.html", {"request": request, "error": "ユーザ名またはパスワードが間違っています"})
-    response = RedirectResponse("/articles", status_code=HTTP_302_FOUND)
+    response = RedirectResponse("/FooTTownTop", status_code=HTTP_302_FOUND)
     session_id = session.set("user", user)
     response.set_cookie("session_id", session_id)
     return response
@@ -116,6 +116,16 @@ def create_user(username: str = Form(...), nickname: str = Form(...), password: 
     response.set_cookie("session_id", session_id)
     return response
 
+@app.get("/FooTTownTop")
+# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
+@check_login
+def top(request: Request, session_id=Cookie(default=None)):
+    user = session.get(session_id).get("user")
+    return templates.TemplateResponse("top.html", {
+        "request": request,
+        "user": user,
+    })
+
 @app.get("/profile_update")
 @check_login
 def profile_update_page(request: Request, session_id=Cookie(default=None)):
@@ -138,7 +148,7 @@ def profile_update(nickname: str = Form(...), twitter: str = Form(...), instagra
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config) # auth.pyを使うために必要
     auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, twitter, instagram, socialmedia, user_name) # auth.pyの中にある関数を使うために必要
-    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
+    return RedirectResponse("/user/%s" % (user_name), status_code=HTTP_302_FOUND)
 
 @app.get("/matching")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
@@ -351,28 +361,27 @@ def go_pub_home(request: Request, pub_id: str, session_id=Cookie(default=None)):
 @check_login
 def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=None)):
     user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     pub = auth_model.find_pub_by_id(pub_id)
-    members = auth_model.find_chat_members_by_pub_id(pub_id)
-    # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
-    # session_id = session.set("user", user)
-    # response.set_cookie("session_id", session_id)
+    followers = auth_model.get_pub_followers(pub_id)
+    follow_id = user_name + "--" + pub_id
+    follow_or_not = auth_model.detect_pub_follow(follow_id)
     return templates.TemplateResponse("pub-home.html", {
         "request": request,
         "user": user,
         "pub": pub,
-        "members": members
+        "follower": followers,
+        "follow_or_not": follow_or_not
     })
 
 @app.get("/community/{pub_id}/discuss")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
-    user_name = session.get(session_id).get("user").get("username")
     user = session.get(session_id).get("user")
     auth_model = AuthModel(config)
     pub = auth_model.find_pub_by_id(pub_id)
-    auth_model.join_pub_member(pub_id, user_name)
     topics = auth_model.find_discussion_by_pub_id(pub_id)
     return templates.TemplateResponse("pub-discuss.html", {
         "user": user,
@@ -501,6 +510,23 @@ def unfollow_user(username: str = Form(...), session_id=Cookie(default=None)):
     auth_model = AuthModel(config)
     auth_model.unfollow_user(username, user_name)
     return RedirectResponse("/user/%s" % (username), status_code=HTTP_302_FOUND)
+
+@app.post("/followpub")
+@check_login
+def follow_user(pub_id: str = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    follow_id = user_name + "--" + pub_id
+    auth_model = AuthModel(config)
+    auth_model.follow_pub(pub_id, user_name, follow_id)
+    return RedirectResponse("/community/%s" % (pub_id), status_code=HTTP_302_FOUND)
+
+@app.post("/unfollowpub")
+@check_login
+def unfollow_user(pub_id: str = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    auth_model.unfollow_pub(pub_id, user_name)
+    return RedirectResponse("/community/%s" % (pub_id), status_code=HTTP_302_FOUND)
 
 
 

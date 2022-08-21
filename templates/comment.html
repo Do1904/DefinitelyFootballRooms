@@ -2,19 +2,25 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
-        <h2>コメント投稿</h2>
         <br>
-        <form action="/article/comment" method="post">
-            <div>
-                <textarea id="body" name="body" rows="20" cols="40" placeholder="コメント"></textarea>
-            </div>
-            <div>
-                <p><input type="hidden" id="article_id" value="{{ article["id"] }}" name="article_id"/></p>
-            </div>
-            <br>
-            <div>
-                <button type="submit">投稿</button>
-            </div>
-        </form>
+        <h2>COMMENT</h2>
+        <div class="formstyle">
+            <p></p>
+            <p>{{ article["body"] }}</p>
+            <div style="border-bottom: rgb(255, 255, 255) 2px dashed;margin: 0px 60px;"></div><br><br>
+            <form action="/article/comment" method="post">
+                <div>
+                    <textarea id="body" name="body" rows="20" cols="40" placeholder="コメント"></textarea>
+                </div>
+                <div>
+                    <p><input type="hidden" id="article_id" value="{{ article["id"] }}" name="article_id"/></p>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">投稿</button>
+                </div>
+            </form>
+        </div>
+        
     </div>
 {% endblock %}
