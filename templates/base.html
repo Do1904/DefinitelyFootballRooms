@@ -22,7 +22,7 @@
                 manu.style.display ="block";
             }
         }
-        </script>
+    </script>
 
     {% if not user %}
     <div class="letter3">
@@ -35,7 +35,7 @@
     </div>
     {% else %}
     <header id="manu" style="z-index:10000">
-        <p style="font-size: 145%;"><a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=user["username"]) }}"><b>{{ user["nickname"] }}</b></a></p>
+        <p style="font-size: 150%;"><a style="font-size: 100%;" class="profile" href="{{ url_for("user_detail_page", username=user["username"]) }}"><b>{{ user["nickname"] }}</b></a></p>
         <br><br>
         <h4>Profile</h4>
         <table border="0" class="profile_table">
@@ -97,7 +97,10 @@
             <a class="menus" href="{{ url_for('logout') }}" methods="post">Logout</a>
           </li>
         </ul>
-      </nav>
+    </nav>
+    <!-- <footer id="brick" style="z-index:20000">
+        <p>Footer</p>
+    </footer> -->
     {% endif %}
     {% if error %}
         <p style="color: red">{{ error }}</p>

@@ -99,7 +99,7 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
 
 @app.post("/register")
-def create_user(username: str = Form(...), nickname: str = Form(...), password: str = Form(...)):
+def create_user(username: str = Form(...), password: str = Form(...)):
     """
     ユーザ登録をおこなう
     フォームから入力を受け取る時は，`username=Form(...)`のように書くことで受け取れる
@@ -109,8 +109,9 @@ def create_user(username: str = Form(...), nickname: str = Form(...), password: 
     :return: 登録が完了したら/blogへリダイレクト
     """
     auth_model = AuthModel(config)
-    auth_model.create_user(username, nickname, password)
+    auth_model.create_user(username, password)
     user = auth_model.find_user_by_name_and_password(username, password)
+    auth_model.add_profile_info(username)
     response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     session_id = session.set("user", user)
     response.set_cookie("session_id", session_id)
@@ -120,7 +121,9 @@ def create_user(username: str = Form(...), nickname: str = Form(...), password: 
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def top(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     return templates.TemplateResponse("top.html", {
         "request": request,
         "user": user,
@@ -129,8 +132,9 @@ def top(request: Request, session_id=Cookie(default=None)):
 @app.get("/profile_update")
 @check_login
 def profile_update_page(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     clubs = auth_model.clubs_list()
     leagues = auth_model.leagues_list()
     nations = auth_model.nations_list()
@@ -154,11 +158,14 @@ def profile_update(nickname: str = Form(...), twitter: str = Form(...), instagra
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def user_finden(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     your_club = user["your_club"]
     your_league = user["your_league"]
     your_nation = user["your_nation"]
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     users = auth_model.fetch_all_fans()
     [clubfan, leaguefan, nationfan] = auth_model.fetch_fans(your_club, your_league, your_nation)
     return templates.TemplateResponse("matching.html", {
@@ -175,7 +182,9 @@ def user_finden(request: Request, session_id=Cookie(default=None)):
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def articles_index(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     article_model = ArticleModel(config)
     articles = article_model.fetch_recent_articles()
     return templates.TemplateResponse("article-index.html", {
@@ -188,7 +197,9 @@ def articles_index(request: Request, session_id=Cookie(default=None)):
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def articles_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     article_model = ArticleModel(config)
     if search_by == "titles":
         articles = article_model.find_article_by_title(keyword)
@@ -206,7 +217,9 @@ def articles_finden(request: Request, keyword: str = Form(...), search_by: str =
 @app.get("/article/create")
 @check_login
 def create_article_page(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     return templates.TemplateResponse("create-article.html", {"request": request, "user": user})
 
 
@@ -225,7 +238,9 @@ def article_detail_page(request: Request, article_id: int, session_id=Cookie(def
     article_model = ArticleModel(config)
     article = article_model.fetch_article_by_id(article_id)
     comments = article_model.fetch_comment_by_id(article_id)
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     return templates.TemplateResponse("article-detail.html", {
         "request": request,
         "article": article,
@@ -238,7 +253,9 @@ def article_detail_page(request: Request, article_id: int, session_id=Cookie(def
 def comment_page(request: Request, article_id: int, session_id=Cookie(default=None)):
     article_model = ArticleModel(config)
     article = article_model.fetch_article_by_id(article_id)
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     return templates.TemplateResponse("comment.html", {
         "request": request,
         "article": article,
@@ -264,7 +281,9 @@ def logout(session_id=Cookie(default=None)):
 @app.get("/community")
 @check_login
 def find_community(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     return templates.TemplateResponse("community.html", {"request": request, "user": user})
 
 
@@ -275,8 +294,9 @@ def find_community(request: Request, session_id=Cookie(default=None)):
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = Form(...), session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     if search_from == "Rooms":
         [search_list, status] = auth_model.find_rooms_by_keyword(keyword)
         return templates.TemplateResponse("community.html", {
@@ -310,7 +330,9 @@ def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = F
 @app.get("/new_community")
 @check_login
 def create_community(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     return templates.TemplateResponse("create-community.html", {"request": request, "user": user})
 
 @app.post("/new_community")
@@ -328,9 +350,9 @@ def create_pub(community_name: str = Form(...), community_comment: str = Form(..
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def show_community_list(request: Request, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     your_community = auth_model.find_your_community_by_user_name(user_name)
     return templates.TemplateResponse("your-community.html", {
         "request": request,
@@ -343,8 +365,9 @@ def show_community_list(request: Request, session_id=Cookie(default=None)):
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def go_pub_home(request: Request, pub_id: str, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
     # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
     # session_id = session.set("user", user)
@@ -360,9 +383,9 @@ def go_pub_home(request: Request, pub_id: str, session_id=Cookie(default=None)):
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
     followers = auth_model.get_pub_followers(pub_id)
     follow_id = user_name + "--" + pub_id
@@ -379,8 +402,9 @@ def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=Non
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
     topics = auth_model.find_discussion_by_pub_id(pub_id)
     return templates.TemplateResponse("pub-discuss.html", {
@@ -394,8 +418,9 @@ def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=N
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def create_new_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
     return templates.TemplateResponse("discuss.html", {
         "user": user,
@@ -415,8 +440,9 @@ def create_discussion(pub_id: str = Form(...), status: str = Form(...), discuss_
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def discussion_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), pub_id: str = Form(...), session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
     if search_by == "titles":
         topics = auth_model.find_discussion_by_title(pub_id, keyword)
@@ -435,23 +461,27 @@ def discussion_finden(request: Request, keyword: str = Form(...), search_by: str
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def discussion_detail_page(request: Request, id: int, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     topic = auth_model.find_discussion_by_id(id)
     comments = auth_model.fetch_discussion_commnets_by_id(id)
+    pub = auth_model.find_pub_by_id(topic["pub_id"])
     return templates.TemplateResponse("discussion-detail.html", {
         "request": request,
         "user": user,
         "topic": topic,
-        "comments": comments
+        "comments": comments,
+        "pub": pub
     })
 
 @app.get("/discussioncomment/{id}")
 @check_login
 def post_discuss_comment(request: Request, id: int, session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     topic = auth_model.find_discussion_by_id(id)
-    user = session.get(session_id).get("user")
     return templates.TemplateResponse("discuss-comment.html", {
         "request": request,
         "topic": topic,
@@ -471,9 +501,9 @@ def post_comment(body: str = Form(...), topic_id: int = Form(...), session_id=Co
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def user_detail_page(request: Request, username: str, session_id=Cookie(default=None)):
-    user = session.get(session_id).get("user")
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
     article_model = ArticleModel(config)
     other_user = auth_model.find_other_users_by_username(username)
     articles = article_model.fetch_article_by_username(username)

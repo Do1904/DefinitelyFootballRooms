@@ -55,7 +55,7 @@ body#pub {
 .pubHome {
   background: repeating-linear-gradient(90deg, #000000, #000000 1px, #491b1b 3px, #491b1b 60px);
   height: 100%;
-  margin:0;
+  margin: 0;
   padding: 100px;
 }
 
@@ -74,7 +74,7 @@ body#pub {
   padding: 50px 100px;
   margin: 30px auto;
   width: 47%;
-  word-wrap:break-all;
+  word-wrap: break-all;
 }
 
 @keyframes bggradient {
@@ -224,6 +224,20 @@ a {
 .join:hover {
   background-position: -100% 0;
   color: rgb(0, 0, 0);
+}
+
+.profile {
+  padding: 0.2em 0.4em;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(190, 255, 192) 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: rgb(190, 255, 192);
+}
+
+.profile:hover {
+  background-position: -100% 0;
+  color: rgb(0, 64, 5);
 }
 
 .blogtitle {
@@ -448,8 +462,7 @@ li.user {
 
 
 .letter3 {
-  background: rgb(211, 204, 193);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: rgb(34, 104, 40);
   margin: 26px auto 0;
   max-width: 550px;
   min-height: 300px;
@@ -474,4 +487,16 @@ li.user {
   border-bottom: #000000b0 2px solid;
 }
 
-
+.footer#brick {
+  background-color: silver;
+  background-image: linear-gradient(335deg, rgb(116, 0, 0) 23px, transparent 23px),
+    linear-gradient(155deg, rgb(129, 0, 0) 23px, transparent 23px),
+    linear-gradient(335deg, rgb(116, 0, 0) 23px, transparent 23px),
+    linear-gradient(155deg, rgb(129, 0, 0) 23px, transparent 23px);
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+  bottom: 0;
+  width: 100%;
+  margin: auto;
+  position: fixed;
+}

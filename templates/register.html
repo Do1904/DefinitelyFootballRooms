@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 {% block body %}
-    <div class="letter3">
-        <h4 style="text-align: center;">FooTTown</h4>
+    <div class="formstyle">
+        <h3 style="text-align: center;">FooTTown</h3>
         <br>
         <form action="/register" method="post">
             <div>
                 <label for="username">ユーザネーム</label>
-                <input id="username" type="text" name="username"/>
+                <input id="username" type="text" size="40" name="username"/>
             </div>
             <div>
                 <label for="nickname">ニックネーム</label>
-                <input id="nickname" type="text" placeholder="表示される名前" name="nickname"/>
+                <input id="nickname" type="text" size="40" placeholder="表示される名前" name="nickname"/>
             </div>
             <div>
                 <label for="password">パスワード</label>
-                <input id="password" type="password" name="password"/>
+                <input id="password" type="password" size="40" name="password"/>
             </div>
             <div>
                 <label for="password-verify">パスワード(確認)</label>
-                <input id="password-verify" type="password"/>
+                <input id="password-verify" size="40" type="password"/>
             </div>
             <div>
                 <button type="submit">送信</button>

@@ -6,12 +6,12 @@
         <div class="formstyle">
             <form action="{{ url_for("post_article") }}" method="post">
                 <div class="cp_iptxt">
-                    <label class="ef">
-                        <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
-                    </label>
+                    <label for="title" class="ef">Blogのタイトルを入力</label><br><br>
+                    <input id="title" type="text" name="title" size="40" placeholder="ブログのタイトルを決めよう！" />
                 </div>
-                <br>
+                <br><br><br>
                 <div>
+                    <label for="body">Blogの内容を作成</label><br><br>
                     <textarea id="body" name="body" rows="20" cols="40" placeholder="ブログの内容を書こう！"></textarea>
                 </div>
                 <br>
