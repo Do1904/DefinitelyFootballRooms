@@ -14,9 +14,11 @@
         <li style="list-style: none;">
           <a class="menus" style="text-align: center;" href="{{ url_for('top') }}">FooTTown</a>
         </li>
+        {% if user["username"] == other_user["username"] %}
         <li style="list-style: none;margin-left: 14px;">
           <a class="menus" href="{{ url_for('profile_update_page') }}">Edit Profile</a>
         </li>
+        {% endif %}
         <!-- <li style="list-style: none;margin-left: 10px;">
           <a class="menus" href="{{ url_for('logout') }}" methods="post">Logout</a>
         </li> -->

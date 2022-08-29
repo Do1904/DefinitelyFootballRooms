@@ -3,7 +3,7 @@
 <br><br><br><br>
     <div class="content">
         <h2><br>SEARCH COMMUNITY</h2>
-        <form action="/community" method="post">
+        <form action="/community" name="search" method="post">
             <div>
                 <p><input id="keyword" type="text" value="#" name="keyword"/></p>
             </div>
@@ -13,7 +13,7 @@
             </div>
             <br>
             <div>
-                <button type="submit">検索</button>
+                <a href="javascript:search.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/search.png')}}" width="30" height="30" alt="search"></div></a>
             </div>
         </form>
         <br>

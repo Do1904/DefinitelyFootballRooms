@@ -6,7 +6,7 @@
         <p>新たなディスカッションを始めよう！！</p>
         <br>
         <div class="pubintro">
-            <form action="/community/newdiscussion" method="post">
+            <form action="/community/newdiscussion" name="go" method="post">
                 <div>
                     <label for="status">ディスカッションの種類</label>
                     <p><select name="status">
@@ -34,7 +34,7 @@
                 </div>
                 <br>
                 <div>
-                    <button type="submit">投稿</button>
+                    <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
                 </div>
             </form>
         </div><br><br>

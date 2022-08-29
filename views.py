@@ -165,7 +165,6 @@ def user_finden(request: Request, session_id=Cookie(default=None)):
     your_league = user["your_league"]
     your_nation = user["your_nation"]
     auth_model = AuthModel(config)
-    user = auth_model.find_profile_by_user_id(user_name)
     users = auth_model.fetch_all_fans()
     [clubfan, leaguefan, nationfan] = auth_model.fetch_fans(your_club, your_league, your_nation)
     return templates.TemplateResponse("matching.html", {
@@ -321,10 +320,6 @@ def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = F
         "user": user,
         "status": status
         })
-
-
-
-
 
 
 @app.get("/new_community")
@@ -495,6 +490,29 @@ def post_comment(body: str = Form(...), topic_id: int = Form(...), session_id=Co
     auth_model = AuthModel(config)
     auth_model.post_discussion_comment(user_name, topic_id, body)
     return RedirectResponse("/community/discussion/%s" % (topic_id), status_code=HTTP_302_FOUND)
+
+@app.get("/discussioncomment/{comment_id}/comment")
+@check_login
+def post_discussion_comment_comment_page(request: Request, comment_id: int, session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
+    topic = auth_model.find_discussion_comment_by_id(comment_id)
+    return templates.TemplateResponse("discuss-comment-comment.html", {
+        "request": request,
+        "topic": topic,
+        "user": user
+    })
+
+@app.post("/discussion/comment/comment")
+@check_login
+def post_comment(body: str = Form(...), message_id: int = Form(...), comment_id: int = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    auth_model.post_discussion_comment_comment(user_name, comment_id, body)
+    return RedirectResponse("/community/discussion/%s" % (message_id), status_code=HTTP_302_FOUND)
+
+
 
 
 @app.get("/user/{username}")

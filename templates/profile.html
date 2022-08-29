@@ -4,7 +4,7 @@
     <div class="content">
         <h2>PROFILE</h2>
         <div class="formstyle">
-        <form action="/profile_update" method="post">
+        <form action="/profile_update" name="go" method="post">
             <div class="cp_iptxt">
                 <label for="nickname" class="ef">あなたのニックネームを入力してください
                 <p><input id="nickname" name="nickname" value="{{ user["nickname"] }}" rows="10" size="40" placeholder=""></label></p>
@@ -55,9 +55,9 @@
             <div>
                 <label for="profile">自己紹介文を書きましょう</label>
                 <p><textarea id="profile" name="profile" rows="10" cols="40" placeholder="">{{ user["profile"] }}</textarea></p>
-            </div><br>
+            </div><br><Br>
             <div>
-                <button type="submit">更新</button>
+                <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
             </div>
         </form>
     </div><br><br><br><br>

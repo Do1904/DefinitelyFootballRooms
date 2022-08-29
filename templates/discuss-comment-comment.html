@@ -1,19 +1,22 @@
-{% extends "base.html" %}
+{% extends "pub-index.html" %}
 {% block body %}
 <br><br><br><br>
     <div class="content">
         <br>
         <h2>COMMENT</h2>
-        <div class="formstyle">
+        <div class="pubintro">
             <p></p>
-            <p>{{ article["body"] }}</p>
+            <p>{{ topic["context"] }}</p>
             <div style="border-bottom: rgb(255, 255, 255) 2px dashed;margin: 0px 60px;"></div><br><br>
-            <form action="/article/comment" name="go" method="post">
+            <form action="/discussion/comment/comment" name="go" method="post">
                 <div>
                     <textarea id="body" name="body" rows="20" cols="40" placeholder="コメント"></textarea>
                 </div>
                 <div>
-                    <p><input type="hidden" id="article_id" value="{{ article["id"] }}" name="article_id"/></p>
+                    <p><input type="hidden" id="message_id" value="{{ topic["message_id"] }}" name="message_id"/></p>
+                </div>
+                <div>
+                    <p><input type="hidden" id="comment_id" value="{{ topic["id"] }}" name="comment_id"/></p>
                 </div>
                 <br>
                 <div>

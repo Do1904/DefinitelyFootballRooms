@@ -1,7 +1,7 @@
 {% extends "pub-index.html" %}
 {% block body %}
 <header id="manu" style="z-index:10000">
-    <br><br>
+    <br><br><br>
     <a style="font-size: 145%;" class="join" href="{{ url_for("pub_detail_page", pub_id=pub["pub_id"]) }}"><b>{{ pub["pub_name"] }}</b></a>
     <br><br><Br>
     <p>Home</p>  
@@ -27,13 +27,13 @@
 <br><br>
 <div id="search">
 <div class="searchdiscussion">
-    <form action="/search_discussion" method="post">
+    <form action="/search_discussion" name="search" method="post">
         <div>
             <label for="search_discussion">Discussion検索</label>
             <p><input id="search_discussion" type="text" value="" name="keyword"/></p>
         </div>
         <div>
-            <table border="0" class="profile_table">
+            <table border="0" name="search" class="profile_table">
                 <tr>
                   <td><label>Title</label></td>
                   <td><input type="radio" name="search_by" class="titles" value="titles" checked="checked"></td>
@@ -51,15 +51,14 @@
         <div>
             <p><input type="hidden" id="pub_id" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
         </div>
-        <Br>
         <div>
-            <button type="submit">検索</button>
+            <a href="javascript:search.submit()"><div class="img_rightside" style="margin-left: 3px;"><img src="{{url_for('static', path='/pics/search.png')}}" width="30" height="30" alt="search"></div></a>
         </div>
     </form>
     <br>
         <br>
-        <p style="font-size: 90%;"><a class="join" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">全て表示/更新</a></p>
-        <p style="font-size: 90%;"><a class="join" href="{{ url_for("create_new_discussion", pub_id=pub["pub_id"]) }}">新規投稿</a></p>
+        <p style="font-size: 90%;"><a href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}"><div class="img_rightside"><img src="{{url_for('static', path='/pics/sync.png')}}" width="30" height="30" alt="comment"></div></a></p>
+        <p style="font-size: 90%;"><a href="{{ url_for("create_new_discussion", pub_id=pub["pub_id"]) }}"><div class="img_rightside" style="margin-left: 3px;"><img src="{{url_for('static', path='/pics/create.png')}}" width="30" height="30" alt="comment"></div></a></p>
 </div>
 </div>
     <div class="content">

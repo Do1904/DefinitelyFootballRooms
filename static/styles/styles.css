@@ -500,3 +500,31 @@ li.user {
   margin: auto;
   position: fixed;
 }
+
+.img_wrap{
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+}
+.img_wrap img{
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+.img_wrap:hover img{
+  opacity: 0.3;
+  transition-duration: 0.3s;
+}
+
+.img_rightside{
+  width: 30px;
+  height: 30px;
+  margin: 0;
+}
+.img_rightside img{
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+.img_rightside:hover img{
+  opacity: 0.3;
+  transition-duration: 0.3s;
+}

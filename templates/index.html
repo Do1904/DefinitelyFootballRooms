@@ -3,7 +3,7 @@
     <div class="formstyle">
         <h3 style="text-align: center;">FooTTown</h3>
         <h2 style="text-align: center;">ログイン</h2>
-        <form action="{{ url_for("login") }}" method="post">
+        <form action="{{ url_for("login") }}" name="go" method="post">
             <div>
                 <label for="username">ユーザ名</label>
                 <input id="username" type="text" name="username"/>
@@ -11,9 +11,9 @@
             <div>
                 <label for="password">パスワード</label>
                 <input id="password" type="password" name="password"/>
-            </div>
+            </div><Br>
             <div>
-                <button type="submit">送信</button>
+                <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
             </div>
         </form>
     </div>

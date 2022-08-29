@@ -2,7 +2,7 @@
 {% block body %}
     <div class="content">
         <p>{{pub["pub_name"]}}の情報を変更します。</p>
-        <form action="/pub_update" method="post">
+        <form action="/pub_update" name="go" method="post">
             <div>
                 <label for="pub_name">Pubの名前</label>
                 <p><input id="pub_name" type="text" name="pub_name"/></p>
@@ -13,9 +13,9 @@
             </div>
             <div>
                 <p><input type="hidden" id="pub_id" type="text" value={{pub["pub_name"]}} name="pub_id"/></p>
-            </div>
+            </div><br><br>
             <div>
-                <button type="submit">更新</button>
+                <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
             </div>
         </form>
     </div>

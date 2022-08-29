@@ -27,7 +27,8 @@
 </header>
 <div id="search">
     <div class="searchdiscussion">
-        <p><a class="menus" href="{{ url_for("post_discuss_comment", id=topic["id"]) }}">新規コメント</a></p>
+        <p><a href="{{ url_for("post_discuss_comment", id=topic["id"]) }}"><div class="img_rightside"><img src="{{url_for('static', path='/pics/commentw.png')}}" width="30" height="30" alt="comment"></div></a></p>
+        <p><a href="{{ url_for("discussion_detail_page", id=topic["id"]) }}"><div class="img_rightside"><img src="{{url_for('static', path='/pics/sync.png')}}" width="30" height="30" alt="comment"></div></a></p>
     </div>
 </div>
 <div class="content">
@@ -49,6 +50,7 @@
     <h3 style="font-size: 100%;text-align: left;color: rgb(0, 0, 0);"><a class="discussionpage" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></h3>
     <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);">{{ comment["context"] }}</p>
     <p style="font-size: 85%;color: rgb(0, 0, 0);">{{ comment["created_at"] }}</p>
+    <p><a href="{{ url_for("post_discussion_comment_comment_page", comment_id=comment["id"]) }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/comment.png')}}" width="30" height="30" alt="comment"></div></a></p>
     <div style="border-bottom: rgb(0, 0, 0) 1px solid;"></div>
 {% endfor %}
 {% if not comments %}

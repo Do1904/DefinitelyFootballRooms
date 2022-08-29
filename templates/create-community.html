@@ -4,7 +4,7 @@
         <br><br><br><br>
         <h2><br>CREATE NEW PUB</h2>
         <div class="formstyle">
-            <form action="/new_community" method="post">
+            <form action="/new_community" name="go" method="post">
                 <div>
                     <label for="community_id">pubのidを作成</label>
                     <p><input id="community_id" type="text" size="40" name="community_id" placeholder="Pubのidを作成しましょう!" required/></p><br>
@@ -21,9 +21,9 @@
                     <label><input type="radio" name="public_or_not" class="public" value="public" checked="checked">Public</label>
                     <label><input type="radio" name="public_or_not" class="private" value="private">Private</label>
                 </div> -->
-                <br>
+                <br><br>
                 <div>
-                    <button type="submit">作成</button>
+                    <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
                 </div>
             </form>
         </div>

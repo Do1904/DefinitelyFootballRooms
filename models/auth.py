@@ -225,13 +225,25 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.id=%s"
         return self.fetch_one(sql, id)
 
+    def find_discussion_comment_by_id(self, id):
+        sql = "SELECT * FROM discuss_comments INNER JOIN profile on discuss_comments.username = profile.username where discuss_comments.id=%s"
+        return self.fetch_one(sql, id)
+
     def fetch_discussion_commnets_by_id(self, id):
         sql = "SELECT * FROM discuss_comments INNER JOIN profile on discuss_comments.username = profile.username where discuss_comments.message_id=%s"
         return self.fetch_all(sql, id)
 
+    def fetch_discussion_commnet_comments_by_id(self, commeid):
+        sql = "SELECT * FROM discuss_comment_comments INNER JOIN profile on discuss_comment_comments.username = profile.username where discuss_comment_comments.discussion_comment_id=%s"
+        return self.fetch_all(sql, commeid)
+
     def post_discussion_comment(self, user_name, topic_id, body):
         sql = "INSERT INTO discuss_comments(username, message_id, context) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, topic_id, body)
+
+    def post_discussion_comment_comment(self, user_name, comment_id, body):
+        sql = "INSERT INTO discuss_comment_comments(username, discussion_comment_id, context) VALUE (%s, %s, %s);"
+        self.execute(sql, user_name, comment_id, body)
 
     def follow_user(self, username, user_name, follow_id):
         sql = "INSERT IGNORE INTO follow(to_user_id, from_user_id, id) VALUE (%s, %s, %s);"

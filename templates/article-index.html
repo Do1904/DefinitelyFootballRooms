@@ -3,7 +3,7 @@
 <br><br><br><br>
 <div id="search">
     <div class="searchblog">
-        <form action="/articles" method="post">
+        <form action="/articles" name="search_article" method="post">
             <div>
                 <label for="search_articles">BLOG検索</label>
                 <p><input id="search_articles" type="text" value="" name="keyword"/></p>
@@ -26,12 +26,10 @@
             </div>
             <Br>
             <div>
-                <button type="submit">検索</button>
+                <a href="javascript:search_article.submit()"><div class="img_rightside" style="margin-left: 3px;"><img src="{{url_for('static', path='/pics/search.png')}}" width="30" height="30" alt="search"></div></a>
             </div>
-        </form>
-        <br>
-        <br>
-        <p style="font-size: 90%;"><a class="menus" href="{{ url_for('articles_index') }}">全て表示/更新</a></p>
+        </form><br>
+        <p><a href="{{ url_for('articles_index') }}"><div class="img_rightside"><img src="{{url_for('static', path='/pics/sync.png')}}" width="30" height="30" alt="sync"></div></a></p>
     </div>
 </div>
     <div class="content">

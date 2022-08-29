@@ -9,7 +9,7 @@
     <p class="article" style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ article["body"] }}</p>
 </div>
 <br>
-<p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=article["id"]) }}">コメント</a></p>
+<p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=article["id"]) }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/commentw.png')}}" width="30" height="30" alt="comment"></div></a></p>
 {% for comment in comments %}
 <div class="article">
     <p style="font-size: 85%;text-align: center;"><a class="blogtitle" href="{{ url_for("user_detail_page", username=article["username"]) }}">{{ article["nickname"] }}</a></p>

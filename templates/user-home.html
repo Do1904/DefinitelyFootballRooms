@@ -2,7 +2,8 @@
 {% block body %}
 <div class="content">
     <div class="profileheader" style="background-color: rgb(0, 64, 5);margin: 0px auto;padding: 100px;color: rgb(190, 255, 192);border: 0;">
-        <h1>{{ other_user["nickname"] }}さんのページ</h1><br>
+        <h1>{{ other_user["nickname"] }}さんのページ</h1>
+        <p>ユーザーネーム：{{ other_user["username"] }}</p><br>
         <div style="border-bottom: rgb(190, 255, 192) 2px dashed;margin: 0px 300px;"></div>
         <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p><br>
         <p style="white-space:pre-wrap;font-size: 89%;">{{ other_user["profile"] }}</p>
