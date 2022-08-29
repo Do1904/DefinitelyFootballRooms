@@ -21,29 +21,29 @@
                 <td>{{ follower|length }}</td>
             </tr>
         </table>
-        <h3>あなたの好きな話題でみんなとディスカッションしましょう！！</h3>
-        <br>
+        
         {% if not follow_or_not %}
         <form action="/followpub" name="follow"  method="post">
             <div>
                 <p><input id="pub_id" type="hidden" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
             </div>
             <div>
-                <a class="join" href="javascript:follow.submit()">Follow</a>
+                <a href="javascript:follow.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/add.png')}}" width="30" height="30" alt="follow"></div></a>
             </div>
         </form>
         {% else %}
-        <p style="color: white;">フォロー中</p>
+        <!-- <p style="color: white;">フォロー中</p> -->
         <form action="/unfollowpub" name="unfollow"  method="post">
             <div>
                 <p><input id="pub_id" type="hidden" value="{{ pub["pub_id"] }}" name="pub_id"/></p>
             </div>
             <div>
-                <a class="join" href="javascript:unfollow.submit()">Unfollow</a>
+                <a href="javascript:unfollow.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/check.png')}}" width="30" height="30" alt="follow"></div></a>
             </div>
         </form>
         
         {% endif %}
+        <h3>あなたの好きな話題でみんなとディスカッションしましょう！！</h3>
         <br>
         <a class="join" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
     </div>

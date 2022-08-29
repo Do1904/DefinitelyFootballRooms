@@ -31,17 +31,17 @@
                 <p><input id="username" type="hidden" value="{{ other_user["username"] }}" name="username"/></p>
             </div>
             <div>
-                <a class="followuser" href="javascript:follow.submit()">Follow</a>
+                <a href="javascript:follow.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/add.png')}}" width="30" height="30" alt="follow"></div></a>
             </div>
         </form>
         {% else %}
-        <p style="color: white;">フォロー中</p>
+        <!-- <p style="color: white;">フォロー中</p> -->
         <form action="/unfollow" name="unfollow"  method="post">
             <div>
                 <p><input id="username" type="hidden" value="{{ other_user["username"] }}" name="username"/></p>
             </div>
             <div>
-                <a class="followuser" href="javascript:unfollow.submit()">Unfollow</a>
+                <a href="javascript:unfollow.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/check.png')}}" width="30" height="30" alt="unfollow"></div></a>
             </div>
         </form>
         
@@ -51,8 +51,7 @@
     <div style="background-color: rgb(34, 104, 40);margin:0;padding: 50px 100px 90px 100px;color: rgb(254, 254, 254);border: 0;">
         <h3>Pubs</h3>
         {% if user["username"] == other_user["username"] %}
-        <p><a class="followuser" href="{{ url_for('create_community') }}">新規作成</a></p>
-        <br>
+        <p><a href="{{ url_for('create_community') }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/add.png')}}" width="30" height="30" alt="add"></div></a></p>
         {% endif %}
     <ul class="pubs-list" style="margin: 0pt 100px;border-left: #000000b0 2px solid;border-right: #000000b0 2px solid;">
         {% for pub in pubs %}
@@ -71,8 +70,7 @@
     <br><br>
     <h3>Blogs</h3>
     {% if user["username"] == other_user["username"] %}
-    <p><a class="followuser" href="{{ url_for('create_article_page') }}">新規投稿</a></p>
-    <br>
+    <p><a href="{{ url_for('create_article_page') }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/create.png')}}" width="30" height="30" alt="create"></div></a></p>
     {% endif %}
     <br>
     {% for article in articles %}

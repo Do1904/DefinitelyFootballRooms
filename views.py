@@ -338,7 +338,6 @@ def create_pub(community_name: str = Form(...), community_comment: str = Form(..
     auth_model = AuthModel(config)
     auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
     pub_id = community_id
-    auth_model.join_pub_member(pub_id, user_name)
     return RedirectResponse("/your_community", status_code=HTTP_302_FOUND)
 
 @app.get("/your_community")
