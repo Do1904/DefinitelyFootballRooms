@@ -68,8 +68,17 @@ def index(request: Request):
     """
     return templates.TemplateResponse("introduction.html", {"request": request})
 
+@app.get("/signin")
+def signin(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 @app.get("/introduction")
-def introduct(request: Request):
+def introduce(request: Request):
+    """
+    新規登録ページ
+    :param request:
+    :return:
+    """
     return templates.TemplateResponse("introduction.html", {"request": request})
 
 @app.get("/register")

@@ -26,13 +26,15 @@
 
     {% if not user %}
     <div class="letter3">
-        <h5 style="text-align: center;">Welcome!</h5>
+        <p style="text-align: center;font-size: 90%;margin-top: 20px;">
+            <a class="menus" href="{{ url_for('introduce') }}">Welcome!</a>
+        </p>
         <!-- <h1 style="text-align: center;">FooTTown</h1> -->
         <p></p>
         </p>
         <p style="text-align: center;">
             <a class="menus" href="{{ url_for('register') }}">Sign Up</a>&nbsp;&nbsp;
-            <a class="menus" href="{{ url_for('index') }}">Sign In</a>
+            <a class="menus" href="{{ url_for('signin') }}">Sign In</a>
         </p>
     </div>
     {% else %}
