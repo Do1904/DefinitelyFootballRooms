@@ -26,12 +26,14 @@
 
     {% if not user %}
     <div class="letter3">
-        <h3 style="text-align: center;">Welcome to</h3>
-        <h1 style="text-align: center;">FooTTown</h1>
-        <p style="text-align: center;">フットボールファンとニッチなトークを楽しんで交流しましょう！<br>あなたの好きなクラブ、リーグ、国を選択して,<Br>あなたの趣味に合ったユーザーと繋がり、<Br>そしてコミュニティで好きなトピックについてディスカッションをして、<br>フットボールファンの自分をもっと好きになろう！
-        </p><hr>
-            <p style="text-align: center;"><a class="blogtitle" href="{{ url_for('register') }}">新規登録</a></p>
-            <p style="text-align: center;"><a class="blogtitle" href="{{ url_for('index') }}">ログイン</a></p>
+        <h5 style="text-align: center;">Welcome!</h5>
+        <!-- <h1 style="text-align: center;">FooTTown</h1> -->
+        <p></p>
+        </p>
+        <p style="text-align: center;">
+            <a class="menus" href="{{ url_for('register') }}">Sign Up</a>&nbsp;&nbsp;
+            <a class="menus" href="{{ url_for('index') }}">Sign In</a>
+        </p>
     </div>
     {% else %}
     <header id="manu" style="z-index:10000">
@@ -57,32 +59,23 @@
               </tr> -->
           </table>
           <br><br>
-        <p>Blog</p>  
-        <ul class="main_menu" style="list-style: none;">
+        <p></p>  
+        <ul class="main_menu" style="list-style: none;padding-left: 4px;">
             <li>
-                <a class="menus" href="{{ url_for('articles_index') }}">Blog一覧</a>
-            </li>
+                <a href="{{ url_for('articles_index') }}"><div class="img_rightside" style="margin-left: 3px;margin-bottom: 4px;"><img src="{{url_for('static', path='/pics/blog.png')}}" width="33" height="33" alt="menu"></div</a>
+            </li><br>
             <li>
-                <a class="menus" href="{{ url_for('create_article_page') }}">新規投稿</a>
-            </li>
-        </ul>
-        <p>Matching</p>  
-        <ul class="matching_menu" style="list-style: none;">
-            <li>
-                <a class="menus" href="{{ url_for('user_finden') }}">マッチング</a>
-            </li>
-        </ul>
-        <p>Community</p>
-        <ul class="community_menu" style="list-style: none;">
+                <a href="{{ url_for('user_finden') }}"><div class="img_rightside" style="margin-left: 3px;margin-bottom: 4px;"><img src="{{url_for('static', path='/pics/people.png')}}" width="33" height="33" alt="menu"></div></a>
+            </li><br>
             <li>
                 <a class="menus" href="{{ url_for('show_community_list') }}">コミュニティ</a>
-            </li>
-            <li>
-                <a class="menus" href="{{ url_for('find_community') }}">検索</a>
-            </li>
+            </li><br>
             <li>
                 <a class="menus" href="{{ url_for('create_community') }}">新規作成</a>
-            </li>
+            </li><br>
+            <li>
+                <a href="{{ url_for('find_community') }}"><div class="img_rightside" style="margin-left: 3px;margin-bottom: 4px;"><img src="{{url_for('static', path='/pics/search.png')}}" width="30" height="30" alt="search"></div></a>
+            </li><br>
         </ul>
     </header>
     <nav class="backhome" id="menu" style="z-index:10000">

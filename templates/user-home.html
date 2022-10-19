@@ -1,6 +1,21 @@
 {% extends "user-index.html" %}
 {% block body %}
 <div class="content">
+    <nav class="backhome" id="menu" style="z-index:10000">
+        <ul class="main_menu" style="list-style: none;display: flex;">
+          <li style="list-style: none;">
+            <a class="menus" style="text-align: center;" href="{{ url_for('top') }}">FooTTown</a>
+          </li>
+          {% if user["username"] == other_user["username"] %}
+          <li style="list-style: none;margin-left: 14px;">
+            <a class="menus" href="{{ url_for('profile_update_page') }}">Edit Profile</a>
+          </li>
+          {% endif %}
+          <!-- <li style="list-style: none;margin-left: 10px;">
+            <a class="menus" href="{{ url_for('logout') }}" methods="post">Logout</a>
+          </li> -->
+        </ul>
+      </nav>
     <div class="profileheader" style="background-color: rgb(0, 64, 5);margin: 0px auto;padding: 100px;color: rgb(190, 255, 192);border: 0;">
         <h1>{{ other_user["nickname"] }}さんのページ</h1>
         <p>ユーザーネーム：{{ other_user["username"] }}</p><br>

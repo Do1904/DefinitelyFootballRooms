@@ -53,9 +53,9 @@
         <h3>USERS</h3>
         <p></p>
             {% for result in search_list %}
-            <div class="communities">
-                <p style="font-size: 145%;"><a style="font-size: 85%;" class="join" href="{{ url_for("user_detail_page", username=result["username"]) }}"><b>{{ result["nickname"] }}</b></a></p>
-                <hr>
+            <div class="usersbox">
+                <p style="font-size: 145%;"><a style="font-size: 85%;" class="followuser" href="{{ url_for("user_detail_page", username=result["username"]) }}"><b>{{ result["nickname"] }}</b></a></p>
+                <div style="border-bottom: rgb(190, 255, 192) 2px dashed;margin: 0px 40px;"></div>
                 <p style="font-size: 94%;white-space:pre-wrap;">{{ result["profile"] }}</p>
                 
             </div>

@@ -66,8 +66,11 @@ def index(request: Request):
     :param request: Request object
     :return:
     """
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("introduction.html", {"request": request})
 
+@app.get("/introduction")
+def introduct(request: Request):
+    return templates.TemplateResponse("introduction.html", {"request": request})
 
 @app.get("/register")
 def register(request: Request):
@@ -347,7 +350,7 @@ def show_community_list(request: Request, session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
-    your_community = auth_model.find_your_community_by_user_name(user_name)
+    your_community = auth_model.find_your_following_community(user_name)
     return templates.TemplateResponse("your-community.html", {
         "request": request,
         "your_community": your_community,

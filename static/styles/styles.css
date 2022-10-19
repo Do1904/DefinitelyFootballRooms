@@ -316,13 +316,13 @@ a {
   color: rgb(255, 255, 255);
   background: repeating-linear-gradient(90deg, #000000, #000000 1px, #491b1b 3px, #491b1b 60px);
   /*背景色の指定*/
-  border: #00000061 3px solid;
+  border: #000000 3px solid;
   /*境界線の指定 */
-  box-shadow: 0 0 0 2px #00000061;
+  box-shadow: 0 0 0 3px #000000;
   /*  境界線の外側の指定 */
   padding: 35px 75px;
   margin: 40px auto;
-  width: 28%;
+  width: 30%;
 }
 
 .blogs {
@@ -347,6 +347,16 @@ a {
   padding: 6px 70px;
   margin: 7px auto;
   width: 20%;
+}
+
+.usersbox {
+  color: rgb(190, 255, 192);
+  background: rgb(0, 64, 5);
+  /*背景色の指定*/
+  /*  境界線の外側の指定 */
+  padding: 6px 70px;
+  margin: 7px auto;
+  width: 30%;
 }
 
 .user_blogs {
@@ -462,14 +472,13 @@ li.user {
 
 
 .letter3 {
-  background: rgb(34, 104, 40);
-  margin: 26px auto 0;
-  max-width: 550px;
-  min-height: 300px;
-  padding: 24px;
-  position: relative;
-  width: 80%;
-  font-family: 'Josefin Sans';
+  color: rgb(255, 255, 255);
+  /*背景色の指定*/
+  background: #000000b7;
+  top: 0;
+  width: 100%;
+  margin: auto;
+  position: fixed;
 }
 
 .letter3:before,

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block body %}
-    <div class="formstyle">
-        <h3 style="text-align: center;">FooTTown</h3>
-        <h2 style="text-align: center;">ログイン</h2>
+    <div class="formstyle" style="margin-top: 200px;">
+        <h3 style="text-align: center;">Sign In</h3>
+        <!-- <h2 style="text-align: center;">ログイン</h2> -->
         <form action="{{ url_for("login") }}" name="go" method="post">
             <div>
                 <label for="username">ユーザ名</label>

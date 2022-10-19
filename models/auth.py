@@ -169,8 +169,8 @@ class AuthModel(AbstractModel):
         else:
             return False
 
-    def find_your_community_by_user_name(self, user_name):
-        sql = "SELECT * FROM pub_members INNER JOIN pubs on pub_members.pub_id = pubs.pub_id where username=%s"
+    def find_your_following_community(self, user_name):
+        sql = "SELECT * FROM followpub INNER JOIN pubs on followpub.pub = pubs.pub_id where followpub.user=%s"
         return self.fetch_all(sql, user_name)
 
     def find_pub_by_id(self, pub_id):
