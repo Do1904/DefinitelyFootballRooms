@@ -45,7 +45,7 @@ body#pub {
 
 .formstyle {
   background-color: rgb(34, 104, 40);
-  margin: 50px 300px;
+  margin: 50px 270px;
   padding: 80px;
   color: rgb(254, 254, 254);
   border: #ffffff 2px dashed;
@@ -326,11 +326,8 @@ a {
 }
 
 .blogs {
-  color: rgb(0, 0, 0);
-  background: #ffffff6c;
-  /*背景色の指定*/
-  border: #ffffff 2px solid;
-  /*境界線の指定 */
+  color: rgb(14, 63, 18);
+  background: rgb(195, 255, 200);
   padding: 6px 70px;
   margin: 7px auto;
   width: 20%;
@@ -360,24 +357,16 @@ a {
 }
 
 .user_blogs {
-  color: rgb(0, 0, 0);
-  background: #ffffff96;
-  /*背景色の指定*/
-  border: #ffffff 2px solid;
-  /*境界線の指定 */
-  box-shadow: 0 0 0 2px #ffffff3c;
-  /*  境界線の外側の指定 */
+  color: rgb(14, 63, 18);
+  background: rgb(195, 255, 200);
   padding: 0px 60px;
   margin: 10px auto;
   width: 55%;
 }
 
 .article {
-  color: rgb(0, 0, 0);
-  background: #ffffff6c;
-  /*背景色の指定*/
-  border: #ffffff 2px solid;
-  /*境界線の指定 */
+  color: rgb(14, 63, 18);
+  background: rgb(195, 255, 200);
   padding: 20px 40px;
   margin: 20px auto;
   width: 57%;

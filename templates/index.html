@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="formstyle" style="margin-top: 200px;">
-        <h3 style="text-align: center;">Sign In</h3>
+        <h2 style="text-align: center;">Sign In</h2>
         <!-- <h2 style="text-align: center;">ログイン</h2> -->
         <form action="{{ url_for("login") }}" name="go" method="post">
             <div>
@@ -16,5 +16,11 @@
                 <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
             </div>
         </form>
+        {% if error %}
+        <p style="color: red">{{ error }}</p>
+        {% endif %}
+        {% if information %}
+        <p style="color: cornflowerblue">{{ information }}</p>
+        {% endif %}
     </div>
 {% endblock %}

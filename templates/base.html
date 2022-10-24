@@ -89,19 +89,10 @@
             <a class="menus" href="javascript:manuDisplay();">Menu</a>
           </li>
           <li style="list-style: none;margin-left: 10px;">
-            <a class="menus" href="{{ url_for('logout') }}" methods="post">Logout</a>
+            <a class="menus" href="{{ url_for('logout') }}" methods="post">Sign Out</a>
           </li>
         </ul>
     </nav>
-    <!-- <footer id="brick" style="z-index:20000">
-        <p>Footer</p>
-    </footer> -->
-    {% endif %}
-    {% if error %}
-        <p style="color: red">{{ error }}</p>
-    {% endif %}
-    {% if information %}
-        <p style="color: cornflowerblue">{{ information }}</p>
     {% endif %}
 <main>
 {% block body %}
