@@ -166,6 +166,16 @@ def profile_update(nickname: str = Form(...), twitter: str = Form(...), instagra
     auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, twitter, instagram, socialmedia, user_name) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/user/%s" % (user_name), status_code=HTTP_302_FOUND)
 
+@app.post("/profile_pic_update")
+@check_login
+def profile_pic_update(profile_pic: str = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config) # auth.pyを使うために必要
+    print('//////////////////////////////')
+    print(profile_pic)
+    
+    return RedirectResponse("/user/%s" % (user_name), status_code=HTTP_302_FOUND)
+
 @app.get("/matching")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
