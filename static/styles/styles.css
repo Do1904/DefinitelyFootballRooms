@@ -226,6 +226,20 @@ a {
   color: rgb(0, 0, 0);
 }
 
+.topLink {
+  padding: 0.2em 0.4em;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(14, 63, 18) 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  transition: .3s;
+  color: rgb(14, 63, 18);
+}
+
+.topLink:hover {
+  background-position: -100% 0;
+  color: rgb(195, 255, 200);
+}
+
 .profile {
   padding: 0.2em 0.4em;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(190, 255, 192) 50%);

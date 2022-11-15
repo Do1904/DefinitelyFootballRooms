@@ -8,6 +8,7 @@ from app.configs import Config
 from app.utilities.session import Session
 from app.models.auth import AuthModel
 from app.models.articles import ArticleModel
+from app.models.picture import PictureModel
 from app.utilities.check_login import check_login
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -170,9 +171,18 @@ def profile_update(nickname: str = Form(...), twitter: str = Form(...), instagra
 @check_login
 def profile_pic_update(profile_pic: str = Form(...), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
-    auth_model = AuthModel(config) # auth.pyを使うために必要
+    # auth_model = AuthModel(config)
+    picture_model = PictureModel(config)
     print('//////////////////////////////')
-    print(profile_pic)
+    print('//////////////////////////////')
+    print('//////////////////////////////')
+    print('//////////////////////////////')
+    profile_pic_link = picture_model.test_print(profile_pic)
+    print(profile_pic_link)
+    print('//////////////////////////////')
+    print('//////////////////////////////')
+    print('//////////////////////////////')
+    print('//////////////////////////////')
     
     return RedirectResponse("/user/%s" % (user_name), status_code=HTTP_302_FOUND)
 
@@ -482,12 +492,14 @@ def discussion_detail_page(request: Request, id: int, session_id=Cookie(default=
     user = auth_model.find_profile_by_user_id(user_name)
     topic = auth_model.find_discussion_by_id(id)
     comments = auth_model.fetch_discussion_commnets_by_id(id)
+    comment_comments = auth_model.fetch_discussion_commnet_comments_by_id(id)
     pub = auth_model.find_pub_by_id(topic["pub_id"])
     return templates.TemplateResponse("discussion-detail.html", {
         "request": request,
         "user": user,
         "topic": topic,
         "comments": comments,
+        "comment_comments": comment_comments,
         "pub": pub
     })
 

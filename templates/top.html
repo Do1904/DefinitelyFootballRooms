@@ -2,8 +2,55 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
-        <h1>FooTTown</h1>
-        <h3>ようこそ！{{ user["username"] }}さん！</h3>
-        <p>Footballファンに出会うチャンスがここにはあります。</p>
+        <h1>Welcome to FooTTown</h1>
+        <h4>ようこそ！{{ user["username"] }}さん！</h4><br><br>
+        <h2>Tutorial</h2>
+
+        <div style="background-color: rgb(195, 255, 200);margin: 40px 240px;padding: 40px;color: rgb(14, 63, 18);border: 0;">
+            <h2>Profile</h2>
+            <h3>あなたのフットボールファン情報を登録しよう！<br></h3><br>
+            <p>
+                ニックネーム / 好きなチーム、リーグ、国 / <br>
+                フットボールについての発信を行なっているSNSアカウント情報 / <br>
+                自己アピール / ニックネーム <br><br>
+            </p><br>
+            <p><a style="font-size: 100%;" class="topLink" href="{{ url_for("user_detail_page", username=user["username"]) }}">→ Create Your Profile</a></p>
+
+            <br><br>
+            <div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 100px;"></div><br><br><br>
+            
+            <h2>Blog</h2>
+            <h3>あなたのフットボールへの想いをBlogで共有しよう！<br></h3><br>
+            <p>
+                みんなのBlogにコメントやカードをあげて盛り上がろう！<br>
+            </p>
+            <p>
+                グリーンカード：そのBlogに共感、良いなと思ったら提示する<br>
+                イエローカード：そのBlogに共感できない、悪いと思ったら提示する
+            </p><br>
+            <p><a style="font-size: 100%;" class="topLink" href="{{ url_for('articles_index') }}">→ See Blogs</a></p>
+
+            <br><br>
+            <div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 100px;"></div><br><br><br>
+            
+            <h2>Matching</h2>
+            <h3>あなたと気が合うフットボールファンとマッチング！<br></h3><br>
+            <p>
+                ニックネーム / 好きなチーム、リーグ、国 / <br>
+                フットボールについての発信を行なっているSNSアカウント情報 / <br>
+                自己アピール / ニックネーム <br><br>
+            </p><br>
+
+            <br><div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 100px;"></div><br><br><br>
+
+            <h2>Community</h2>
+            <h3>フットボールの話題なんでも話し合える「Pub」に参加しよう！<br></h3><br>
+            <p>
+                ニックネーム / 好きなチーム、リーグ、国 / <br>
+                フットボールについての発信を行なっているSNSアカウント情報 / <br>
+                自己アピール / ニックネーム <br><br>
+            </p><br>
+        </div>
+        <br><br>
     </div>
 {% endblock %}
