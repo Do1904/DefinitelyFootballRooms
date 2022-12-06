@@ -10,7 +10,7 @@
     {% for result in your_community %}
     <div class="your_community">
         <br>
-        <a style="font-size: 145%;" class="join" href="{{ url_for("go_pub_home", pub_id=result["pub_id"]) }}"><b>{{ result["pub_name"] }}</b></a>
+        <a style="font-size: 145%;" class="join" href="{{ url_for("pub_detail_page", pub_id=result["pub_id"]) }}"><b>{{ result["pub_name"] }}</b></a>
         <br><br>
         <p style="font-size: 90%;">{{ result["pub_comment"] }}</p>
         

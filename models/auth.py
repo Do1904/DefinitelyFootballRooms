@@ -64,7 +64,7 @@ class AuthModel(AbstractModel):
         return self.fetch_one(sql, user_name)
 
     def add_profile_info(self, username):
-        sql = "INSERT INTO discuss_comments(username) VALUE (%s)"
+        sql = "INSERT INTO profile(username) VALUE (%s)"
         self.execute(sql, username)
 
     def logout(self):
@@ -234,7 +234,7 @@ class AuthModel(AbstractModel):
         return self.fetch_all(sql, id)
 
     def fetch_discussion_commnet_comments_by_id(self, commeid):
-        sql = "SELECT * FROM discuss_comment_comments INNER JOIN profile on discuss_comment_comments.username = profile.username where discuss_comment_comments.discussion_comment_id=%s"
+        sql = "SELECT * FROM discuss_comment_comments INNER JOIN profile on discuss_comment_comments.username = profile.username where discuss_comment_comments.discussion_id=%s"
         return self.fetch_all(sql, commeid)
 
     def post_discussion_comment(self, user_name, topic_id, body):

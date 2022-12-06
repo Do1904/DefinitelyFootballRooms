@@ -6,7 +6,7 @@
         <h4>ようこそ！{{ user["username"] }}さん！</h4><br><br>
         <h2>Tutorial</h2>
 
-        <div style="background-color: rgb(195, 255, 200);margin: 40px 240px;padding: 40px;color: rgb(14, 63, 18);border: 0;">
+        <div style="background-color: rgb(195, 255, 200);margin: 40px 280px;padding: 40px;color: rgb(14, 63, 18);border: 0;">
             <h2>Profile</h2>
             <h3>あなたのフットボールファン情報を登録しよう！<br></h3><br>
             <p>
@@ -17,7 +17,7 @@
             <p><a style="font-size: 100%;" class="topLink" href="{{ url_for("user_detail_page", username=user["username"]) }}">→ Create Your Profile</a></p>
 
             <br><br>
-            <div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 100px;"></div><br><br><br>
+            <div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 60px;"></div><br><br><br>
             
             <h2>Blog</h2>
             <h3>あなたのフットボールへの想いをBlogで共有しよう！<br></h3><br>
@@ -31,25 +31,27 @@
             <p><a style="font-size: 100%;" class="topLink" href="{{ url_for('articles_index') }}">→ See Blogs</a></p>
 
             <br><br>
-            <div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 100px;"></div><br><br><br>
+            <div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 60px;"></div><br><br><br>
             
             <h2>Matching</h2>
             <h3>あなたと気が合うフットボールファンとマッチング！<br></h3><br>
             <p>
-                ニックネーム / 好きなチーム、リーグ、国 / <br>
-                フットボールについての発信を行なっているSNSアカウント情報 / <br>
-                自己アピール / ニックネーム <br><br>
+                同じクラブやリーグのファンを探そう！ <br>
             </p><br>
+            <p><a style="font-size: 100%;" class="topLink" href="{{ url_for('user_finden') }}">→ Go Find Football Fans</a></p>
 
-            <br><div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 100px;"></div><br><br><br>
+            <br><div style="border-bottom: rgb(14, 63, 18) 2px solid;margin: 0px 60px;"></div><br><br><br>
 
             <h2>Community</h2>
-            <h3>フットボールの話題なんでも話し合える「Pub」に参加しよう！<br></h3><br>
+            <h3>フットボールの話題なんでも話し合えるコミュニティ、「Pub」に参加しよう！<br></h3><br>
             <p>
                 ニックネーム / 好きなチーム、リーグ、国 / <br>
                 フットボールについての発信を行なっているSNSアカウント情報 / <br>
                 自己アピール / ニックネーム <br><br>
             </p><br>
+            <p><a style="font-size: 100%;" class="topLink" href="{{ url_for('create_community') }}">→ Create New Pub</a></p>
+            <p><a style="font-size: 100%;" class="topLink" href="{{ url_for('show_community_list') }}">→ Following Pubs</a></p>
+
         </div>
         <br><br>
     </div>

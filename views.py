@@ -387,23 +387,6 @@ def show_community_list(request: Request, session_id=Cookie(default=None)):
     })
 
 
-@app.get("/your_community/{pub_id}")
-# check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
-@check_login
-def go_pub_home(request: Request, pub_id: str, session_id=Cookie(default=None)):
-    user_name = session.get(session_id).get("user").get("username")
-    auth_model = AuthModel(config)
-    user = auth_model.find_profile_by_user_id(user_name)
-    pub = auth_model.find_pub_by_id(pub_id)
-    # response = RedirectResponse(url="/articles", status_code=HTTP_302_FOUND)
-    # session_id = session.set("user", user)
-    # response.set_cookie("session_id", session_id)
-    return templates.TemplateResponse("pub-home.html", {
-        "request": request,
-        "user": user,
-        "pub": pub
-    })
-
     
 @app.get("/community/{pub_id}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
@@ -414,6 +397,7 @@ def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=Non
     user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
     followers = auth_model.get_pub_followers(pub_id)
+    print(followers)
     follow_id = user_name + "--" + pub_id
     follow_or_not = auth_model.detect_pub_follow(follow_id)
     return templates.TemplateResponse("pub-home.html", {
@@ -493,6 +477,7 @@ def discussion_detail_page(request: Request, id: int, session_id=Cookie(default=
     topic = auth_model.find_discussion_by_id(id)
     comments = auth_model.fetch_discussion_commnets_by_id(id)
     comment_comments = auth_model.fetch_discussion_commnet_comments_by_id(id)
+    print(comment_comments)
     pub = auth_model.find_pub_by_id(topic["pub_id"])
     return templates.TemplateResponse("discussion-detail.html", {
         "request": request,

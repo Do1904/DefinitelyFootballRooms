@@ -39,14 +39,13 @@
             <div>
                 <a href="javascript:unfollow.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/check.png')}}" width="30" height="30" alt="follow"></div></a>
             </div>
-            <p style="color: white;float:left">フォロー中</p>
+            <p style="color: white;font-size: 80%;">フォロー中</p>
         </form>
         
         
         {% endif %}
-        <h3>あなたの好きな話題でみんなとディスカッションしましょう！！</h3>
         <br>
-        <a class="join" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">参加する</a>
+        <a class="join" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">ENTER</a>
     </div>
 </div>
 

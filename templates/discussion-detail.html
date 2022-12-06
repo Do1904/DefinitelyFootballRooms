@@ -50,9 +50,9 @@
     <h3 style="font-size: 100%;text-align: left;color: rgb(0, 0, 0);"><a class="discussionpage" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></h3>
     <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);">{{ comment["context"] }}</p>
     <p style="font-size: 85%;color: rgb(0, 0, 0);">{{ comment["created_at"] }}</p>
+    {{ comment_comments }}
     <p><a href="{{ url_for("post_discussion_comment_comment_page", comment_id=comment["id"]) }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/comment.png')}}" width="30" height="30" alt="comment"></div></a></p>
     <div style="border-bottom: rgb(0, 0, 0) 1px solid;"></div>
-    {% for comment_comment in  %}
 {% endfor %}
 {% if not comments %}
 <br>
