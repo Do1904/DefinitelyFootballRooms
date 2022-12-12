@@ -20,4 +20,10 @@
 {% if not comments %}
 <div class="article">コメントはまだありません。</div>
 {% endif %}
+{% if error %}
+<p style="color: red">{{ error }}</p>
+{% endif %}
+{% if information %}
+<p style="color: cornflowerblue">{{ information }}</p>
+{% endif %}
 {% endblock %}

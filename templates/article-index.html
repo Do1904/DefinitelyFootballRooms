@@ -49,5 +49,12 @@
         {% if not articles %}
             <p>投稿された記事はありません</p>
         {% endif %}
+        
     </div>
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %}
+    {% if information %}
+    <p style="color: cornflowerblue">{{ information }}</p>
+    {% endif %}
 {% endblock %}

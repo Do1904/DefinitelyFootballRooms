@@ -19,5 +19,11 @@
     {% if not your_community %}
     <p>該当するコミュニティは見つかりませんでした。</p>
     {% endif %}
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %}
+    {% if information %}
+    <p style="color: cornflowerblue">{{ information }}</p>
+    {% endif %}
 </div>
 {% endblock %}

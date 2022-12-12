@@ -228,6 +228,9 @@ def articles_index(request: Request, session_id=Cookie(default=None)):
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
 def articles_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), session_id=Cookie(default=None)):
+    if keyword == "":
+        return templates.TemplateResponse("article-index.html", {
+    })
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
