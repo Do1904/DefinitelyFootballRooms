@@ -5,6 +5,7 @@
         <div id="matchingUsers">
             <div>
                 <h3>Followers</h3>
+            <div class="followscroll">
                 <table class="followesTables">
                     {% for follower in followers %}
                     <tr>
@@ -12,11 +13,14 @@
                     </tr>
                     {% endfor %}
                 </table>
-                <br><br>
+                
+            </div>
+            <br><br>
             </div>
             
             <div>
                 <h3>Followings</h3>
+            <div class="followscroll">
                 <table class="followesTables">
                     {% for following in followings %}
                     <tr>
@@ -24,7 +28,9 @@
                     </tr>
                     {% endfor %}
                 </table>
-                <br><br>
+                
+            </div>
+            <br><br>
             </div>
         </div>
         

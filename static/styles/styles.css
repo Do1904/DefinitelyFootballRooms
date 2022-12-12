@@ -582,6 +582,11 @@ li.user {
   border-right: #004005 2px solid;
 }
 
+.followscroll {
+  height: 200px;
+  overflow-y: scroll;
+}
+
 .followesTables {
   margin: 20px 10px;
 }
