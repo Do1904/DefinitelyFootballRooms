@@ -2,16 +2,32 @@
 {% block body %}
 <br>
     <div class="content" style="margin: 100px;">
-        <div>
-            <p>マッチング承諾</p>
-            <h3>Followers</h3>
-            <table>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+        <div id="matchingUsers">
+            <div>
+                <h3>Followers</h3>
+                <table class="followesTables">
+                    {% for follower in followers %}
+                    <tr>
+                        <td><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=follower["from_user_id"]) }}"><b>{{ follower["from_user_id"] }}</b></a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br><br>
+            </div>
+            
+            <div>
+                <h3>Followings</h3>
+                <table class="followesTables">
+                    {% for following in followings %}
+                    <tr>
+                        <td><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=following["from_user_id"]) }}"><b>{{ following["to_user_id"] }}</b></a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br><br>
+            </div>
         </div>
+        
 
 
         <div style="border-bottom: #ffffff 2px solid;margin: 0px 300px;"></div>

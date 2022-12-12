@@ -581,3 +581,26 @@ li.user {
   border-left: #004005 2px solid;
   border-right: #004005 2px solid;
 }
+
+.followesTables {
+  margin: 20px 10px;
+}
+
+.followesTables td{
+  color: rgb(0, 0, 0);
+  background: #ffffffbb;
+  /*背景色の指定*/
+  border: #000000b0 2px solid;
+  /*境界線の指定 */
+  box-shadow: 0 0 0 2px #ffffffa3;
+  /*  境界線の外側の指定 */
+  width: 200px;
+  height: 30px;
+}
+
+#matchingUsers {
+  display: flex;
+  /* Flexboxの利用 */
+  justify-content: center;
+  /* 子要素の横並び・中央寄せ */
+}

@@ -198,6 +198,8 @@ def user_finden(request: Request, session_id=Cookie(default=None)):
     your_nation = user["your_nation"]
     auth_model = AuthModel(config)
     users = auth_model.fetch_all_fans()
+    followers = auth_model.get_followers(user_name)
+    followings = auth_model.get_followings(user_name)
     [clubfan, leaguefan, nationfan] = auth_model.fetch_fans(your_club, your_league, your_nation)
     return templates.TemplateResponse("matching.html", {
         "request": request,
@@ -205,7 +207,9 @@ def user_finden(request: Request, session_id=Cookie(default=None)):
         "user": user,
         "clubfan": clubfan,
         "leaguefan": leaguefan,
-        "nationfan": nationfan
+        "nationfan": nationfan,
+        "followers": followers,
+        "followings": followings
     })
 
 
