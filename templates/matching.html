@@ -2,6 +2,19 @@
 {% block body %}
 <br>
     <div class="content" style="margin: 100px;">
+        <div>
+            <p>マッチング承諾</p>
+            <h3>Followers</h3>
+            <table>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div style="border-bottom: #ffffff 2px solid;margin: 0px 300px;"></div>
         <p>{{ user["your_club"] }}のファン</p>
         <ul class="users-list">
             {% for fan in clubfan %}
@@ -45,10 +58,6 @@
         {% endif %}
         </ul>
         <br><Br><br>
-        <div style="border-bottom: #ffffff 2px solid;margin: 0px 300px;"></div>
-        <div>
-            <p>マッチング承諾</p>
-            
-        </div>
+        
     </div>
 {% endblock %}

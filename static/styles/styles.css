@@ -554,3 +554,17 @@ li.user {
   opacity: 0.3;
   transition-duration: 0.3s;
 }
+
+#matchedInfo {
+  background-color: #beffc0;
+  margin: 30px 340px 20px;
+  padding: 40px;
+  color: #004005;
+  text-align: center;
+
+}
+
+#matchedInfoTable {
+  margin: 0 auto;
+  width: 200px;
+}

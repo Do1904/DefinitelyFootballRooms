@@ -16,10 +16,10 @@
           </li> -->
         </ul>
       </nav>
-    <div class="profileheader" style="background-color: rgb(0, 64, 5);margin: 0px auto;padding: 100px;color: rgb(190, 255, 192);border: 0;">
+    <div class="profileheader" style="background-color: #004005;margin: 0px auto;padding: 100px;color: rgb(190, 255, 192);border: 0;">
         <h1>{{ other_user["nickname"] }}さんのページ</h1>
         <p>ユーザーネーム：{{ other_user["username"] }}</p><br>
-        <div style="border-bottom: rgb(190, 255, 192) 2px dashed;margin: 0px 300px;"></div>
+        <div style="border-bottom: #beffc0 2px dashed;margin: 0px 300px;"></div>
         <p>{{ other_user["your_club"] }} | {{ other_user["your_league"] }} | {{ other_user["your_nation"] }}</p><br>
         <p style="white-space:pre-wrap;font-size: 89%;">{{ other_user["profile"] }}</p>
         <div style="border-bottom: rgb(190, 255, 192) 2px dashed;margin: 0px 300px;"></div><br>
@@ -55,12 +55,40 @@
             <div>
                 <p><input id="username" type="hidden" value="{{ other_user["username"] }}" name="username"/></p>
             </div>
+            <p style="color: white;font-size: 80%;">フォロー中</p>
             <div>
                 <a href="javascript:unfollow.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/check.png')}}" width="30" height="30" alt="unfollow"></div></a>
             </div>
         </form>
         
+        {% if evil_follow_or_not %}
+        <br><br>
+        <h2>Matched!!</h2>
+        <p style="font-size: 80%;">{{ other_user["nickname"] }}さんと相互フォロー中です！</p>
+        <div id="matchedInfo">
+            <table id="matchedInfoTable">
+                <tr>
+                    <td>Twitter</td>
+                    <td>{{ other_user["twitter"] }}</td>
+                </tr>
+                <tr>
+                    <td>Instagram</td>
+                    <td>{{ other_user["instagram"] }}</td>
+                </tr>
+                <tr>
+                    <td>Other SNS</td>
+                    <td>{{ other_user["SNS"] }}</td>
+                </tr>
+            </table>
+        </div>
+        
         {% endif %}
+
+        {% endif %}
+        {% endif %}
+
+        {% if follower["from_user_id"] == user["username"] %}
+        <p>Love each other</p>
         {% endif %}
     </div>
     <div style="background-color: rgb(34, 104, 40);margin:0;padding: 50px 100px 90px 100px;color: rgb(254, 254, 254);border: 0;">

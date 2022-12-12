@@ -551,7 +551,9 @@ def user_detail_page(request: Request, username: str, session_id=Cookie(default=
     followings = auth_model.get_followings(username)
     followers = auth_model.get_followers(username)
     follow_id = user_name + "--" + username
+    evil_follow_id = username + "--" + user_name
     follow_or_not = auth_model.detect_follow(follow_id)
+    evil_follow_or_not = auth_model.detect_follow(evil_follow_id)
     return templates.TemplateResponse("user-home.html", {
         "request": request,
         "user": user,
@@ -560,7 +562,8 @@ def user_detail_page(request: Request, username: str, session_id=Cookie(default=
         "pubs": pubs,
         "following": followings,
         "follower": followers,
-        "follow_or_not": follow_or_not
+        "follow_or_not": follow_or_not,
+        "evil_follow_or_not": evil_follow_or_not
     })
 
 @app.post("/follow")
