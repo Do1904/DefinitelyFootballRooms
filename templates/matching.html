@@ -24,7 +24,7 @@
                 <table class="followesTables">
                     {% for following in followings %}
                     <tr>
-                        <td><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=following["from_user_id"]) }}"><b>{{ following["to_user_id"] }}</b></a></td>
+                        <td><a style="font-size: 85%;" class="blogtitle" href="{{ url_for("user_detail_page", username=following["to_user_id"]) }}"><b>{{ following["to_user_id"] }}</b></a></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -37,6 +37,7 @@
 
 
         <div style="border-bottom: #ffffff 2px solid;margin: 0px 300px;"></div>
+        <br>
         <p>{{ user["your_club"] }}のファン</p>
         <ul class="users-list">
             {% for fan in clubfan %}

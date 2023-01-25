@@ -8,6 +8,11 @@
     </p>
     <p class="article" style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ article["body"] }}</p>
 </div>
+{% if article["username"] == user["username"] %}
+<div>
+    <p style="text-align: center;"><a href="{{ url_for("edit_article_page", article_id=article["id"]) }}">Edit</a></p>
+</div>
+{% endif %}
 <br>
 <p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=article["id"]) }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/commentw.png')}}" width="30" height="30" alt="comment"></div></a></p>
 {% for comment in comments %}

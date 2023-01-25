@@ -55,6 +55,17 @@ class ArticleModel(AbstractModel):
         sql = "INSERT INTO articles(username, title, body) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, title, body)
 
+    def update_article(self, title, body, article_id):
+        """
+        新しく記事を作成する
+        :param user_name: 投稿したユーザのusername
+        :param title: 記事のタイトル
+        :param body: 記事の本文
+        :return: None
+        """
+        sql = "UPDATE articles SET title = %s, body = %s WHERE id = %s;"
+        self.execute(sql, title, body, article_id)
+
     def find_article_by_title(self, keyword):
         args = f'%{keyword}%'
         sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where articles.title like %s ORDER BY articles.created_at DESC LIMIT 500"

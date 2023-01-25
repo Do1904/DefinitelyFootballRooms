@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block body %}
+<br><br><br><br>
+    <div class="content">
+        <h2><br>EDIT BLOG</h2>
+        <div class="formstyle">
+            <form action="{{ url_for("finish_editting_article_page") }}" name="go" method="post">
+                <div class="cp_iptxt">
+                    <label for="title" class="ef">TITLE</label><br><br>
+                    <input id="title" type="text" name="title" size="40" value="{{ article["title"] }}" />
+                </div>
+                <br><br><br>
+                <div>
+                    <label for="body">BODY</label><br><br>
+                    <textarea id="body" name="body" rows="20" cols="40" >{{ article["body"] }}</textarea>
+                </div>
+                <div>
+                    <p><input type="hidden" id="article_id" value="{{ article["id"] }}" name="article_id" /></p>
+                </div>
+                <br><br>
+                <div>
+                    <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+{% endblock %}

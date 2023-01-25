@@ -308,6 +308,32 @@ def post_comment(body: str = Form(...), article_id: int = Form(...), session_id=
     article_model.post_new_comment(user_name, article_id, body)
     return RedirectResponse("/article/%s" % (article_id), status_code=HTTP_302_FOUND)
 
+
+
+@app.get("/article/{article_id}/edit")
+@check_login
+def edit_article_page(request: Request, article_id: int, session_id=Cookie(default=None)):
+    article_model = ArticleModel(config)
+    article = article_model.fetch_article_by_id(article_id)
+    user_name = session.get(session_id).get("user").get("username")
+    auth_model = AuthModel(config)
+    user = auth_model.find_profile_by_user_id(user_name)
+    return templates.TemplateResponse("edit-article.html", {
+        "request": request,
+        "article": article,
+        "user": user
+    })
+
+@app.post("/article/edit")
+@check_login
+def finish_editting_article_page(title: str = Form(...), body: str = Form(...), article_id: int = Form(...), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
+    article_model = ArticleModel(config)
+    article_model.update_article(title, body, article_id)
+    return RedirectResponse("/article/%s" % (article_id), status_code=HTTP_302_FOUND)
+
+
+
 @app.get("/logout")
 @check_login
 def logout(session_id=Cookie(default=None)):
