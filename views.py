@@ -333,6 +333,17 @@ def finish_editting_article_page(title: str = Form(...), body: str = Form(...), 
     return RedirectResponse("/article/%s" % (article_id), status_code=HTTP_302_FOUND)
 
 
+@app.delete("/article/delete")
+@check_login
+def destroy_article_page(article_id: int = Form(...)):
+    print("fkddsdnagjkfdsangklsjfkldjskagfkdjsklvdsjkagkdas")
+    article_model = ArticleModel(config)
+    article_model.destory_article(article_id)
+    return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
+
+
+
+
 
 @app.get("/logout")
 @check_login
@@ -541,6 +552,30 @@ def post_comment(body: str = Form(...), topic_id: int = Form(...), session_id=Co
     auth_model = AuthModel(config)
     auth_model.post_discussion_comment(user_name, topic_id, body)
     return RedirectResponse("/community/discussion/%s" % (topic_id), status_code=HTTP_302_FOUND)
+
+
+@app.get("/community/discussion/{discussion_id}/edit")
+@check_login
+def edit_discussion_page(request: Request, discussion_id: int, session_id=Cookie(default=None)):
+    auth_model = AuthModel(config)
+    discussion = auth_model.find_discussion_by_id(discussion_id)
+    user_name = session.get(session_id).get("user").get("username")
+    user = auth_model.find_profile_by_user_id(user_name)
+    return templates.TemplateResponse("edit-discuss.html", {
+        "request": request,
+        "discussion": discussion,
+        "user": user
+    })
+
+@app.post("/community/discussion/edit")
+@check_login
+def finish_editting_discussion_page(status: str = Form(...), title: str = Form(...), body: str = Form(...), discussion_id: int = Form(...), session_id=Cookie(default=None)):
+    auth_model = AuthModel(config)
+    auth_model.update_discussion_page(status, title, body, discussion_id)
+    return RedirectResponse("/community/discussion/%s" % (discussion_id), status_code=HTTP_302_FOUND)
+
+
+
 
 @app.get("/discussioncomment/{comment_id}/comment")
 @check_login

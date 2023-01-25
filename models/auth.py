@@ -241,6 +241,10 @@ class AuthModel(AbstractModel):
         sql = "INSERT INTO discuss_comments(username, message_id, context) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, topic_id, body)
 
+    def update_discussion_page(self, status, title, body, discussion_id):
+        sql = "UPDATE message SET status = %s, title = %s, body = %s WHERE id = %s;"
+        self.execute(sql, status, title, body, discussion_id)
+
     def post_discussion_comment_comment(self, user_name, comment_id, body):
         sql = "INSERT INTO discuss_comment_comments(username, discussion_comment_id, context) VALUE (%s, %s, %s);"
         self.execute(sql, user_name, comment_id, body)

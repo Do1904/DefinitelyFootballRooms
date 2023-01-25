@@ -1,0 +1,20 @@
+{% extends "pub-index.html" %}
+{% block body %}
+<br><br><br><br>
+    <div class="content">
+        <h2>EDIT COMMENT</h2>
+        <br>
+        <form action="/discussion/comment" name="go" method="post">
+            <div>
+                <textarea id="body" name="body" rows="20" cols="40" placeholder="コメント"></textarea>
+            </div>
+            <div>
+                <p><input type="hidden" id="topic_id" value="{{ topic["id"] }}" name="topic_id"/></p>
+            </div>
+            <br>
+            <div>
+                <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

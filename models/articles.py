@@ -66,6 +66,11 @@ class ArticleModel(AbstractModel):
         sql = "UPDATE articles SET title = %s, body = %s WHERE id = %s;"
         self.execute(sql, title, body, article_id)
 
+    def destory_article(self, article_id):
+        print("fkddsdnagjkfdsangklsjfkldjskagfkdjsklvdsjkagkdas")
+        sql = "DELETE from articles where id = %s;"
+        self.execute(sql, article_id)
+
     def find_article_by_title(self, keyword):
         args = f'%{keyword}%'
         sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where articles.title like %s ORDER BY articles.created_at DESC LIMIT 500"

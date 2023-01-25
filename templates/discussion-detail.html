@@ -40,9 +40,16 @@
             <p style="font-size: 120%;white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);">{{ topic["body"] }}</p><Br>
             <p style="font-size: 105%;color: rgb(0, 0, 0);">By:<a class="blogtitle" href="{{ url_for("user_detail_page", username=topic["username"]) }}">{{ topic["nickname"] }}</a></p>
             <p style="font-size: 105%;color: rgb(0, 0, 0);">{{ topic["created_at"] }}</p>
-        </p>
+        </p><br>
+        {% if topic["username"] == user["username"] %}
+        <div>
+            <p style="text-align: center;"><a href="{{ url_for("edit_discussion_page", discussion_id=topic["id"]) }}">Edit</a></p>
+        </div>
+        
+        {% endif %}
     </div>
 <br>
+
 <!-- <p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=["id"]) }}">コメント</a></p> -->
 <div class="letter2">
     <h2 style="background: #000000bb;color: whitesmoke;">Discussion</h2>
@@ -50,6 +57,12 @@
     <h3 style="font-size: 100%;text-align: left;color: rgb(0, 0, 0);"><a class="discussionpage" href="{{ url_for("user_detail_page", username=comment["username"]) }}">{{ comment["nickname"] }}</a></h3>
     <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;color: rgb(0, 0, 0);">{{ comment["context"] }}</p>
     <p style="font-size: 85%;color: rgb(0, 0, 0);">{{ comment["created_at"] }}</p>
+    {% if comment["username"] == user["username"] %}
+    <div>
+        <p>fkdsalngkoa</p>
+    </div>
+    
+    {% endif %}
     <div style="border-bottom: rgb(0, 0, 0) 1px solid;"></div>
 {% endfor %}
 {% if not comments %}
