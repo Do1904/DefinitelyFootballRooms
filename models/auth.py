@@ -231,6 +231,7 @@ class AuthModel(AbstractModel):
 
     def fetch_discussion_commnets_by_id(self, id):
         sql = "SELECT * FROM discuss_comments INNER JOIN profile on discuss_comments.username = profile.username where discuss_comments.message_id=%s"
+        print(sql)
         return self.fetch_all(sql, id)
 
     def fetch_discussion_commnet_comments_by_id(self, commeid):
@@ -244,6 +245,10 @@ class AuthModel(AbstractModel):
     def update_discussion_page(self, status, title, body, discussion_id):
         sql = "UPDATE message SET status = %s, title = %s, body = %s WHERE id = %s;"
         self.execute(sql, status, title, body, discussion_id)
+
+    def update_discussion_comment_page(self, context, discussion_comment_id):
+        sql = "UPDATE discuss_comments SET context = %s WHERE id = %s;"
+        self.execute(sql, context, discussion_comment_id)
 
     def post_discussion_comment_comment(self, user_name, comment_id, body):
         sql = "INSERT INTO discuss_comment_comments(username, discussion_comment_id, context) VALUE (%s, %s, %s);"

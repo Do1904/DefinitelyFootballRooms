@@ -2,18 +2,26 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
+        {{ discussion_comment }}
         <h2>EDIT COMMENT</h2>
         <br>
-        <form action="/discussion/comment" name="go" method="post">
+        <form action="/discussioncomment/edit" name="go" method="post">
+            <br><br>
             <div>
-                <textarea id="body" name="body" rows="20" cols="40" placeholder="コメント"></textarea>
+                <label for="context">COMMENT</label>
+                <p><textarea id="context" name="context" rows="20" cols="40">{{ discussion_comment["context"] }}</textarea></p>
             </div>
             <div>
-                <p><input type="hidden" id="topic_id" value="{{ topic["id"] }}" name="topic_id"/></p>
+                <p><input type="hidden" id="discussion_comment_id" value="{{ discussion_comment["id"] }}" name="discussion_comment_id"/></p>
+            </div>
+            <div>
+                <p><input type="hidden" id="discussion_id" value="{{ discussion_comment["message_id"] }}" name="discussion_id"/></p>
             </div>
             <br>
             <div>
-                <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
+                <a href="javascript:go.submit()">
+                    <div class="img_wrap"><img src="{{ url_for('static', path='/pics/submit.png') }}" width="30" height="30" alt="submit"></div>
+                </a>
             </div>
         </form>
     </div>

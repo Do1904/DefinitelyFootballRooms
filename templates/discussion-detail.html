@@ -59,7 +59,7 @@
     <p style="font-size: 85%;color: rgb(0, 0, 0);">{{ comment["created_at"] }}</p>
     {% if comment["username"] == user["username"] %}
     <div>
-        <p>fkdsalngkoa</p>
+        <p style="text-align: center;"><a href="{{ url_for("edit_discussioncomment_page", discussion_comment_id=comment["id"]) }}">Edit</a></p>
     </div>
     
     {% endif %}

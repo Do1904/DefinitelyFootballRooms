@@ -1,3 +1,4 @@
+from multiprocessing import context
 from typing import List, Optional
 from fastapi import FastAPI, Request, Form, Cookie, WebSocket, WebSocketDisconnect 
 from fastapi.responses import RedirectResponse
@@ -574,6 +575,26 @@ def finish_editting_discussion_page(status: str = Form(...), title: str = Form(.
     auth_model.update_discussion_page(status, title, body, discussion_id)
     return RedirectResponse("/community/discussion/%s" % (discussion_id), status_code=HTTP_302_FOUND)
 
+
+@app.get("/discussioncomment/{discussion_comment_id}/edit")
+@check_login
+def edit_discussioncomment_page(request: Request, discussion_comment_id: int, session_id=Cookie(default=None)):
+    auth_model = AuthModel(config)
+    discussion_comment = auth_model.find_discussion_comment_by_id(discussion_comment_id)
+    user_name = session.get(session_id).get("user").get("username")
+    user = auth_model.find_profile_by_user_id(user_name)
+    return templates.TemplateResponse("edit-discuss-comment.html", {
+        "request": request,
+        "discussion_comment": discussion_comment,
+        "user": user
+    })
+
+@app.post("/discussioncomment/edit")
+@check_login
+def finish_editting_discussioncomment_page(context: str = Form(...), discussion_comment_id: int = Form(...), discussion_id: int = Form(...), session_id=Cookie(default=None)):
+    auth_model = AuthModel(config)
+    auth_model.update_discussion_comment_page(context, discussion_comment_id)
+    return RedirectResponse("/community/discussion/%s" % (discussion_id), status_code=HTTP_302_FOUND)
 
 
 
