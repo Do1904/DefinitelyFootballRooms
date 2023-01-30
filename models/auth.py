@@ -231,8 +231,11 @@ class AuthModel(AbstractModel):
 
     def fetch_discussion_commnets_by_id(self, id):
         sql = "SELECT * FROM discuss_comments INNER JOIN profile on discuss_comments.username = profile.username where discuss_comments.message_id=%s"
-        print(sql)
         return self.fetch_all(sql, id)
+
+    def pub_member_by_id(self, pub_id):
+        sql = "SELECT * FROM followpub INNER JOIN profile on followpub.user = profile.username where followpub.pub = %s"
+        return self.fetch_all(sql, pub_id)
 
     def fetch_discussion_commnet_comments_by_id(self, commeid):
         sql = "SELECT * FROM discuss_comment_comments INNER JOIN profile on discuss_comment_comments.username = profile.username where discuss_comment_comments.discussion_id=%s"

@@ -70,13 +70,10 @@
             </li><br>
             <li>
                 <a href="{{ url_for('user_finden') }}"><div class="img_rightside" style="margin-left: 3px;margin-bottom: 4px;"><img src="{{url_for('static', path='/pics/people.png')}}" width="33" height="33" alt="menu"></div></a>
-            </li><br>
+            </li>
             <li>
-                <a class="menus" href="{{ url_for('show_community_list') }}">コミュニティ</a>
-            </li><br>
-            <li>
-                <a class="menus" href="{{ url_for('create_community') }}">新規作成</a>
-            </li><br>
+                <a class="menus" href="{{ url_for('show_community_list') }}"><div class="img_rightside" style="margin-left: 3px;margin-bottom: 4px;"><img src="{{url_for('static', path='/pics/pub.png')}}" width="33" height="33" alt="menu"></div></a>
+            </li><br><br><br>
             <li>
                 <a href="{{ url_for('find_community') }}"><div class="img_rightside" style="margin-left: 3px;margin-bottom: 4px;"><img src="{{url_for('static', path='/pics/search.png')}}" width="30" height="30" alt="search"></div></a>
             </li><br>

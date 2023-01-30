@@ -587,6 +587,9 @@ li.user {
   overflow-y: scroll;
 }
 
+pubmembersTables
+
+
 .followesTables {
   margin: 20px 10px;
 }
@@ -601,6 +604,16 @@ li.user {
   /*  境界線の外側の指定 */
   width: 200px;
   height: 30px;
+}
+
+.pubmembersTables {
+  margin: 10px 7px;
+}
+
+.pubmembersTables td {
+  color: rgb(255, 255, 255);
+  width: 200px;
+  height: 20px;
 }
 
 #matchingUsers {

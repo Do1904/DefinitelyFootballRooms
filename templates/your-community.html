@@ -2,10 +2,13 @@
 {% block body %}
 <br><br><br><br>
 <div class="content">
-    <h2><br>PUBS YOU FOLLOWED</h2>
     <br>
+    
+    <p><h2>PUBS</h2><a class="menus" href="{{ url_for('create_community') }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/add.png')}}" width="30" height="30" alt="add"></div></a></p>
+    
     <div style="border-bottom: #ffffff 2px solid;margin: 0px 300px;"></div>
 
+    <br>
     <h3>あなたの行きつけのPub</h3>
     {% for result in your_community %}
     <div class="your_community">

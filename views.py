@@ -461,11 +461,13 @@ def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=N
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
     pub = auth_model.find_pub_by_id(pub_id)
+    members = auth_model.pub_member_by_id(pub_id)
     topics = auth_model.find_discussion_by_pub_id(pub_id)
     return templates.TemplateResponse("pub-discuss.html", {
         "user": user,
         "request": request,
         "pub": pub,
+        "members": members,
         "topics": topics
     })
 
@@ -522,14 +524,15 @@ def discussion_detail_page(request: Request, id: int, session_id=Cookie(default=
     topic = auth_model.find_discussion_by_id(id)
     comments = auth_model.fetch_discussion_commnets_by_id(id)
     comment_comments = auth_model.fetch_discussion_commnet_comments_by_id(id)
-    print(comment_comments)
     pub = auth_model.find_pub_by_id(topic["pub_id"])
+    members = auth_model.pub_member_by_id(topic["pub_id"])
     return templates.TemplateResponse("discussion-detail.html", {
         "request": request,
         "user": user,
         "topic": topic,
         "comments": comments,
         "comment_comments": comment_comments,
+        "members": members,
         "pub": pub
     })
 
