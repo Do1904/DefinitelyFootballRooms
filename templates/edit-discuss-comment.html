@@ -2,14 +2,15 @@
 {% block body %}
 <br><br><br><br>
     <div class="content">
-        {{ discussion_comment }}
+        <br>
         <h2>EDIT COMMENT</h2>
         <br>
+        <div class="pubintro">
         <form action="/discussioncomment/edit" name="go" method="post">
             <br><br>
             <div>
                 <label for="context">COMMENT</label>
-                <p><textarea id="context" name="context" rows="20" cols="40">{{ discussion_comment["context"] }}</textarea></p>
+                <p><textarea id="context" name="context" rows="12" cols="40">{{ discussion_comment["context"] }}</textarea></p>
             </div>
             <div>
                 <p><input type="hidden" id="discussion_comment_id" value="{{ discussion_comment["id"] }}" name="discussion_comment_id"/></p>
@@ -24,5 +25,6 @@
                 </a>
             </div>
         </form>
+        </div>
     </div>
 {% endblock %}

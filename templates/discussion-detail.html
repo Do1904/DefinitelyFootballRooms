@@ -4,7 +4,7 @@
 <header id="manu" style="z-index:10000">
     <br><br>
     <a style="font-size: 145%;" class="join" href="{{ url_for("pub_detail_page", pub_id=topic["pub_id"]) }}"><b>{{ pub["pub_name"] }}</b></a>
-    <br><br><Br>
+    <br><br>
     <ul class="main_menu" style="list-style: none;padding-left: 4px;">
         <li>
             <a class="menus" href="{{ url_for("go_pub_discussion", pub_id=pub["pub_id"]) }}">
@@ -12,7 +12,7 @@
             </a>
         </li>
     </ul>
-    <br>
+    
     <p>Member</p>
     <div class="followscroll">
         <table class="pubmembersTables">

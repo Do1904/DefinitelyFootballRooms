@@ -8,7 +8,7 @@ class ArticleModel(AbstractModel):
     def __init__(self, config):
         super(ArticleModel, self).__init__(config)
 
-    def fetch_recent_articles(self, limit=500):
+    def fetch_recent_articles(self, limit=200):
         """
         最新の記事を取得する．デフォルトでは最新5件まで
         :param limit: 取得する記事の数
@@ -67,24 +67,36 @@ class ArticleModel(AbstractModel):
         self.execute(sql, title, body, article_id)
 
     def destory_article(self, article_id):
-        print("fkddsdnagjkfdsangklsjfkldjskagfkdjsklvdsjkagkdas")
         sql = "DELETE from articles where id = %s;"
         self.execute(sql, article_id)
 
     def find_article_by_title(self, keyword):
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where articles.title like %s ORDER BY articles.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, args)
+        if keyword is None:
+            sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username ORDER BY articles.created_at DESC LIMIT 200"
+            return self.fetch_all(sql)
+        else:
+            args = f'%{keyword}%'
+            sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where articles.title like %s ORDER BY articles.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, args)
+        
 
     def find_article_by_keyword(self, keyword):
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where articles.body like %s ORDER BY articles.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, args)
+        if keyword is None:
+            sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username ORDER BY articles.created_at DESC LIMIT 200"
+            return self.fetch_all(sql)
+        else:
+            args = f'%{keyword}%'
+            sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where articles.body like %s ORDER BY articles.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, args)
 
     def find_article_by_username(self, keyword):
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where profile.nickname like %s ORDER BY articles.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, args)
+        if keyword is None:
+            sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username ORDER BY articles.created_at DESC LIMIT 200"
+            return self.fetch_all(sql)
+        else:
+            args = f'%{keyword}%'
+            sql = "SELECT * FROM articles INNER JOIN profile on articles.username = profile.username where profile.nickname like %s ORDER BY articles.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, args)
 
     def post_new_comment(self, user_name, article_id, body):
         sql = "INSERT INTO comments(username, article_id, comment) VALUE (%s, %s, %s);"

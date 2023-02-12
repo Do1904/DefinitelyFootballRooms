@@ -93,7 +93,7 @@ def register(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
 
 @app.post("/login")
-def login(request: Request, username: str = Form(...), password: str = Form(...)):
+def login(request: Request, username: Optional[str] = Form(None), password: Optional[str] = Form(None)):
     """
     ログイン処理
     :param request:
@@ -113,10 +113,10 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
 
 @app.post("/register")
-def create_user(username: str = Form(...), password: str = Form(...)):
+def create_user(username: Optional[str] = Form(None), password: Optional[str] = Form(None)):
     """
     ユーザ登録をおこなう
-    フォームから入力を受け取る時は，`username=Form(...)`のように書くことで受け取れる
+    フォームから入力を受け取る時は，`username=Form(None)`のように書くことで受け取れる
     :param username: 登録するユーザ名
     :param nickname: 登録するサイトでの表示名
     :param password: 登録するパスワード
@@ -162,29 +162,27 @@ def profile_update_page(request: Request, session_id=Cookie(default=None)):
 
 @app.post("/profile_update")
 @check_login
-def profile_update(nickname: str = Form(...), twitter: str = Form(...), instagram: str = Form(...), socialmedia: str = Form(...), yourclub: str = Form(...), yourleague: str = Form(...), yournation: str = Form(...), profile: str = Form(...), session_id=Cookie(default=None)):
+def profile_update(nickname: Optional[str] = Form("未登録"), twitter: Optional[str] = Form("未登録"), instagram: Optional[str] = Form("未登録"), socialmedia: Optional[str] = Form("未登録"), yourclub: Optional[str] = Form(None), yourleague: Optional[str] = Form(None), yournation: Optional[str] = Form(None), profile: Optional[str] = Form(None), session_id=Cookie(default=None)):
+    print(twitter)
+    nullables = [nickname, twitter, instagram, socialmedia, profile]
+    index = 0
+    while index < len(nullables):
+        if nullables[index] == "":
+            nullables[index] = "未登録"
+        index = index + 1
+    print(nullables[1])
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config) # auth.pyを使うために必要
-    auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, twitter, instagram, socialmedia, user_name) # auth.pyの中にある関数を使うために必要
+    auth_model.profile_update(nickname, yourclub, yourleague, yournation, profile, nullables[1], instagram, socialmedia, user_name) # auth.pyの中にある関数を使うために必要
     return RedirectResponse("/user/%s" % (user_name), status_code=HTTP_302_FOUND)
 
 @app.post("/profile_pic_update")
 @check_login
-def profile_pic_update(profile_pic: str = Form(...), session_id=Cookie(default=None)):
+def profile_pic_update(profile_pic: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     # auth_model = AuthModel(config)
     picture_model = PictureModel(config)
-    print('//////////////////////////////')
-    print('//////////////////////////////')
-    print('//////////////////////////////')
-    print('//////////////////////////////')
     profile_pic_link = picture_model.test_print(profile_pic)
-    print(profile_pic_link)
-    print('//////////////////////////////')
-    print('//////////////////////////////')
-    print('//////////////////////////////')
-    print('//////////////////////////////')
-    
     return RedirectResponse("/user/%s" % (user_name), status_code=HTTP_302_FOUND)
 
 @app.get("/matching")
@@ -232,10 +230,10 @@ def articles_index(request: Request, session_id=Cookie(default=None)):
 @app.post("/articles")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def articles_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), session_id=Cookie(default=None)):
-    if keyword == "":
-        return templates.TemplateResponse("article-index.html", {
-    })
+def articles_finden(request: Request, keyword: Optional[str] = Form(None), search_by: Optional[str] = Form(None), session_id=Cookie(default=None)):
+    # if keyword == "":
+    #     return templates.TemplateResponse("article-index.html", {
+    # })
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
@@ -264,7 +262,7 @@ def create_article_page(request: Request, session_id=Cookie(default=None)):
 
 @app.post("/article/create")
 @check_login
-def post_article(title: str = Form(...), body: str = Form(...), session_id=Cookie(default=None)):
+def post_article(title: Optional[str] = Form(None), body: Optional[str] = Form(None), session_id=Cookie(default=None)):
     article_model = ArticleModel(config)
     user_name = session.get(session_id).get("user").get("username")
     article_model.create_article(user_name, title, body)
@@ -303,7 +301,7 @@ def comment_page(request: Request, article_id: int, session_id=Cookie(default=No
 
 @app.post("/article/comment")
 @check_login
-def post_comment(body: str = Form(...), article_id: int = Form(...), session_id=Cookie(default=None)):
+def post_comment(body: Optional[str] = Form(None), article_id: int = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     article_model = ArticleModel(config)
     article_model.post_new_comment(user_name, article_id, body)
@@ -327,7 +325,7 @@ def edit_article_page(request: Request, article_id: int, session_id=Cookie(defau
 
 @app.post("/article/edit")
 @check_login
-def finish_editting_article_page(title: str = Form(...), body: str = Form(...), article_id: int = Form(...), session_id=Cookie(default=None)):
+def finish_editting_article_page(title: Optional[str] = Form(None), body: Optional[str] = Form(None), article_id: int = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     article_model = ArticleModel(config)
     article_model.update_article(title, body, article_id)
@@ -336,7 +334,7 @@ def finish_editting_article_page(title: str = Form(...), body: str = Form(...), 
 
 @app.delete("/article/delete")
 @check_login
-def destroy_article_page(article_id: int = Form(...)):
+def destroy_article_page(article_id: int = Form(None)):
     print("fkddsdnagjkfdsangklsjfkldjskagfkdjsklvdsjkagkdas")
     article_model = ArticleModel(config)
     article_model.destory_article(article_id)
@@ -369,29 +367,38 @@ def find_community(request: Request, session_id=Cookie(default=None)):
 @app.post("/community")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def pubs_finden(request: Request, keyword: str = Form(...), search_from: str = Form(...), session_id=Cookie(default=None)):
+def pubs_finden(request: Request, findenAus: Optional[str] = Form(None), keyword: Optional[str] = Form(None), search_from: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
     if search_from == "Rooms":
         [search_list, status] = auth_model.find_rooms_by_keyword(keyword)
+        if keyword is None:
+            keyword = ""
         return templates.TemplateResponse("community.html", {
+        "keyword": keyword,
         "request": request,
         "search_list": search_list,
         "user": user,
         "status": status
         })
     elif search_from == "Pubs":
-        [search_list, status] = auth_model.find_pubs_by_keyword(keyword)
+        [search_list, status] = auth_model.find_pubs_by_keyword(keyword, findenAus)
+        if keyword is None:
+            keyword = ""
         return templates.TemplateResponse("community.html", {
+        "keyword": keyword,
         "request": request,
         "search_list": search_list,
         "user": user,
         "status": status
         })
     elif search_from == "Users":
-        [search_list, status] = auth_model.find_users_by_keyword(keyword)
+        [search_list, status] = auth_model.find_users_by_keyword(keyword, findenAus)
+        if keyword is None:
+            keyword = ""
         return templates.TemplateResponse("community.html", {
+        "keyword": keyword,
         "request": request,
         "search_list": search_list,
         "user": user,
@@ -410,7 +417,7 @@ def create_community(request: Request, session_id=Cookie(default=None)):
 @app.post("/new_community")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def create_pub(community_name: str = Form(...), community_comment: str = Form(...), community_id: str = Form(...), session_id=Cookie(default=None)):
+def create_pub(community_name: Optional[str] = Form(None), community_comment: Optional[str] = Form(None), community_id: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     auth_model.create_new_pub(community_id, community_name, community_comment, user_name)
@@ -436,7 +443,7 @@ def show_community_list(request: Request, session_id=Cookie(default=None)):
 @app.get("/community/{pub_id}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=None)):
+def pub_detail_page(request: Request, pub_id: Optional[str], session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
@@ -456,7 +463,7 @@ def pub_detail_page(request: Request, pub_id: str, session_id=Cookie(default=Non
 @app.get("/community/{pub_id}/discuss")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
+def go_pub_discussion(request: Request, pub_id: Optional[str], session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
@@ -474,7 +481,7 @@ def go_pub_discussion(request: Request, pub_id: str, session_id=Cookie(default=N
 @app.get("/community/{pub_id}/newdiscussion")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def create_new_discussion(request: Request, pub_id: str, session_id=Cookie(default=None)):
+def create_new_discussion(request: Request, pub_id: Optional[str], session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
@@ -487,7 +494,7 @@ def create_new_discussion(request: Request, pub_id: str, session_id=Cookie(defau
 
 @app.post("/community/newdiscussion")
 @check_login
-def create_discussion(pub_id: str = Form(...), status: str = Form(...), discuss_title: str = Form(...), body: str = Form(...), session_id=Cookie(default=None)):
+def create_discussion(pub_id: Optional[str] = Form(None), status: Optional[str] = Form(None), discuss_title: Optional[str] = Form(None), body: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     auth_model.create_new_discussion(pub_id, user_name, status, discuss_title, body)
@@ -496,7 +503,7 @@ def create_discussion(pub_id: str = Form(...), status: str = Form(...), discuss_
 @app.post("/search_discussion")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def discussion_finden(request: Request, keyword: str = Form(...), search_by: str = Form(...), pub_id: str = Form(...), session_id=Cookie(default=None)):
+def discussion_finden(request: Request, keyword: Optional[str] = Form(None), search_by: Optional[str] = Form(None), pub_id: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
@@ -551,7 +558,7 @@ def post_discuss_comment(request: Request, id: int, session_id=Cookie(default=No
 
 @app.post("/discussion/comment")
 @check_login
-def post_comment(body: str = Form(...), topic_id: int = Form(...), session_id=Cookie(default=None)):
+def post_comment(body: Optional[str] = Form(None), topic_id: int = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     auth_model.post_discussion_comment(user_name, topic_id, body)
@@ -573,7 +580,7 @@ def edit_discussion_page(request: Request, discussion_id: int, session_id=Cookie
 
 @app.post("/community/discussion/edit")
 @check_login
-def finish_editting_discussion_page(status: str = Form(...), title: str = Form(...), body: str = Form(...), discussion_id: int = Form(...), session_id=Cookie(default=None)):
+def finish_editting_discussion_page(status: Optional[str] = Form(None), title: Optional[str] = Form(None), body: Optional[str] = Form(None), discussion_id: int = Form(None), session_id=Cookie(default=None)):
     auth_model = AuthModel(config)
     auth_model.update_discussion_page(status, title, body, discussion_id)
     return RedirectResponse("/community/discussion/%s" % (discussion_id), status_code=HTTP_302_FOUND)
@@ -594,7 +601,7 @@ def edit_discussioncomment_page(request: Request, discussion_comment_id: int, se
 
 @app.post("/discussioncomment/edit")
 @check_login
-def finish_editting_discussioncomment_page(context: str = Form(...), discussion_comment_id: int = Form(...), discussion_id: int = Form(...), session_id=Cookie(default=None)):
+def finish_editting_discussioncomment_page(context: Optional[str] = Form(None), discussion_comment_id: int = Form(None), discussion_id: int = Form(None), session_id=Cookie(default=None)):
     auth_model = AuthModel(config)
     auth_model.update_discussion_comment_page(context, discussion_comment_id)
     return RedirectResponse("/community/discussion/%s" % (discussion_id), status_code=HTTP_302_FOUND)
@@ -616,7 +623,7 @@ def post_discussion_comment_comment_page(request: Request, comment_id: int, sess
 
 @app.post("/discussion/comment/comment")
 @check_login
-def post_comment(body: str = Form(...), message_id: int = Form(...), comment_id: int = Form(...), session_id=Cookie(default=None)):
+def post_comment(body: Optional[str] = Form(None), message_id: int = Form(None), comment_id: int = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     auth_model.post_discussion_comment_comment(user_name, comment_id, body)
@@ -628,7 +635,7 @@ def post_comment(body: str = Form(...), message_id: int = Form(...), comment_id:
 @app.get("/user/{username}")
 # check_loginデコレータをつけるとログインしていないユーザをリダイレクトできる
 @check_login
-def user_detail_page(request: Request, username: str, session_id=Cookie(default=None)):
+def user_detail_page(request: Request, username: Optional[str], session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
@@ -657,7 +664,7 @@ def user_detail_page(request: Request, username: str, session_id=Cookie(default=
 
 @app.post("/follow")
 @check_login
-def follow_user(username: str = Form(...), session_id=Cookie(default=None)):
+def follow_user(username: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     follow_id = user_name + "--" + username
     auth_model = AuthModel(config)
@@ -666,7 +673,7 @@ def follow_user(username: str = Form(...), session_id=Cookie(default=None)):
 
 @app.post("/unfollow")
 @check_login
-def unfollow_user(username: str = Form(...), session_id=Cookie(default=None)):
+def unfollow_user(username: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     auth_model.unfollow_user(username, user_name)
@@ -674,7 +681,7 @@ def unfollow_user(username: str = Form(...), session_id=Cookie(default=None)):
 
 @app.post("/followpub")
 @check_login
-def follow_user(pub_id: str = Form(...), session_id=Cookie(default=None)):
+def follow_user(pub_id: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     follow_id = user_name + "--" + pub_id
     auth_model = AuthModel(config)
@@ -683,7 +690,7 @@ def follow_user(pub_id: str = Form(...), session_id=Cookie(default=None)):
 
 @app.post("/unfollowpub")
 @check_login
-def unfollow_user(pub_id: str = Form(...), session_id=Cookie(default=None)):
+def unfollow_user(pub_id: Optional[str] = Form(None), session_id=Cookie(default=None)):
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     auth_model.unfollow_pub(pub_id, user_name)

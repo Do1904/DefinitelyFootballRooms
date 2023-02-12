@@ -5,7 +5,15 @@
         <h2><br>SEARCH COMMUNITY</h2>
         <form action="/community" name="search" method="post">
             <div>
-                <p><input id="keyword" type="text" value="#" name="keyword"/></p>
+                <label for="findenAus">Find from:</label>
+                <select name="findenAus">
+                    <option value="id" selected>ID</option>
+                    <option value="name">名前</option>
+                    <option value="explanation">フリーワード、Hashtag</option>
+                </select>
+            </div>
+            <div>
+                <p>Keyword: <input id="keyword" type="text" value="{{ keyword }}" name="keyword"/></p>
             </div>
             <div>
                 <label><input type="radio" name="search_from" class="Pubs" value="Pubs" checked="checked">Pubs</label>

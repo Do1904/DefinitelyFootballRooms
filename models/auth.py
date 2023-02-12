@@ -1,6 +1,7 @@
 """
 ログイン関連の処理をここに書く
 """
+from gettext import find
 from .abstract import AbstractModel
 
 from hashlib import sha256
@@ -95,18 +96,23 @@ class AuthModel(AbstractModel):
         sql = "SELECT * FROM rooms INNER JOIN users on rooms.created_by = users.username where room_comment LIKE %s"
         return self.fetch_all(sql,args),status
 
-    def find_pubs_by_keyword(self, keyword):
-        """
-        ユーザ名とパスワードからユーザを探す
-        ユーザが存在しない場合，空の辞書を返す
-        :param username: 検索するユーザ名
-        :param password: 検索するパスワード
-        :return: 検索したユーザ
-        """
+    def find_pubs_by_keyword(self, keyword, findenAus):
         status = "pub"
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM pubs INNER JOIN profile on pubs.created_by = profile.username where pubs.pub_comment LIKE %s"
-        return self.fetch_all(sql, args),status
+        sql_id = "SELECT * FROM pubs INNER JOIN profile on pubs.created_by = profile.username where pubs.pub_id LIKE %s"
+        sql_name = "SELECT * FROM pubs INNER JOIN profile on pubs.created_by = profile.username where pubs.pub_name LIKE %s"
+        sql_comment = "SELECT * FROM pubs INNER JOIN profile on pubs.created_by = profile.username where pubs.pub_comment LIKE %s"
+        sql_none = "SELECT * FROM pubs INNER JOIN profile on pubs.created_by = profile.username ORDER BY pubs.created_at DESC LIMIT 200"
+        
+        if keyword is None:
+            return self.fetch_all(sql_none),status
+        else:
+            args = f'%{keyword}%'
+            if findenAus == "id":
+                return self.fetch_all(sql_id, args),status
+            elif findenAus == "name":
+                return self.fetch_all(sql_name, args),status
+            elif findenAus == "explanation":
+                return self.fetch_all(sql_comment, args),status
 
     def fetch_all_fans(self):
         sql = "SELECT * FROM users INNER JOIN profile on users.username = profile.username"
@@ -118,18 +124,24 @@ class AuthModel(AbstractModel):
         sql3 = "SELECT * FROM users INNER JOIN profile on users.username = profile.username where profile.your_nation = %s"
         return self.fetch_all(sql, your_club), self.fetch_all(sql2, your_league), self.fetch_all(sql3, your_nation)
 
-    def find_users_by_keyword(self, keyword):
-        """
-        ユーザ名とパスワードからユーザを探す
-        ユーザが存在しない場合，空の辞書を返す
-        :param username: 検索するユーザ名
-        :param password: 検索するパスワード
-        :return: 検索したユーザ
-        """
+    def find_users_by_keyword(self, keyword, findenAus):
         status = "user"
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM users INNER JOIN profile on users.username = profile.username where profile.profile LIKE %s"
-        return self.fetch_all(sql, args),status
+        sql_username = "SELECT * FROM users INNER JOIN profile on users.username = profile.username where profile.username LIKE %s ORDER BY users.created_at DESC LIMIT 200"
+        sql_nickname = "SELECT * FROM users INNER JOIN profile on users.username = profile.username where profile.nickname LIKE %s ORDER BY users.created_at DESC LIMIT 200"
+        sql_profile = "SELECT * FROM users INNER JOIN profile on users.username = profile.username where profile.profile LIKE %s ORDER BY users.created_at DESC LIMIT 200"
+        sql_none = "SELECT * FROM users INNER JOIN profile on users.username = profile.username ORDER BY users.created_at DESC LIMIT 200"
+
+        if keyword is None:
+            return self.fetch_all(sql_none),status
+        else:
+            args = f'%{keyword}%'
+            if findenAus == "id":
+                return self.fetch_all(sql_username, args),status
+            elif findenAus == "name":
+                return self.fetch_all(sql_nickname, args),status
+            elif findenAus == "explanation":
+                return self.fetch_all(sql_profile, args),status
+            
 
     def validate_pub(self,community_id) -> bool:
         sql = "SELECT * FROM pubs WHERE pub_id=%s"
@@ -207,19 +219,33 @@ class AuthModel(AbstractModel):
 
 
     def find_discussion_by_title(self, pub_id, keyword):
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s AND message.title like %s ORDER BY message.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, pub_id, args)
+        if keyword is None:
+            sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s ORDER BY message.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, pub_id)
+        else:
+            args = f'%{keyword}%'
+            sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s AND message.title like %s ORDER BY message.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, pub_id, args)
+        
 
     def find_discussion_by_keyword(self, pub_id, keyword):
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s AND message.body like %s ORDER BY message.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, pub_id, args)
+        if keyword is None:
+            sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s ORDER BY message.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, pub_id)
+        else:
+            args = f'%{keyword}%'
+            sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s AND message.body like %s ORDER BY message.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, pub_id, args)
+        
 
     def find_discussion_by_username(self, pub_id, keyword):
-        args = f'%{keyword}%'
-        sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s AND profile.nickname like %s ORDER BY message.created_at DESC LIMIT 500"
-        return self.fetch_all(sql, pub_id, args)
+        if keyword is None:
+            sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s ORDER BY message.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, pub_id)
+        else:
+            args = f'%{keyword}%'
+            sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.pub_id = %s AND profile.nickname like %s ORDER BY message.created_at DESC LIMIT 200"
+            return self.fetch_all(sql, pub_id, args)
 
     def find_discussion_by_id(self, id):
         sql = "SELECT * FROM message INNER JOIN profile on message.username = profile.username where message.id=%s"
