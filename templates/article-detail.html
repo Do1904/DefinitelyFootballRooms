@@ -2,41 +2,56 @@
 {% block body %}
 <br><br><br><br>
 <div class="content">
+    {% if article["body"] == "[Deleted]" and article["title"] == "[This post has been deleted]" %}
+    <div class="article">
+        <h2>{{ article["title"] }}</h2>
+    </div>
+    {% else %}
+    <div class="article">
     <h2>{{ article["title"] }}</h2>
     <p>
-        <i>投稿者: {{ article["username"] }}</i>
+        <i>Post by: {{ article["nickname"] }}</i>
     </p>
-    <p class="article" style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ article["body"] }}</p>
+    <br>
+    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ article["body"] }}</p>
+    {% if article["username"] == user["username"] %}
+    <div>
+        <table style="margin: auto;">
+            <tr>
+                <td>
+                    <p></p>
+                    <a class="topLink" href="{{ url_for("edit_article_page", article_id=article["id"]) }}">Edit</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    {% endif %}
+    </div>
+    {% endif %}
 </div>
-{% if article["username"] == user["username"] %}
-<div>
-    <p style="text-align: center;"><a href="{{ url_for("edit_article_page", article_id=article["id"]) }}">Edit</a></p>
 
-    <form href="{{ url_for("destroy_article_page") }}" name="go" method="delete"></form>
-        <div>
-            <p><input type="hidden" id="article_id" value="{{ article["id"] }}" name="article_id"/></p>
-        </div>
-        <p style="text-align: center;"><a href="javascript:go.submit()">Delete</a></p>
-    </form>
-</div>
+{% if article["body"] == "[Deleted]" and article["title"] == "[This post has been deleted]" %}
+    <p></p>
+{% else %}
 
-{% endif %}
-<br>
-<p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=article["id"]) }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/commentw.png')}}" width="30" height="30" alt="comment"></div></a></p>
-{% for comment in comments %}
-<div class="article">
-    <p style="font-size: 85%;text-align: center;"><a class="blogtitle" href="{{ url_for("user_detail_page", username=article["username"]) }}">{{ comment["nickname"] }}</a></p>
-    <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ comment["comment"] }}</p>
-    <p style="font-size: 85%;">{{ comment["created_at"] }}</p>
-</div>
-{% endfor %}
-{% if not comments %}
-<div class="article">コメントはまだありません。</div>
-{% endif %}
-{% if error %}
-<p style="color: red">{{ error }}</p>
-{% endif %}
-{% if information %}
-<p style="color: cornflowerblue">{{ information }}</p>
+    <br>
+    <p style="text-align: center;"><a href="{{ url_for("comment_page", article_id=article["id"]) }}"><div class="img_wrap"><img src="{{url_for('static', path='/pics/commentw.png')}}" width="30" height="30" alt="comment"></div></a></p>
+    {% for comment in comments %}
+    <div class="article">
+      <p style="font-size: 85%;text-align: center;"><a class="blogtitle" href="{{ url_for("user_detail_page", username=article["username"]) }}">{{ comment["nickname"] }}</a></p>
+       <p style="white-space:pre-wrap;word-wrap:break-all;text-align: left;">{{ comment["comment"] }}</p>
+       <p style="font-size: 85%;">{{ comment["created_at"] }}</p>
+    </div>
+    {% endfor %}
+    {% if not comments %}
+    <div class="article">コメントはまだありません。</div>
+    {% endif %}
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %}
+    {% if information %}
+    <p style="color: cornflowerblue">{{ information }}</p>
+    {% endif %}
 {% endif %}
 {% endblock %}

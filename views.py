@@ -317,11 +317,19 @@ def edit_article_page(request: Request, article_id: int, session_id=Cookie(defau
     user_name = session.get(session_id).get("user").get("username")
     auth_model = AuthModel(config)
     user = auth_model.find_profile_by_user_id(user_name)
-    return templates.TemplateResponse("edit-article.html", {
-        "request": request,
-        "article": article,
-        "user": user
-    })
+    articles = article_model.fetch_recent_articles()
+    if article["username"] != user_name:
+        return templates.TemplateResponse("article-index.html", {
+            "request": request,
+            "articles": articles,
+            "user": user,
+        })
+    else:
+        return templates.TemplateResponse("edit-article.html", {
+            "request": request,
+            "article": article,
+            "user": user
+        })
 
 @app.post("/article/edit")
 @check_login
@@ -332,10 +340,10 @@ def finish_editting_article_page(title: Optional[str] = Form(None), body: Option
     return RedirectResponse("/article/%s" % (article_id), status_code=HTTP_302_FOUND)
 
 
-@app.delete("/article/delete")
+@app.post("/article/destroy")
 @check_login
-def destroy_article_page(article_id: int = Form(None)):
-    print("fkddsdnagjkfdsangklsjfkldjskagfkdjsklvdsjkagkdas")
+def destroy_article_page(article_id: int = Form(None), session_id=Cookie(default=None)):
+    user_name = session.get(session_id).get("user").get("username")
     article_model = ArticleModel(config)
     article_model.destory_article(article_id)
     return RedirectResponse("/articles", status_code=HTTP_302_FOUND)
@@ -593,11 +601,29 @@ def edit_discussioncomment_page(request: Request, discussion_comment_id: int, se
     discussion_comment = auth_model.find_discussion_comment_by_id(discussion_comment_id)
     user_name = session.get(session_id).get("user").get("username")
     user = auth_model.find_profile_by_user_id(user_name)
-    return templates.TemplateResponse("edit-discuss-comment.html", {
-        "request": request,
-        "discussion_comment": discussion_comment,
-        "user": user
-    })
+    topic = auth_model.find_discussion_by_id(discussion_comment["message_id"])
+    comments = auth_model.fetch_discussion_commnets_by_id(discussion_comment["message_id"])
+    comment_comments = auth_model.fetch_discussion_commnet_comments_by_id(discussion_comment["message_id"])
+    pub = auth_model.find_pub_by_id(topic["pub_id"])
+    members = auth_model.pub_member_by_id(topic["pub_id"])
+
+
+    if discussion_comment["username"] != user_name:
+        return templates.TemplateResponse("discussion-detail.html", {
+            "request": request,
+            "user": user,
+            "topic": topic,
+            "comments": comments,
+            "comment_comments": comment_comments,
+            "members": members,
+            "pub": pub
+        })
+    else:
+        return templates.TemplateResponse("edit-discuss-comment.html", {
+            "request": request,
+            "discussion_comment": discussion_comment,
+            "user": user
+        })
 
 @app.post("/discussioncomment/edit")
 @check_login

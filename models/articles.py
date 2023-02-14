@@ -56,18 +56,11 @@ class ArticleModel(AbstractModel):
         self.execute(sql, user_name, title, body)
 
     def update_article(self, title, body, article_id):
-        """
-        新しく記事を作成する
-        :param user_name: 投稿したユーザのusername
-        :param title: 記事のタイトル
-        :param body: 記事の本文
-        :return: None
-        """
-        sql = "UPDATE articles SET title = %s, body = %s WHERE id = %s;"
+        sql = "UPDATE articles SET title = %s, body = %s WHERE id = %s"
         self.execute(sql, title, body, article_id)
 
     def destory_article(self, article_id):
-        sql = "DELETE from articles where id = %s;"
+        sql = "UPDATE articles SET title = '[This post has been deleted]', body = '[Deleted]' WHERE id = %s"
         self.execute(sql, article_id)
 
     def find_article_by_title(self, keyword):

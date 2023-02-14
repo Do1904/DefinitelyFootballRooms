@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block body %}
 <br><br><br><br>
+{% if article["body"] == "[Deleted]" and article["title"] == "[This post has been deleted]" %}
+<p>This post has been deleted</p>
+{% else %}
     <div class="content">
         <h2><br>EDIT BLOG</h2>
         <div class="formstyle">
@@ -22,7 +25,14 @@
                     <a href="javascript:go.submit()"><div class="img_wrap"><img src="{{url_for('static', path='/pics/submit.png')}}" width="30" height="30" alt="submit"></div></a>
                 </div>
             </form>
+            <form action="{{ url_for("destroy_article_page") }}" name="delete_article" method="post">
+                <div>
+                    <p><input type="hidden" id="article_id" value="{{ article["id"] }}" name="article_id" /></p>
+                </div>
+                <a class="join" href="javascript:delete_article.submit()">Delete</a>
+            </form>
         </div>
         
     </div>
+{% endif %}
 {% endblock %}

@@ -38,6 +38,11 @@
         <h2><br>BLOG</h2>
         <br>
             {% for article in articles %}
+            {% if article["body"] == "[Deleted]" and article["title"] == "[This post has been deleted]" %}
+                <div class="blogs">
+                    <p>This post has been deleted</p>
+                </div>
+            {% else %}
             <div class="blogs">
                 <p>
                     <a class="blogtitle" href="{{ url_for("article_detail_page", article_id=article["id"]) }}">{{ article["title"] }} </a>
@@ -45,6 +50,7 @@
                     <p style="font-size: 78%;">{{ article["created_at"] }}</p>
                 </p>
             </div>
+            {% endif %}
             {% endfor %}
         {% if not articles %}
             <p>投稿された記事はありません</p>
