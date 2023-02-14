@@ -580,11 +580,26 @@ def edit_discussion_page(request: Request, discussion_id: int, session_id=Cookie
     discussion = auth_model.find_discussion_by_id(discussion_id)
     user_name = session.get(session_id).get("user").get("username")
     user = auth_model.find_profile_by_user_id(user_name)
-    return templates.TemplateResponse("edit-discuss.html", {
-        "request": request,
-        "discussion": discussion,
-        "user": user
-    })
+    comments = auth_model.fetch_discussion_commnets_by_id(discussion_id)
+    comment_comments = auth_model.fetch_discussion_commnet_comments_by_id(discussion_id)
+    pub = auth_model.find_pub_by_id(discussion["pub_id"])
+    members = auth_model.pub_member_by_id(discussion["pub_id"])
+    if discussion["username"] != user_name:
+        return templates.TemplateResponse("discussion-detail.html", {
+            "request": request,
+            "user": user,
+            "topic": discussion,
+            "comments": comments,
+            "comment_comments": comment_comments,
+            "members": members,
+            "pub": pub
+        })
+    else:
+        return templates.TemplateResponse("edit-discuss.html", {
+            "request": request,
+            "discussion": discussion,
+            "user": user
+        })
 
 @app.post("/community/discussion/edit")
 @check_login
